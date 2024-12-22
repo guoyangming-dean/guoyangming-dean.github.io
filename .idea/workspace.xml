@@ -4,91 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab462dfd-5867-474f-adc6-47cdca9d061c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/index.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_layouts/markdown-table2me.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_layouts/markdown.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/about.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/css/about-style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/css/index-style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/css/main.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/css/main.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/css/markdown_LC_style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/css/python-style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/css/typora-github.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/images/avatar.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/js/_main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/js/lunr/lunr-en.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/js/lunr/lunr-gr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/js/lunr/lunr-store.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/js/lunr/lunr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/js/lunr/lunr.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/js/main.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/js/main.min.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/js/plugins/gumshoe.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/js/plugins/jquery.ba-throttle-debounce.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/js/plugins/jquery.fitvids.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/js/plugins/jquery.greedy-navigation.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/js/plugins/jquery.magnific-popup.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/js/plugins/smooth-scroll.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/js/py-loader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/js/type-writer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/assets/js/vendor/jquery/jquery-3.6.0.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/code.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/code/leetcode/LC0724_Find_Pivot_Index_S1_Two_Points.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/code/leetcode/LC3033_Modify_the_Matrix_S1_Simulation.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/code/leetcode/LC3099_Harshad_Number_S1_Simulation.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/code/leetcode/LC3101_Count_Alternating_Subarrays_S1_Sliding_Window.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/code/leetcode/LC3200_Maximum_Height_of_a_Triangle_S1_Simulation.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/code/leetcode/LC3200_Maximum_Height_of_a_Triangle_S2_Math.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/code/leetcode/LC3211_Generate_Binary_Strings_Without_Adjacent_Zeros_S1_Recursion.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/code/leetcode/LC3211_Generate_Binary_Strings_Without_Adjacent_Zeros_S2_Iteration.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/code/leetcode/LC3211_Generate_Binary_Strings_Without_Adjacent_Zeros_S3_Bitwise.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/code/leetcode/LC3216_Lexicographyically_Smallest_String_After_a_Swap.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/code/leetcode/hello.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/code/leetcode/run_solution.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/code/leetcode/x.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/code/shell/git.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/code/shell/mycode.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/feed.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/markdown/coding-tips.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/markdown/git操作.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/markdown/leetcode.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/robots.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_site/sitemap.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/about.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/css/about-style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/css/index-style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/css/markdown_LC_style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/css/python-style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/css/typora-github.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/images/avatar.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/js/py-loader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/js/type-writer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/code.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/code/leetcode/LC0724_Find_Pivot_Index_S1_Two_Points.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/code/leetcode/LC3033_Modify_the_Matrix_S1_Simulation.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/code/leetcode/LC3099_Harshad_Number_S1_Simulation.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/code/leetcode/LC3101_Count_Alternating_Subarrays_S1_Sliding_Window.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/code/leetcode/LC3200_Maximum_Height_of_a_Triangle_S1_Simulation.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/code/leetcode/LC3200_Maximum_Height_of_a_Triangle_S2_Math.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/code/leetcode/LC3211_Generate_Binary_Strings_Without_Adjacent_Zeros_S1_Recursion.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/code/leetcode/LC3211_Generate_Binary_Strings_Without_Adjacent_Zeros_S2_Iteration.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/code/leetcode/LC3211_Generate_Binary_Strings_Without_Adjacent_Zeros_S3_Bitwise.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/code/leetcode/LC3216_Lexicographyically_Smallest_String_After_a_Swap.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/code/leetcode/hello.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/code/leetcode/run_solution.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/code/leetcode/x.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/code/shell/git.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/code/shell/mycode.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/markdown/coding-tips.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/markdown/git操作.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/markdown/leetcode.md" beforeDir="false" />
-    </list>
+    <list default="true" id="ab462dfd-5867-474f-adc6-47cdca9d061c" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -103,7 +19,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/docs" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -248,7 +164,7 @@
       <workItem from="1722235283641" duration="224000" />
       <workItem from="1722235517027" duration="31000" />
       <workItem from="1734698858148" duration="5848000" />
-      <workItem from="1734793536359" duration="6082000" />
+      <workItem from="1734793536359" duration="7222000" />
     </task>
     <servers />
   </component>
