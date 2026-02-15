@@ -1,0 +1,34 @@
+---
+# You don't need to edit this file, it's empty on purpose.
+# Edit theme's home layout instead if you wanna make some changes
+# See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
+layout: home
+author_profile: true
+title: ""
+---
+
+## Selected Publications
+
+1. **Bao, X., Guo, S., Guo, Y., Yang, C., Shi, L., Li, Y., & Jiang, Y.** (2022). Multilevel operation strategy of a vascular interventional robot system for surgical safety in teleoperation. *IEEE Transactions on Robotics, 38*(4).
+
+2. **Xu, Z., Guo, Y., Zhao, T., Zhao, Y., Liu, Z., Sun, X., Xie, G., & Li, Y.** (2022). Abnormality classification from electrocardiograms with various lead combinations. *Physiological Measurement, 43*(7).
+
+3. **Zhu, Z., Lan, X., Zhao, T., Guo, Y., Kojodjojo, P., Xu, Z., Liu, Z., Liu, S., Wang, H., Sun, X., & Feng, M.** (2021). Identification of 27 abnormalities from multi-lead ECG signals: An ensembled SE_ResNet framework with Sign Loss function. *Physiological Measurement, 42*(6).
+
+### Conference Papers
+
+1. **Guo, Y., Guo, S., & Yang, C.** (2020, August). Feasibility study on cloud communication operation for an interventional surgery robot. In *Proceedings of the 2020 IEEE International Conference on Mechatronics and Automation (ICMA)* (pp. 443–447). Beijing, China. [Oral presentation and paper publication]
+
+2. **Guo, S., Guo, Y., Bao, X., & Yang, C.** (2019, August). A PID-type fuzzy logic controller for an interventional surgical robot. In *Proceedings of the 2019 IEEE International Conference on Mechatronics and Automation (ICMA)* (pp. 2529–2533). Tianjin, China. [Oral presentation and paper publication]
+
+### Patents
+
+1. **Guo, Y., Hao, B., & Tang, R.** (2023). Prediction method, device, apparatus, and medium for gene expression in cells after drug perturbation (CN116959569A). China National Intellectual Property Administration.
+
+2. **Guo, Y., & Xu, Z.** (2022). ECG classification method based on deep learning, device, apparatus, and storage medium (CN114587378A). China National Intellectual Property Administration.
+
+3. **Guo, S., Yang, C., Guo, Y., & Bao, X.** (2020). Master controller of an interventional surgical robot (CN212089720U). China National Intellectual Property Administration.
+
+4. **Guo, S., Yang, C., Guo, Y., & Bao, X.** (2020). Master operating device of an interventional surgical robot (CN212089719U). China National Intellectual Property Administration.
+
+*For a complete list of publications and patents, please see my [CV](/assets/files/CV_Yangming%20Guo.pdf) or contact me directly.*

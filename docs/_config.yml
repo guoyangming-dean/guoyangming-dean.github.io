@@ -14,9 +14,9 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: Yangming Guo
-email: yangmingnjau@163.com
+email: yangmingbit@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Personal blog and portfolio of Yangming Guo - sharing thoughts on technology, software development, and projects.
+  Personal blog and portfolio of Yangming Guo - Master's in Control Science and Engineering, Senior Algorithm Engineer specializing in AI, ML, and robotics.
 twitter_username: username
 github_username: username
 minimal_mistakes_skin: default
@@ -59,29 +59,32 @@ plugins:
 author:
   name   : "Yangming Guo"
   avatar : "/assets/images/avatar.jpg"
-  bio    : "Software developer passionate about technology and continuous learning."
+  bio    : ""
   links:
-    - label: "Website"
-      icon: "fas fa-fw fa-link"
-      url: "https://"
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/"
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope"
+      url: "mailto:yangmingbit@gmail.com"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/"
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       url: "https://instagram.com/"
 
 footer:
   links:
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/"
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope"
+      url: "mailto:yangmingbit@gmail.com"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/"
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       url: "https://instagram.com/"
