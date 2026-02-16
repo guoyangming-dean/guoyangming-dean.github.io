@@ -27,7 +27,7 @@
 /* Mixins and functions */
 /* Magnific Popup CSS */
 .mfp-counter {
-    font-family: Georgia, Times, serif;
+    font-family: "Titillium Web", Georgia, Times, serif;
 }
 
 .mfp-bg {
@@ -189,7 +189,7 @@ button::-moz-focus-inner {
     color: #fff;
     font-style: normal;
     font-size: 28px;
-    font-family: Georgia, Times, serif;
+    font-family: "Titillium Web", Georgia, Times, serif;
 }
 
 .mfp-close:hover, .mfp-close:focus {
@@ -672,7 +672,7 @@ body {
     margin: 0;
     padding: 0;
     color: #3d4144;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     line-height: 1.5;
 }
 
@@ -683,7 +683,7 @@ body.overflow--hidden { /* when primary navigation is visible, the content in th
 h1, h2, h3, h4, h5, h6 {
     margin: 2em 0 0.5em;
     line-height: 1.2;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     font-weight: bold;
 }
 
@@ -853,7 +853,7 @@ figure.third figcaption {
 figcaption {
     margin-bottom: 0.5em;
     color: #646769;
-    font-family: Georgia, Times, serif;
+    font-family: "Titillium Web", Georgia, Times, serif;
     font-size: 0.75em;
 }
 
@@ -947,7 +947,7 @@ label, input, button, select, textarea {
 
 input, button, select, textarea {
     box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
 }
 
 label {
@@ -1191,7 +1191,7 @@ table {
     display: block;
     margin-bottom: 1em;
     width: 100%;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     font-size: 0.75em;
     border-collapse: collapse;
     overflow-x: auto;
@@ -1247,7 +1247,7 @@ tr, td, th {
     display: inline-block;
     margin-bottom: 0.25em;
     padding: 0.5em 1em;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     font-size: 0.75em;
     font-weight: bold;
     text-align: center;
@@ -1453,7 +1453,7 @@ tr, td, th {
     margin: 2em 0 !important; /* override*/
     padding: 1em;
     color: #3d4144;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     font-size: 0.75em !important;
     text-indent: initial; /* override*/
     background-color: #f2f3f3;
@@ -1510,7 +1510,7 @@ blockquote.notice {
     margin: 2em 0 !important; /* override*/
     padding: 1em;
     color: #3d4144;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     font-size: 0.75em !important;
     text-indent: initial; /* override*/
     background-color: #e2e4e5;
@@ -1567,7 +1567,7 @@ blockquote.notice--primary {
     margin: 2em 0 !important; /* override*/
     padding: 1em;
     color: #3d4144;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     font-size: 0.75em !important;
     text-indent: initial; /* override*/
     background-color: #d8ebf1;
@@ -1624,7 +1624,7 @@ blockquote.notice--info {
     margin: 2em 0 !important; /* override*/
     padding: 1em;
     color: #3d4144;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     font-size: 0.75em !important;
     text-indent: initial; /* override*/
     background-color: #f7e5cd;
@@ -1681,7 +1681,7 @@ blockquote.notice--warning {
     margin: 2em 0 !important; /* override*/
     padding: 1em;
     color: #3d4144;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     font-size: 0.75em !important;
     text-indent: initial; /* override*/
     background-color: #d9edd9;
@@ -1738,7 +1738,7 @@ blockquote.notice--success {
     margin: 2em 0 !important; /* override*/
     padding: 1em;
     color: #3d4144;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     font-size: 0.75em !important;
     text-indent: initial; /* override*/
     background-color: #fcdfde;
@@ -1812,7 +1812,7 @@ blockquote.notice--danger {
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
 }
 
 .masthead__inner-wrap::after {
@@ -1895,7 +1895,7 @@ blockquote.notice--danger {
     margin: 0 auto;
     max-width: 100%;
     padding-inline: 1em;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     -webkit-animation: intro 0.3s both;
     animation: intro 0.3s both;
     -webkit-animation-delay: 0.3s;
@@ -1960,7 +1960,7 @@ blockquote.notice--danger {
     margin: 0;
     padding: 0;
     list-style-type: none;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
 }
 
 .pagination li {
@@ -1973,7 +1973,7 @@ blockquote.notice--danger {
     display: block;
     margin-bottom: 0.25em;
     padding: 0.5em 1em;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     font-size: 14px;
     font-weight: bold;
     line-height: 1.5;
@@ -2018,7 +2018,7 @@ blockquote.notice--danger {
     padding: 1em 2em;
     float: inline-start;
     width: 50%;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     font-size: 1em;
     font-weight: bold;
     text-align: center;
@@ -2366,7 +2366,7 @@ blockquote.notice--danger {
 .nav__title {
     margin: 0;
     padding: 0.5rem 0.75rem;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     font-size: 1em;
     font-weight: bold;
 }
@@ -2375,7 +2375,7 @@ blockquote.notice--danger {
     display: block;
     margin: 0.5rem 0;
     padding: 0.25rem 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     font-size: 0.75em;
     font-weight: bold;
     text-transform: uppercase;
@@ -2384,7 +2384,7 @@ blockquote.notice--danger {
 
 /* Table of contents navigation ========================================================================== */
 .toc {
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     color: #7a8288;
     background-color: #fff;
     border: 1px solid #f2f3f3;
@@ -2509,7 +2509,7 @@ blockquote.notice--danger {
 }
 
 .page__footer-copyright {
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     font-size: 0.6875em;
 }
 
@@ -2523,7 +2523,7 @@ blockquote.notice--danger {
     display: inline-block;
     padding-top: 5px;
     padding-bottom: 5px;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     font-size: 0.75em;
     text-transform: uppercase;
 }
@@ -3044,7 +3044,7 @@ body:hover .visually-hidden a, body:hover .visually-hidden input, body:hover .vi
     position: fixed;
     z-index: 20;
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     white-space: nowrap;
 }
 
@@ -3637,7 +3637,7 @@ body {
 }
 
 .page__lead {
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     font-size: 1.25em;
 }
 
@@ -3695,13 +3695,13 @@ body {
 
 .page__content dt {
     margin-top: 1em;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     font-weight: bold;
 }
 
 .page__content dd {
     margin-inline-start: 1em;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     font-size: 0.75em;
 }
 
@@ -3796,7 +3796,7 @@ body {
     margin: 0 auto;
     padding: 2px 5px;
     color: #fff;
-    font-family: Georgia, Times, serif;
+    font-family: "Titillium Web", Georgia, Times, serif;
     font-size: 0.6875em;
     background: #000;
     text-align: end;
@@ -3846,7 +3846,7 @@ body {
 .page__meta, .comment__date {
     margin-top: 2em;
     color: #646769;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     font-size: 0.75em;
 }
 
@@ -4163,7 +4163,7 @@ body {
 
 .archive__item-title {
     margin-bottom: 0.25em;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     line-height: initial;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -4215,7 +4215,7 @@ body {
     margin: 0 auto;
     padding: 2px 5px;
     color: #fff;
-    font-family: Georgia, Times, serif;
+    font-family: "Titillium Web", Georgia, Times, serif;
     font-size: 0.625em;
     background: #000;
     text-align: end;
@@ -4590,11 +4590,11 @@ body {
 
 .sidebar h2, .sidebar h3, .sidebar h4, .sidebar h5, .sidebar h6 {
     margin-bottom: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
 }
 
 .sidebar p, .sidebar li {
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     font-size: 0.75em;
     line-height: 1.5;
 }
@@ -4730,7 +4730,7 @@ body {
 }
 
 .sidebar .author__name {
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     font-size: 1em;
 }
 
@@ -4749,7 +4749,7 @@ body {
     position: relative;
     display: table-cell;
     vertical-align: middle;
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
+    font-family: "Titillium Web", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Lucida Grande", Arial, sans-serif;
     z-index: 20;
     cursor: pointer;
 }

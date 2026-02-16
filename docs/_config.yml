@@ -13,12 +13,17 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
+# 网站标题
 title: Yangming Guo
+# 联系邮箱（显示在网站页脚和关于页面）
 email: yangmingbit@gmail.com
+# 网站描述（用于SEO和社交媒体分享）
 description: >- # this means to ignore newlines until "baseurl:"
   Personal blog and portfolio of Yangming Guo - Master's in Control Science and Engineering, Senior Algorithm Engineer specializing in AI, ML, and robotics.
+# 社交媒体用户名（需要替换为实际用户名）
 twitter_username: username
 github_username: username
+# 主题皮肤和搜索功能
 minimal_mistakes_skin: default
 search: true
 
@@ -48,6 +53,8 @@ include:
 #   - vendor/ruby/
 
 # Plugins (previously gems:)
+# Jekyll插件配置
+# 这些插件扩展了Jekyll的功能，如分页、站点地图、订阅等
 plugins:
   - jekyll-paginate
   - jekyll-sitemap
@@ -56,6 +63,11 @@ plugins:
   - jemoji
   - jekyll-include-cache
 
+# 作者信息配置
+# name: 显示在网站上的姓名
+# avatar: 头像图片路径
+# bio: 个人简介（已设为空字符串，不在头像下方显示）
+# links: 社交链接列表
 author:
   name   : "Yangming Guo"
   avatar : "/assets/images/avatar.jpg"
@@ -74,6 +86,8 @@ author:
       icon: "fab fa-fw fa-instagram"
       url: "https://instagram.com/"
 
+# 页脚链接配置
+# 与作者社交链接保持一致
 footer:
   links:
     - label: "Email"

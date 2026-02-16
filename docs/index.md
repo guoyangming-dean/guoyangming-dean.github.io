@@ -7,6 +7,14 @@ author_profile: true
 title: ""
 ---
 
+<!--
+首页内容说明：
+1. Selected Publications部分 - 展示主要期刊论文
+2. Conference Papers部分 - 展示会议论文
+3. Patents部分 - 展示专利
+4. Gallery部分 - 通过include引入图片轮播组件
+-->
+
 ## Selected Publications
 
 1. **Bao, X., Guo, S., Guo, Y., Yang, C., Shi, L., Li, Y., & Jiang, Y.** (2022). Multilevel operation strategy of a vascular interventional robot system for surgical safety in teleoperation. *IEEE Transactions on Robotics, 38*(4).
@@ -32,3 +40,5 @@ title: ""
 4. **Guo, S., Yang, C., Guo, Y., & Bao, X.** (2020). Master operating device of an interventional surgical robot (CN212089719U). China National Intellectual Property Administration.
 
 *For a complete list of publications and patents, please see my [CV](/assets/files/CV_Yangming%20Guo.pdf) or contact me directly.*
+
+{% include gallery.html %}

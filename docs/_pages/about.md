@@ -3,6 +3,16 @@ permalink: /about/
 title: "About"
 ---
 
+<!--
+关于页面内容结构：
+1. 个人简介
+2. 专业经历
+3. 教育背景
+4. 技术技能
+5. 出版物和专利
+6. 联系方式
+-->
+
 Hello! I'm Yangming Guo, a Senior Algorithm Engineer specializing in artificial intelligence, machine learning, robotics, and biomedical applications.
 
 ## About Me
