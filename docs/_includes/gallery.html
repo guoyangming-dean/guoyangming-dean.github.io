@@ -224,7 +224,7 @@
 </section>
 
 <script>
-// 图片轮播的JavaScript逻辑 - 实现循环滚动效果
+// 图片轮播的JavaScript逻辑 - 实现真正的无缝循环（像时钟一样）
 document.addEventListener('DOMContentLoaded', function() {
   // 获取DOM元素
   const track = document.getElementById('gallery-track');
@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (!track) return;
 
   // 获取所有图片项
-  const galleryItems = track.querySelectorAll('.gallery-item');
+  let galleryItems = Array.from(track.querySelectorAll('.gallery-item'));
 
   // 如果图片数量少于2张，隐藏左右按钮
   if (galleryItems.length <= 1) {
@@ -244,59 +244,97 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
+  // 原始图片数量
+  const originalCount = galleryItems.length;
+
+  // 实现无缝循环：在开头添加最后一张的副本，在结尾添加第一张的副本
+  const firstItem = galleryItems[0];
+  const lastItem = galleryItems[galleryItems.length - 1];
+
+  // 克隆最后一张放到开头（这样第一张左边就是最后一张）
+  const lastClone = lastItem.cloneNode(true);
+  track.insertBefore(lastClone, firstItem);
+
+  // 克隆第一张放到结尾（这样最后一张右边就是第一张）
+  const firstClone = firstItem.cloneNode(true);
+  track.appendChild(firstClone);
+
+  // 重新获取所有图片项（包括克隆的）
+  galleryItems = Array.from(track.querySelectorAll('.gallery-item'));
+
   // 计算单个图片项的宽度（包括间距）
   let itemWidth = galleryItems[0].offsetWidth + 40; // 40px是CSS中设置的gap
-  let scrollAmount = itemWidth; // 每次滚动1个图片的宽度（修改为1张）
+  let scrollAmount = itemWidth; // 每次滚动1个图片的宽度
   let paddingLeft = parseFloat(getComputedStyle(track).paddingLeft);
 
   // 计算容器和轨道的基本尺寸
   let containerWidth = track.clientWidth;
   let maxScroll = track.scrollWidth - containerWidth;
 
-  // 当前居中显示的图片索引（从0开始）
-  let currentIndex = 0;
-  // 标记是否正在进行滚轮操作（防抖）
-  let isWheeling = false;
-  // 滚轮水平滚动累积值（用于控制滑动灵敏度）
-  let wheelDeltaXAccumulated = 0;
-  // 触发切换的阈值（像素），默认值为图片宽度的60%
-  let wheelThreshold = 0;
+  // 当前居中显示的图片索引
+  // 现在数组结构是：[最后一张的克隆, 第1张, 第2张, ..., 第N张, 第一张的克隆]
+  // 初始显示第1张（索引1）
+  let currentIndex = 1;
+
+  // 标记是否正在进行无缝跳转（防止重复触发）
+  let isJumping = false;
 
   // 计算让指定索引的图片居中的滚动位置
   function getScrollPositionForIndex(index) {
-    // 确保索引在有效范围内（循环处理）
-    const itemCount = galleryItems.length;
-    if (index < 0) index = itemCount - 1;
-    if (index >= itemCount) index = 0;
-
-    // 计算目标图片的中心位置
+    // 计算目标图片的中心位置（允许超出范围，用于无缝循环）
     const targetCenter = paddingLeft + index * itemWidth + itemWidth / 2;
-
     // 计算需要滚动到的位置，使目标图片居中
-    let scrollPosition = targetCenter - containerWidth / 2;
-
-    // 限制滚动范围，确保不超出边界
-    scrollPosition = Math.max(0, Math.min(scrollPosition, maxScroll));
-
-    return { scrollPosition, adjustedIndex: index };
+    const scrollPosition = targetCenter - containerWidth / 2;
+    return scrollPosition;
   }
 
-  // 滚动到指定索引的图片，使其居中显示
+  // 滚动到指定索引的图片
   function scrollToIndex(index, smooth = true) {
-    const { scrollPosition, adjustedIndex } = getScrollPositionForIndex(index);
-    currentIndex = adjustedIndex;
+    const totalItems = galleryItems.length;
+    // 真实图片数量：总数量减去2个克隆
+    const realCount = totalItems - 2;
 
-    // 执行滚动
+    // 无缝循环跳转逻辑
+    if (!isJumping) {
+      if (index <= 0) {
+        // 滚动到了"最后一张的克隆"（索引0），瞬移到真实的最后一张（索引 realCount）
+        isJumping = true;
+        const targetPos = getScrollPositionForIndex(realCount);
+        track.scrollTo({ left: targetPos, behavior: smooth ? 'smooth' : 'auto' });
+        currentIndex = realCount;
+        updateActiveItem();
+
+        setTimeout(() => {
+          isJumping = false;
+        }, smooth ? 350 : 50);
+        return;
+      } else if (index >= totalItems - 1) {
+        // 滚动到了"第一张的克隆"（最后一个索引），瞬移到真实的第一张（索引1）
+        isJumping = true;
+        const targetPos = getScrollPositionForIndex(1);
+        track.scrollTo({ left: targetPos, behavior: smooth ? 'smooth' : 'auto' });
+        currentIndex = 1;
+        updateActiveItem();
+
+        setTimeout(() => {
+          isJumping = false;
+        }, smooth ? 350 : 50);
+        return;
+      }
+    }
+
+    // 正常滚动
+    currentIndex = index;
+    const targetPos = getScrollPositionForIndex(index);
     track.scrollTo({
-      left: scrollPosition,
+      left: targetPos,
       behavior: smooth ? 'smooth' : 'auto'
     });
 
-    // 更新UI状态
     updateActiveItem();
   }
 
-  // 更新当前活动图片的样式
+  // 更新当前活动图片的样式（排除克隆图片）
   function updateActiveItem() {
     // 移除所有图片的active类和其他位置类
     galleryItems.forEach(item => {
@@ -308,13 +346,13 @@ document.addEventListener('DOMContentLoaded', function() {
       galleryItems[currentIndex].classList.add('active', 'gallery-item-center');
     }
 
-    // 为左侧图片添加left类
-    for (let i = 0; i < currentIndex; i++) {
+    // 为左侧图片添加left类（排除索引0的克隆）
+    for (let i = 1; i < currentIndex; i++) {
       galleryItems[i].classList.add('gallery-item-left');
     }
 
-    // 为右侧图片添加right类
-    for (let i = currentIndex + 1; i < galleryItems.length; i++) {
+    // 为右侧图片添加right类（排除最后一个索引的克隆）
+    for (let i = currentIndex + 1; i < galleryItems.length - 1; i++) {
       galleryItems[i].classList.add('gallery-item-right');
     }
   }
@@ -357,7 +395,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // 移除 scroll 事件监听器以避免与程序滚动冲突
 
   // 初始状态：让第二张图片居中显示
-  scrollToIndex(1, false);
+  // 初始显示第二张图片（索引2，因为索引0是最后一张的克隆，索引1是第一张）
+  scrollToIndex(2, false);
 
   // 添加键盘支持（可选功能）
   document.addEventListener('keydown', function(event) {
