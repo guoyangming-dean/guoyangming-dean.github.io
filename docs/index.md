@@ -7,6 +7,10 @@ author_profile: true
 title: ""
 ---
 
+<p align="center">
+  <a href="/assets/files/CV_Yangming%20Guo.pdf" class="btn btn--primary">📄 Download CV</a>
+</p>
+
 <!--
 首页内容说明：
 1. Selected Publications部分 - 展示主要期刊论文
