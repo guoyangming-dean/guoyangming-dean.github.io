@@ -19,3 +19,6 @@ Gemfile.lock
 
 # Logs
 *.log
+
+# Claude AI settings
+.claude/
