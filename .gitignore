@@ -2,3 +2,20 @@ _site
 .sass-cache
 .jekyll-metadata
 Gemfile.lock
+
+# macOS system files
+.DS_Store
+**/.DS_Store
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp
+
+# Logs
+*.log
