@@ -32,68 +32,44 @@ permalink: /assets/
 </div>
 
 <script>
-const repo = 'guoyangming-dean.github.io';
-const branch = 'main';
-const basePath = 'docs/assets';
+const basePath = '/assets';
 
-async function fetchDirectory(path, containerId) {
-  const container = document.getElementById(containerId);
+async function loadAssets() {
   try {
-    const url = `https://api.github.com/repos/${repo}/contents/${path}?ref=${branch}`;
-    const response = await fetch(url);
-    if (!response.ok) throw new Error('Failed to fetch');
-    const files = await response.json();
+    const res = await fetch(`${basePath}/assets.json`);
+    if (!res.ok) throw new Error('Failed to fetch assets.json');
+    const data = await res.json();
 
-    if (!Array.isArray(files) || files.length === 0) {
-      container.innerHTML = '<div class="error">No files found</div>';
-      return;
-    }
-
-    container.innerHTML = files
-      .filter(f => f.type === 'file' && !f.name.startsWith('.'))
-      .map(file => {
-        const name = file.name;
-        const ext = name.split('.').pop().toLowerCase();
-        const isImage = ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg'].includes(ext);
-        const isPdf = ext === 'pdf';
-        const url = `https://raw.githubusercontent.com/${repo}/${branch}/${path}/${encodeURIComponent(name)}`;
-        const pageUrl = `https://guoyangming-dean.github.io/${path}/${encodeURIComponent(name)}`;
-
-        if (isImage) {
-          return `
-            <div class="asset-item">
-              <a href="${pageUrl}" target="_blank">
-                <img src="${url}" alt="${name}" loading="lazy">
-                <div class="asset-name">${name}</div>
-              </a>
-            </div>
-          `;
-        } else if (isPdf) {
-          return `
-            <div class="asset-item">
-              <a href="${pageUrl}" target="_blank">
-                <div style="font-size: 48px; color: #c00;">📄</div>
-                <div class="asset-name">${name}</div>
-                <div class="asset-type">PDF</div>
-              </a>
-            </div>
-          `;
-        } else {
-          return `
-            <div class="asset-item">
-              <a href="${pageUrl}" target="_blank">
-                <div style="font-size: 48px;">📁</div>
-                <div class="asset-name">${name}</div>
-              </a>
-            </div>
-          `;
-        }
-      }).join('');
+    renderGrid('pictures-grid', data.pictures, 'pictures');
+    renderGrid('files-grid', data.files, 'files');
   } catch (error) {
-    container.innerHTML = `<div class="error">Failed to load: ${error.message}</div>`;
+    document.getElementById('pictures-grid').innerHTML = `<div class="error">Failed to load: ${error.message}</div>`;
+    document.getElementById('files-grid').innerHTML = '';
   }
 }
 
-fetchDirectory(`${basePath}/pictures`, 'pictures-grid');
-fetchDirectory(`${basePath}/files`, 'files-grid');
+function renderGrid(containerId, files, folder) {
+  const container = document.getElementById(containerId);
+  if (!files || files.length === 0) {
+    container.innerHTML = '<div class="error">No files found</div>';
+    return;
+  }
+
+  container.innerHTML = files.map(name => {
+    const ext = name.split('.').pop().toLowerCase();
+    const isImage = ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg'].includes(ext);
+    const isPdf = ext === 'pdf';
+    const pageUrl = `${basePath}/${folder}/${encodeURIComponent(name)}`;
+
+    if (isImage) {
+      return `<div class="asset-item"><a href="${pageUrl}" target="_blank"><img src="${pageUrl}" alt="${name}" loading="lazy"><div class="asset-name">${name}</div></a></div>`;
+    } else if (isPdf) {
+      return `<div class="asset-item"><a href="${pageUrl}" target="_blank"><div style="font-size:48px;color:#c00;">📄</div><div class="asset-name">${name}</div><div class="asset-type">PDF</div></a></div>`;
+    } else {
+      return `<div class="asset-item"><a href="${pageUrl}" target="_blank"><div style="font-size:48px;">📁</div><div class="asset-name">${name}</div></a></div>`;
+    }
+  }).join('');
+}
+
+loadAssets();
 </script>
