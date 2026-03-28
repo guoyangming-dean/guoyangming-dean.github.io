@@ -1,3 +1,53 @@
+<!-- MathJax for LaTeX rendering -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  }
+};
+</script>
+
+<style>
+/* Center and improve md page content */
+.initial-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.page__content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+/* Better code block styling */
+.highlighter-rouge {
+  background: #f4f4f4;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 0.9em;
+}
+/* Better table styling */
+.page__content table {
+  border-collapse: collapse;
+  margin: 1em auto;
+  width: auto;
+}
+.page__content th, .page__content td {
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+}
+.page__content th {
+  background: #f4f4f4;
+}
+</style>
+
 <!-- Custom head content for Formula 1 style fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

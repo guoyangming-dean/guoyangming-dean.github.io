@@ -1,5 +1,5 @@
 # Auto-frontmatter plugin for Jekyll md collection
-# GitHub Pages compatible
+# Sets default layout and title from filename/heading
 Jekyll::Hooks.register :documents, :pre_render do |doc, payload|
   next unless doc.collection.label == 'md'
   if doc.data['layout'].nil?
