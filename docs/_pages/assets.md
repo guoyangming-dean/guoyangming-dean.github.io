@@ -18,7 +18,12 @@ permalink: /assets/
 <ul class="asset-list">
 {% for file in site.static_files %}
   {% if file.path contains '/assets/pictures/' %}
-    <li><a href="{{ file.path | relative_url }}">{{ file.name }}</a></li>
+    <li>
+      <a href="{{ file.path | relative_url }}">
+        <img src="{{ file.path | relative_url }}" alt="{{ file.name }}" style="height: 40px; width: auto; object-fit: contain;">
+        <span>{{ file.name }}</span>
+      </a>
+    </li>
   {% endif %}
 {% endfor %}
 </ul>
