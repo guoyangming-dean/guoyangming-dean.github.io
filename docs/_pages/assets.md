@@ -41,7 +41,9 @@ permalink: /assets/
 ## Notes
 
 <ul class="asset-list">
-{% for doc in site.md %}
-  <li><a href="{{ doc.url }}">{{ doc.title }}</a></li>
+{% for page in site.pages %}
+  {% if page.url contains '/assets/md/' %}
+    <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+  {% endif %}
 {% endfor %}
 </ul>
