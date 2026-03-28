@@ -130,9 +130,16 @@ tag_archive:
   type: liquid
   path: /tags/
 
-# Custom collection for markdown files in assets/md
 collections:
   md:
     output: true
     permalink: /assets/md/:name/
     source: assets/md
+
+defaults:
+  - scope:
+      path: "assets/md"
+      type: md
+    values:
+      layout: single
+
