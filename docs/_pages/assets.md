@@ -37,3 +37,11 @@ permalink: /assets/
   {% endif %}
 {% endfor %}
 </ul>
+
+## Notes
+
+<ul class="asset-list">
+{% for doc in site.md %}
+  <li><a href="{{ doc.url }}">{{ doc.title }}</a></li>
+{% endfor %}
+</ul>
