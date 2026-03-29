@@ -57,7 +57,7 @@ I have multiple publications in IEEE Transactions on Robotics and Physiological 
 
 Feel free to reach out to me at yangmingbit@gmail.com or call +86 18910392731 if you'd like to discuss potential collaborations, research opportunities, or just connect!
 
-**Download my CV**: [CV_Yangming Guo.pdf](/assets/cv/CV_Yangming%20Guo.pdf)
+**Download my CV**: [CV_Yangming Guo.pdf](/assets/cv/CV_Yangming_Guo.pdf)
 
 ---
 

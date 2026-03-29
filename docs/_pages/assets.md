@@ -29,7 +29,7 @@ permalink: /assets/
 {% for file in site.static_files %}
   {% if file.path contains '/assets/pictures/' %}
     <li>
-      <a href="{{ file.path | relative_url }}">
+      <a href="{{ file.path | relative_url }}" target="_blank">
         <img src="{{ file.path | relative_url }}" alt="{{ file.name }}" style="height: 40px; width: auto; object-fit: contain;">
         <span>{{ file.name }}</span>
       </a>
@@ -44,6 +44,16 @@ permalink: /assets/
 {% for page in site.pages %}
   {% if page.url contains '/assets/md/' %}
     <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+  {% endif %}
+{% endfor %}
+</ul>
+
+## Docs
+
+<ul class="asset-list">
+{% for file in site.static_files %}
+  {% if file.path contains '/assets/docs/' %}
+    <li><a href="{{ file.path | relative_url }}">{{ file.name }}</a></li>
   {% endif %}
 {% endfor %}
 </ul>
