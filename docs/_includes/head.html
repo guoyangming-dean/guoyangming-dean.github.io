@@ -38,7 +38,9 @@ window.MathJax = {
 };
 </script>
 
+{% if page.url contains '/assets/md/' %}
 <style>
 .initial-content, .page__content { max-width: 900px; margin: 0 auto; padding: 0 20px; }
 .highlighter-rouge { background: #f4f4f4; border-radius: 4px; padding: 2px 6px; font-size: 0.9em; }
 </style>
+{% endif %}
