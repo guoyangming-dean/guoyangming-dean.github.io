@@ -1,0 +1,25 @@
+{% assign hero = include.data %}
+
+<section class="home-hero">
+  <div class="home-hero__content">
+    {% if hero.kicker %}
+      <p class="home-eyebrow">{{ hero.kicker | escape }}</p>
+    {% endif %}
+    <h1 class="home-hero__title">{{ hero.title | escape }}</h1>
+    {% if hero.description %}
+      <p class="home-hero__description">{{ hero.description | escape }}</p>
+    {% endif %}
+    {% include action-buttons.html actions=hero.actions %}
+  </div>
+
+  {% if hero.highlights %}
+    <aside class="home-hero__panel" aria-label="Research highlights">
+      <p class="home-hero__panel-label">Working Areas</p>
+      <div class="home-chip-list">
+        {% for highlight in hero.highlights %}
+          <span class="home-chip">{{ highlight | escape }}</span>
+        {% endfor %}
+      </div>
+    </aside>
+  {% endif %}
+</section>

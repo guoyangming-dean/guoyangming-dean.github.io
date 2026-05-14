@@ -1,0 +1,24 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import GlassHeader from "@/components/GlassHeader";
+import HeroSection from "@/components/HeroSection";
+import ExperienceSection from "@/components/ExperienceSection";
+import SkillsSection from "@/components/SkillsSection";
+import ProjectsSection from "@/components/ProjectsSection";
+import AwardsSection from "@/components/AwardsSection";
+import EducationSection from "@/components/EducationSection";
+import Footer from "@/components/Footer";
+---
+
+<Layout>
+  <GlassHeader client:load />
+  <main class="min-h-screen">
+    <HeroSection client:load />
+    <ExperienceSection client:load />
+    <SkillsSection client:load />
+    <ProjectsSection client:load />
+    <AwardsSection client:load />
+    <EducationSection client:load />
+  </main>
+  <Footer client:load />
+</Layout>

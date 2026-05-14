@@ -1,0 +1,137 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import GlassHeader from "@/components/GlassHeader";
+import Footer from "@/components/Footer";
+import { getAssetsPageData } from "@/lib/assets";
+
+const { files, pictures, notes, docs } = await getAssetsPageData();
+
+const sections = [
+  {
+    id: "files",
+    title: "Files",
+    icon: "📄",
+    items: files,
+  },
+  {
+    id: "pictures",
+    title: "Pictures",
+    icon: "🖼️",
+    items: pictures,
+  },
+  {
+    id: "notes",
+    title: "Notes",
+    icon: "📝",
+    items: notes,
+  },
+  {
+    id: "docs",
+    title: "Docs",
+    icon: "📚",
+    items: docs,
+  },
+];
+---
+
+<Layout
+  title="Assets - Yangming Guo"
+  description="Notes, papers, pictures, and documents from Yangming Guo."
+>
+  <GlassHeader client:load />
+  <main class="min-h-screen">
+    <section class="py-12 md:py-16">
+      <div class="container max-w-4xl mx-auto px-6 md:px-4">
+        <div class="mb-10">
+          <a
+            href="/"
+            class="inline-flex items-center text-sm text-muted-foreground hover:text-purple-500 transition-colors mb-4"
+          >
+            ← Portfolio
+          </a>
+          <h1 class="text-4xl font-bold mb-3">Assets</h1>
+          <p class="text-muted-foreground max-w-2xl">
+            Notes, papers, diagrams, and documents collected from the previous site.
+          </p>
+        </div>
+
+        <div class="space-y-10">
+          {
+            sections.map((section) => (
+              <section id={section.id} class="space-y-4">
+                <div class="flex items-center justify-between gap-4">
+                  <h2 class="section-heading font-bold">
+                    <span class="mr-2">{section.icon}</span>
+                    {section.title}
+                  </h2>
+                  <span class="text-xs text-muted-foreground bg-background/60 border border-border/50 px-2 py-1 rounded-md">
+                    {section.items.length} items
+                  </span>
+                </div>
+
+                {section.items.length === 0 ? (
+                  <div class="rounded-lg border border-border/50 bg-background/80 backdrop-blur-md p-4 text-muted-foreground">
+                    No items yet.
+                  </div>
+                ) : section.id === "pictures" ? (
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {section.items.map((item) => (
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="group rounded-lg border border-border/50 bg-background/80 backdrop-blur-md backdrop-filter shadow-sm dark:bg-card/30 dark:backdrop-blur-md overflow-hidden transition-all duration-300 ease-in-out hover:scale-[1.012] hover:shadow-md hover:border-purple-500/30"
+                      >
+                        <div class="bg-gradient-to-r from-purple-500/5 to-pink-500/5 p-3">
+                          <img
+                            src={item.href}
+                            alt={item.title}
+                            loading="lazy"
+                            class="h-36 w-full object-contain rounded-md bg-background/60"
+                          />
+                        </div>
+                        <div class="p-4">
+                          <p class="font-medium break-words group-hover:text-purple-500 transition-colors">
+                            {item.title}
+                          </p>
+                          <p class="text-xs text-muted-foreground mt-1">
+                            {item.extension}
+                          </p>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                ) : (
+                  <div class="grid grid-cols-1 gap-3">
+                    {section.items.map((item) => (
+                      <a
+                        href={item.href}
+                        class="group flex items-center gap-3 rounded-lg border border-border/50 bg-background/80 backdrop-blur-md backdrop-filter shadow-sm dark:bg-card/30 dark:backdrop-blur-md p-4 transition-all duration-300 ease-in-out hover:scale-[1.012] hover:shadow-md hover:border-purple-500/30"
+                      >
+                        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-purple-500/10">
+                          {section.icon}
+                        </span>
+                        <span class="min-w-0 flex-1">
+                          <span class="block font-medium break-words group-hover:text-purple-500 transition-colors">
+                            {item.title}
+                          </span>
+                          <span class="block text-xs text-muted-foreground mt-1">
+                            {item.extension}
+                          </span>
+                        </span>
+                        <span class="text-sm text-muted-foreground group-hover:text-purple-500 transition-colors">
+                          Open
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </section>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer client:load />
+</Layout>

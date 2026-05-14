@@ -1,0 +1,74 @@
+{% assign section = include.section %}
+{% assign columns = section.columns | default: 'auto' %}
+{% assign layout = section.layout | default: 'grid' %}
+
+{% if section and section.items %}
+  <section class="home-section home-section--{{ layout }}">
+    <div class="home-section__header">
+      <div>
+        <h2 class="home-section__title">{{ section.title | escape }}</h2>
+        {% if section.subtitle %}
+          <p class="home-section__subtitle">{{ section.subtitle | escape }}</p>
+        {% endif %}
+      </div>
+
+      {% if section.actions %}
+        {% include action-buttons.html actions=section.actions %}
+      {% endif %}
+    </div>
+
+    <div class="home-card-grid home-card-grid--{{ columns }} home-card-grid--{{ layout }}">
+      {% for item in section.items %}
+        {% assign item_url = item.url %}
+        {% if item_url %}
+          {% if item_url contains '://' %}
+            {% assign resolved_url = item_url %}
+          {% else %}
+            {% assign resolved_url = item_url | relative_url %}
+          {% endif %}
+          <a class="home-card home-card--link" href="{{ resolved_url }}" style="--home-card-accent: {{ item.accent | default: '#334155' }};">
+        {% else %}
+          <article class="home-card" style="--home-card-accent: {{ item.accent | default: '#334155' }};">
+        {% endif %}
+
+          <div class="home-card__accent" aria-hidden="true"></div>
+
+          {% if item.eyebrow %}
+            <p class="home-card__eyebrow">{{ item.eyebrow | escape }}</p>
+          {% endif %}
+
+          <h3 class="home-card__title">{{ item.title | escape }}</h3>
+
+          {% if item.authors %}
+            <p class="home-card__authors">{{ item.authors | escape }}</p>
+          {% endif %}
+
+          {% if item.meta %}
+            <p class="home-card__meta">{{ item.meta | escape }}</p>
+          {% endif %}
+
+          {% if item.description %}
+            <p class="home-card__description">{{ item.description | escape }}</p>
+          {% endif %}
+
+          {% if item.tags %}
+            <div class="home-chip-list home-chip-list--card">
+              {% for tag in item.tags %}
+                <span class="home-chip">{{ tag | escape }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          {% if item.cta %}
+            <span class="home-card__cta">{{ item.cta | escape }}</span>
+          {% endif %}
+
+        {% if item_url %}
+          </a>
+        {% else %}
+          </article>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}

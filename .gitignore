@@ -1,24 +1,36 @@
-_site
-.sass-cache
-.jekyll-metadata
-Gemfile.lock
+# build output
+dist/
 
-# macOS system files
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
 .DS_Store
 **/.DS_Store
 
-# IDE files
+# jetbrains setting folder
 .idea/
 .vscode/
-*.swp
-*.swo
 
-# Temporary files
-*.tmp
-*.temp
-
-# Logs
-*.log
-
-# Claude AI settings
+# local assistant config
 .claude/
+
+# legacy Jekyll generated output
+legacy-jekyll/_site/
+legacy-jekyll/.sass-cache/
+legacy-jekyll/.jekyll-cache/
+legacy-jekyll/.jekyll-metadata
+legacy-jekyll/Gemfile.lock

@@ -1,0 +1,17 @@
+{% assign actions = include.actions %}
+
+{% if actions %}
+  <div class="home-actions">
+    {% for action in actions %}
+      {% assign action_url = action.url %}
+      {% if action_url contains '://' %}
+        {% assign resolved_url = action_url %}
+      {% else %}
+        {% assign resolved_url = action_url | relative_url %}
+      {% endif %}
+      <a class="home-button home-button--{{ action.style | default: 'secondary' }}" href="{{ resolved_url }}">
+        <span>{{ action.label | escape }}</span>
+      </a>
+    {% endfor %}
+  </div>
+{% endif %}

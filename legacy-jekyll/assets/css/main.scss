@@ -13,6 +13,7 @@ $sans-serif-narrow: "Times New Roman", Times, serif;
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}";
 @import "minimal-mistakes";
 @import "components/timeline";
+@import "components/home-ui";
 
 html {
   font-size: 17px;
