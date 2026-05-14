@@ -67,41 +67,14 @@ plugins:
 # name: 显示在网站上的姓名
 # avatar: 头像图片路径
 # bio: 个人简介（已设为空字符串，不在头像下方显示）
-# links: 社交链接列表
 author:
   name   : "Yangming Guo"
   avatar : "/assets/images/avatar.jpg"
   bio    : ""
-  links:
-    - label: "Email"
-      icon: "fas fa-fw fa-envelope"
-      url: "mailto:yangmingbit@gmail.com"
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/"
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/"
-    - label: "Instagram"
-      icon: "fab fa-fw fa-instagram"
-      url: "https://instagram.com/"
+  links: []
 
-# 页脚链接配置
-# 与作者社交链接保持一致
 footer:
-  links:
-    - label: "Email"
-      icon: "fas fa-fw fa-envelope"
-      url: "mailto:yangmingbit@gmail.com"
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/"
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/"
-    - label: "Instagram"
-      icon: "fab fa-fw fa-instagram"
-      url: "https://instagram.com/"
+  links: []
 
 defaults:
   # _posts

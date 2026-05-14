@@ -1,0 +1,53 @@
+---
+# Only the main Sass file needs front matter.
+---
+
+@charset "utf-8";
+
+$global-font-family: "Times New Roman", Times, serif;
+$header-font-family: "Times New Roman", Times, serif;
+$caption-font-family: "Times New Roman", Times, serif;
+$sans-serif: "Times New Roman", Times, serif;
+$sans-serif-narrow: "Times New Roman", Times, serif;
+
+@import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}";
+@import "minimal-mistakes";
+@import "components/timeline";
+
+html {
+  font-size: 16px;
+}
+
+@media (min-width: 48em) {
+  html {
+    font-size: 17px;
+  }
+}
+
+@media (min-width: 64em) {
+  html {
+    font-size: 17px;
+  }
+}
+
+@media (min-width: 80em) {
+  html {
+    font-size: 17px;
+  }
+}
+
+.author__avatar .custom-author-profile__image {
+  border-radius: 4px;
+}
+
+.sidebar .author__name {
+  font-family: "Times New Roman", Times, serif;
+}
+
+.page__content .header-link {
+  display: none !important;
+}
+
+#footer.page__footer {
+  display: none;
+}
