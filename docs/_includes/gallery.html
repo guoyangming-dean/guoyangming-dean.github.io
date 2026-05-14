@@ -278,6 +278,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // 标记是否正在进行无缝跳转（防止重复触发）
   let isJumping = false;
+  let wheelDeltaXAccumulated = 0;
+  let isWheeling = false;
 
   // 计算让指定索引的图片居中的滚动位置
   function getScrollPositionForIndex(index) {

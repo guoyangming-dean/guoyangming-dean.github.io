@@ -122,6 +122,12 @@ defaults:
     values:
       layout: single
       author_profile: true
+  # assets/md
+  - scope:
+      path: "assets/md"
+      type: md
+    values:
+      layout: single
 
 category_archive:
   type: liquid
@@ -138,11 +144,3 @@ collections:
 
 kramdown:
   math_engine: mathjax
-
-defaults:
-  - scope:
-      path: "assets/md"
-      type: md
-    values:
-      layout: single
-

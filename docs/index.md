@@ -8,7 +8,7 @@ title: ""
 ---
 
 <p align="center">
-  <a href="/assets/files/CV_Yangming%20Guo.pdf" class="btn btn--primary">📄 Download CV</a>
+  <a href="/assets/cv/CV_Yangming_Guo.pdf" class="btn btn--primary">📄 Download CV</a>
 </p>
 
 <!--
@@ -43,6 +43,6 @@ title: ""
 
 4. **Guo, S., Yang, C., Guo, Y., & Bao, X.** (2020). Master operating device of an interventional surgical robot (CN212089719U). China National Intellectual Property Administration.
 
-*For a complete list of publications and patents, please see my [CV](/assets/files/CV_Yangming%20Guo.pdf) or contact me directly.*
+*For a complete list of publications and patents, please see my [CV](/assets/cv/CV_Yangming_Guo.pdf) or contact me directly.*
 
 {% include gallery.html %}
