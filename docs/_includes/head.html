@@ -32,22 +32,51 @@
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+function siteRenderMath() {
   if (typeof renderMathInElement === 'function') {
     renderMathInElement(document.body, {
       delimiters: [
+        {left: '\\(', right: '\\)', display: true},
+        {left: '\\[', right: '\\]', display: true},
         {left: '$$', right: '$$', display: true},
         {left: '$', right: '$', display: false}
       ],
+      ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
       throwOnError: false,
       trust: true
     });
   }
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', siteRenderMath);
+} else {
+  siteRenderMath();
+}
 </script>
 
-{% if page.url contains '/assets/md/' %}
-<style>
-.initial-content, .page__content { max-width: 900px; margin: 0 auto; padding: 0 20px; }
-</style>
-{% endif %}
+<script>
+function siteBindNotesTocLinks() {
+  var tocLinks = document.querySelectorAll('.notes-page .toc__menu a[href^="#"]');
+
+  tocLinks.forEach(function(link) {
+    link.addEventListener('click', function(event) {
+      var target = document.getElementById(decodeURIComponent(link.hash.slice(1)));
+
+      if (!target) {
+        return;
+      }
+
+      event.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.replaceState(null, '', link.hash);
+    });
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', siteBindNotesTocLinks);
+} else {
+  siteBindNotesTocLinks();
+}
+</script>

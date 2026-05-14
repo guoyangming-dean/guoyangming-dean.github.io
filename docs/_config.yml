@@ -62,6 +62,8 @@ plugins:
   - jekyll-feed
   - jemoji
   - jekyll-include-cache
+  - jekyll-optional-front-matter
+  - jekyll-titles-from-headings
 
 # 作者信息配置
 # name: 显示在网站上的姓名
@@ -95,12 +97,19 @@ defaults:
     values:
       layout: single
       author_profile: true
-  # assets/md
+  # assets/notes
   - scope:
-      path: "assets/md"
-      type: md
+      path: "assets/notes"
     values:
       layout: single
+      author_profile: false
+      classes:
+        - notes-page
+      toc: true
+      toc_sticky: true
+      toc_label: "Outline"
+      toc_icon: "list"
+      permalink: /assets/notes/:basename/
 
 category_archive:
   type: liquid
@@ -109,11 +118,13 @@ tag_archive:
   type: liquid
   path: /tags/
 
-collections:
-  md:
-    output: true
-    permalink: /assets/md/:name/
-    source: assets/md
-
 kramdown:
+  input: GFM
   math_engine: mathjax
+
+optional_front_matter:
+  remove_originals: true
+
+titles_from_headings:
+  enabled: true
+  strip_title: true

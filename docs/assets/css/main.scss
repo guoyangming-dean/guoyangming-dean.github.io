@@ -15,24 +15,24 @@ $sans-serif-narrow: "Times New Roman", Times, serif;
 @import "components/timeline";
 
 html {
-  font-size: 16px;
+  font-size: 17px;
 }
 
 @media (min-width: 48em) {
   html {
-    font-size: 17px;
+    font-size: 18px;
   }
 }
 
 @media (min-width: 64em) {
   html {
-    font-size: 17px;
+    font-size: 18px;
   }
 }
 
 @media (min-width: 80em) {
   html {
-    font-size: 17px;
+    font-size: 18px;
   }
 }
 
@@ -46,6 +46,92 @@ html {
 
 .page__content .header-link {
   display: none !important;
+}
+
+.notes-page .sidebar {
+  display: none;
+}
+
+.notes-page .page {
+  float: none;
+  margin: 0 auto;
+  max-width: 860px;
+  padding-right: 0;
+  width: 100%;
+}
+
+.notes-page .page__inner-wrap {
+  position: relative;
+}
+
+.notes-page .page__content {
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.notes-page .page__content p,
+.notes-page .page__content li {
+  line-height: 1.7;
+}
+
+.notes-page .sidebar__right {
+  clear: none;
+  float: none;
+  left: auto;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  position: static;
+  right: auto;
+  top: auto;
+  width: auto;
+  z-index: auto;
+}
+
+.notes-page .toc {
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+.notes-page .toc .nav__title {
+  font-size: 0.78rem;
+}
+
+.notes-page .toc__menu {
+  font-size: 0.82rem;
+}
+
+.notes-page .toc__menu a {
+  font-weight: normal;
+  line-height: 1.35;
+}
+
+@media (min-width: 80em) {
+  .notes-page .page {
+    max-width: 860px;
+  }
+
+  .notes-page .sidebar__right {
+    float: left;
+    left: auto;
+    margin-left: -15rem;
+    margin-right: 0;
+    padding: 0 2rem 0 0;
+    position: sticky;
+    right: auto;
+    top: 2rem;
+    width: 13rem;
+  }
+
+  .notes-page .sidebar__right .toc__menu {
+    max-height: calc(100vh - 7rem);
+    overflow-y: auto;
+  }
+}
+
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.4rem 0;
 }
 
 #footer.page__footer {

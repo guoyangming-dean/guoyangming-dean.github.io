@@ -4,29 +4,29 @@ Link: [吴恩达《大型语言模型的后训练|Post-training of LLMs》中英
 
 # 01.Introduction
 
-- 训练LLM分为两个阶段：
+## 训练LLM分为两个阶段：
 
-  1. pre-trainning：模型从计算和成本角度学习预测下一个单词或标记。这是主要训练阶段，可能需要在万亿或者十万亿个tokens上训练
-  2. post-training：模型进一步训练以执行更具体任务，如回答问题。此阶段通常使用更小的数据集，而且数据更快，成本更低
+1. pre-trainning：模型从计算和成本角度学习预测下一个单词或标记。这是主要训练阶段，可能需要在万亿或者十万亿个tokens上训练
+2. post-training：模型进一步训练以执行更具体任务，如回答问题。此阶段通常使用更小的数据集，而且数据更快，成本更低
 
-- 本门课你将学习三种常见后训练方法：
+## 三种常见后训练方法：
 
-  1. SFT（Surpervised Learning）：基于带标签的prompt-response pairs，帮助LLM学习遵循指令，或通过复制input-prompt和disered-response关系来使用工具。SFT对应如新行为特别有效，或对模型进行重大更改
-  2. DPO（Direct Preference Optimization，直接偏好优化）：通过展示good and bad answers来教导模型，DPO为同一prompt给模型提供两个选项，其中一个比另一个更受偏好。DPO通过对比损失，推动模型更接近good responses，远离bad responses
-  3. Online Reinforcement Learning，在线强化学习：你提供prompt，然后LLM生成responses，然后reward function对答案的质量进行评分，模型随后根据这些reward scores进行更新。
-     1. 获取reward model以得到reward scores的一种方式是人类对响应质量的判断（human judements of the quality of responses）。
-        1. 可以训练一个函数来分配scores，从而以一种与人类判断一致的方式对responses进行评分。
-        2. 最常见的算法是近端策略优化（Proximal Policy Optimization，PPO）
-     2. 提出rewards的另一种方式是可验证奖励（Verifiable Rewards），适用于具有客观正确性度量的任务，如math或coding
-        1. 你可以使用math checker或者unit tests以客观方式判断生成的数学解答或者代码是否正确
-        2. 这种正确性的度量随后为你提供reward function
-        3. 使用这些reward functions的一个强大算法是GRPO（Group Relative Policy Optimization，分组相对策略优化）
+1. SFT（Surpervised Learning）：基于带标签的prompt-response pairs，帮助LLM学习遵循指令，或通过复制input-prompt和disered-response关系来使用工具。SFT对应如新行为特别有效，或对模型进行重大更改
+2. DPO（Direct Preference Optimization，直接偏好优化）：通过展示good and bad answers来教导模型，DPO为同一prompt给模型提供两个选项，其中一个比另一个更受偏好。DPO通过对比损失，推动模型更接近good responses，远离bad responses
+3. Online Reinforcement Learning，在线强化学习：你提供prompt，然后LLM生成responses，然后reward function对答案的质量进行评分，模型随后根据这些reward scores进行更新。
+   1. 获取reward model以得到reward scores的一种方式是人类对响应质量的判断（human judements of the quality of responses）。
+      1. 可以训练一个函数来分配scores，从而以一种与人类判断一致的方式对responses进行评分。
+      2. 最常见的算法是近端策略优化（Proximal Policy Optimization，PPO）
+   2. 提出rewards的另一种方式是可验证奖励（Verifiable Rewards），适用于具有客观正确性度量的任务，如math或coding
+      1. 你可以使用math checker或者unit tests以客观方式判断生成的数学解答或者代码是否正确
+      2. 这种正确性的度量随后为你提供reward function
+      3. 使用这些reward functions的一个强大算法是GRPO（Group Relative Policy Optimization，分组相对策略优化）
 
-  # 02.Introduction for post-training
+# 02.Introduction for post-training
 
--  post-training：试图从精选数据中学习回复，包括聊天数据、工具使用或智能体数据。之后通常会得到一个指令模型（Instruct Model）或对话模型（Chat Model），它能够响应指令（respond to instructions）或与用户对话
+1. post-training：试图从精选数据中学习回复，包括聊天数据、工具使用或智能体数据。之后通常会得到一个指令模型（Instruct Model）或对话模型（Chat Model），它能够响应指令（respond to instructions）或与用户对话
 
-- further or continual post-learning：试图改变模型行为，或增强模型的某些能力，之后就得到了定制模型（customized Model），它在某些领域专精或具有特定行为。理想情况下，领域知识应该超过1B tokens
+2. further or continual post-learning：试图改变模型行为，或增强模型的某些能力，之后就得到了定制模型（customized Model），它在某些领域专精或具有特定行为。理想情况下，领域知识应该超过1B tokens
 
 1. Pre-training（无监督学习unsupervised Learning）
 2. Post-training Method 1：Supervised Fine-tuning （SFT）
