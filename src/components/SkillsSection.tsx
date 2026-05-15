@@ -21,10 +21,10 @@ export default function SkillsSection() {
       id="skills"
       className="py-12 bg-gradient-to-b from-background to-muted/20"
     >
-      <div className="container max-w-4xl mx-auto px-6 md:px-4">
+      <div className="container max-w-3xl mx-auto px-6 md:px-4">
         <MotionWrapper>
           <h2 className="section-heading font-bold mb-8 text-center md:text-left">
-            🛠️ Skills
+            Skills
           </h2>
         </MotionWrapper>
 
@@ -32,7 +32,7 @@ export default function SkillsSection() {
           <div>
             <GlassCard className="p-4">
               <h3 className="text-lg font-medium mb-3 text-center md:text-left flex items-center">
-                <span className="mr-2 text-xl">💻</span> Programming Languages
+                Programming Languages
               </h3>
               <div className="flex flex-wrap gap-2 justify-center md:justify-start">
                 {skills.programmingLanguages.map((skill) => (
@@ -45,7 +45,7 @@ export default function SkillsSection() {
           <div>
             <GlassCard className="p-4">
               <h3 className="text-lg font-medium mb-3 text-center md:text-left flex items-center">
-                <span className="mr-2 text-xl">🎨</span> Frontend Development
+                Frontend Development
               </h3>
               <div className="flex flex-wrap gap-2 justify-center md:justify-start">
                 {skills.frontendDevelopment.map((skill) => (
@@ -58,7 +58,7 @@ export default function SkillsSection() {
           <div>
             <GlassCard className="p-4">
               <h3 className="text-lg font-medium mb-3 text-center md:text-left flex items-center">
-                <span className="mr-2 text-xl">⚙️</span> Backend Development
+                Backend Development
               </h3>
               <div className="flex flex-wrap gap-2 justify-center md:justify-start">
                 {skills.backendDevelopment.map((skill) => (
@@ -71,7 +71,7 @@ export default function SkillsSection() {
           <div>
             <GlassCard className="p-4">
               <h3 className="text-lg font-medium mb-3 text-center md:text-left flex items-center">
-                <span className="mr-2 text-xl">🗄️</span> Database & Storage
+                Database & Storage
               </h3>
               <div className="flex flex-wrap gap-2 justify-center md:justify-start">
                 {skills.databaseAndStorage.map((skill) => (
@@ -84,7 +84,7 @@ export default function SkillsSection() {
           <div>
             <GlassCard className="p-4">
               <h3 className="text-lg font-medium mb-3 text-center md:text-left flex items-center">
-                <span className="mr-2 text-xl">☁️</span> Cloud & DevOps
+                Cloud & DevOps
               </h3>
               <div className="flex flex-wrap gap-2 justify-center md:justify-start">
                 {skills.cloudAndDevOps.map((skill) => (
@@ -97,7 +97,7 @@ export default function SkillsSection() {
           <div>
             <GlassCard className="p-4">
               <h3 className="text-lg font-medium mb-3 text-center md:text-left flex items-center">
-                <span className="mr-2 text-xl">🧰</span> Tools & Services
+                Tools & Services
               </h3>
               <div className="flex flex-wrap gap-2 justify-center md:justify-start">
                 {skills.toolsAndServices.map((skill) => (

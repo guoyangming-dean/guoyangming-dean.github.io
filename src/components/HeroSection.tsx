@@ -1,21 +1,19 @@
 import { personalInfo } from "@/lib/data";
-import { FileText, Github, Linkedin, Mail, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 import MotionWrapper from "./MotionWrapper";
 
 export default function HeroSection() {
   return (
-    <section className="py-16 md:py-24 relative overflow-hidden">
-      <div className="container max-w-4xl mx-auto px-6 md:px-4 relative z-10">
+    <section className="pt-16 pb-6 md:pt-24 md:pb-8 relative overflow-hidden">
+      <div className="container max-w-3xl mx-auto px-6 md:px-4 relative z-10">
         <motion.div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
           <div className="text-center md:text-left">
-            <motion.h1 className="text-4xl font-bold mb-2">
-              {personalInfo.name}{" "}
-              <span className="inline-block animate-pulse">✨</span>
+            <motion.h1 className="text-3xl font-bold mb-2">
+              {personalInfo.name}
             </motion.h1>
 
-            <motion.p className="text-xl text-muted-foreground mb-6">
-              {personalInfo.title} 👨‍💻
+            <motion.p className="text-lg text-muted-foreground mb-6">
+              {personalInfo.title}
             </motion.p>
 
             <motion.div className="flex flex-col gap-2 items-center md:items-start">
@@ -23,8 +21,8 @@ export default function HeroSection() {
                 className="flex items-center text-sm text-muted-foreground"
                 whileHover={{ scale: 1.05, color: "#4b5563" }}
               >
-                <MapPin className="h-4 w-4 mr-2" />
-                📍 {personalInfo.location}
+                <span className="font-medium text-foreground/70 mr-2">Location</span>
+                {personalInfo.location}
               </motion.div>
 
               <motion.a
@@ -32,8 +30,8 @@ export default function HeroSection() {
                 className="flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
                 whileHover={{ scale: 1.05, color: "#4b5563" }}
               >
-                <Mail className="h-4 w-4 mr-2" />
-                ✉️ {personalInfo.email}
+                <span className="font-medium text-foreground/70 mr-2">Email</span>
+                {personalInfo.email}
               </motion.a>
 
               {personalInfo.github && (
@@ -44,8 +42,7 @@ export default function HeroSection() {
                   className="flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
                   whileHover={{ scale: 1.05, color: "#4b5563" }}
                 >
-                  <Github className="h-4 w-4 mr-2" />
-                  🌟 GitHub
+                  GitHub
                 </motion.a>
               )}
 
@@ -57,8 +54,7 @@ export default function HeroSection() {
                   className="flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
                   whileHover={{ scale: 1.05, color: "#4b5563" }}
                 >
-                  <Linkedin className="h-4 w-4 mr-2" />
-                  🔗 LinkedIn
+                  LinkedIn
                 </motion.a>
               )}
 
@@ -68,8 +64,7 @@ export default function HeroSection() {
                   className="flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
                   whileHover={{ scale: 1.05, color: "#4b5563" }}
                 >
-                  <FileText className="h-4 w-4 mr-2" />
-                  📄 Download CV
+                  Download CV
                 </motion.a>
               )}
             </motion.div>
@@ -85,15 +80,15 @@ export default function HeroSection() {
               <img
                 src={personalInfo.profilePicture}
                 alt="Profile"
-                className="w-44 md:w-56 h-auto rounded-lg relative ring-2 ring-purple-500/50"
+                className="w-36 md:w-44 h-auto rounded-lg relative ring-2 ring-purple-500/50"
               />
             </div>
           </motion.div>
         </motion.div>
 
         <MotionWrapper>
-          <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm backdrop-filter p-4 rounded-lg border border-purple-500/20 dark:border-purple-500/10 shadow-sm">
-            <p className="text-muted-foreground pl-4 py-2 mb-4 relative">
+          <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm backdrop-filter p-4 rounded-lg border border-purple-500/20 dark:border-purple-500/10 shadow-sm transition-all duration-300 ease-in-out hover:scale-[1.012] hover:shadow-md hover:border-purple-500/30">
+            <p className="text-muted-foreground pl-4 py-2 relative">
               <span className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full"></span>
               {personalInfo.heroDescription}
             </p>

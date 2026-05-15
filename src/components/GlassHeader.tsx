@@ -1,32 +1,30 @@
 import ThemeToggle from "./ui/theme-toggle";
 import { personalInfo } from "@/lib/data";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function GlassHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navItems = [
-    { href: "/#experience", label: "Experience", icon: "💼" },
-    { href: "/#skills", label: "Skills", icon: "🛠️" },
-    { href: "/#projects", label: "Projects", icon: "🚀" },
-    { href: "/#publications", label: "Publications", icon: "📚" },
-    { href: "/#education", label: "Education", icon: "🎓" },
-    { href: "/assets/", label: "Assets", icon: "📎" },
+    { href: "/#experience", label: "Experience" },
+    { href: "/#projects", label: "Projects" },
+    { href: "/#publications", label: "Publications" },
+    { href: "/#education", label: "Education" },
+    { href: "/assets/", label: "Assets" },
   ];
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
     <header className="sticky z-50 w-full backdrop-blur-md backdrop-filter bg-background/70 dark:bg-background/40 border-b border-border/40 supports-[backdrop-filter]:bg-background/60">
-      <div className="container max-w-4xl mx-auto p-4 flex justify-between items-center">
+      <div className="container max-w-3xl mx-auto p-4 flex justify-between items-center">
         <motion.a
           className="flex items-center text-lg font-medium"
           href="/"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          ✨ {personalInfo.name}
+          {personalInfo.name}
         </motion.a>
 
         {/* Desktop Navigation */}
@@ -39,7 +37,7 @@ export default function GlassHeader() {
                 className="transition-colors hover:text-foreground/80 text-foreground/60"
                 whileHover={{ y: -2 }}
               >
-                {item.icon} {item.label}
+                {item.label}
               </motion.a>
             )
           )}
@@ -50,12 +48,12 @@ export default function GlassHeader() {
 
           {/* Mobile Menu Button */}
           <motion.button
-            className="md:hidden p-2 text-foreground"
+            className="md:hidden px-3 py-2 text-sm text-foreground"
             onClick={toggleMenu}
             aria-label="Toggle menu"
             whileTap={{ scale: 0.95 }}
           >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMenuOpen ? "Close" : "Menu"}
           </motion.button>
         </div>
       </div>
@@ -82,7 +80,7 @@ export default function GlassHeader() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.2, delay: index * 0.1 }}
                   >
-                    {item.icon} {item.label}
+                    {item.label}
                   </motion.a>
                 )
               )}
