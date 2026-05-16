@@ -1,0 +1,652 @@
+---
+import { createMarkdownProcessor } from "@astrojs/markdown-remark";
+import rehypeKatex from "rehype-katex";
+import remarkMath from "remark-math";
+import "katex/dist/katex.min.css";
+import Layout from "@/layouts/Layout.astro";
+import GlassHeader from "@/components/GlassHeader";
+import Footer from "@/components/Footer";
+import {
+  getInterviewEntries,
+  getInterviewSource,
+  htmlExtractOutlineItems,
+  interviewParseBlocks,
+  markdownUnwrapParagraph,
+} from "@/lib/interviews";
+import type {
+  InterviewDialogueBlock,
+  InterviewEntry,
+  InterviewMarkdownBlock,
+  InterviewOutlineItem,
+} from "@/lib/interviews";
+
+interface RenderedMarkdownBlock extends InterviewMarkdownBlock {
+  html: string;
+}
+
+interface RenderedDialogueBlock extends Omit<InterviewDialogueBlock, "markdown"> {
+  contentHtml: string;
+}
+
+type RenderedBlock = RenderedMarkdownBlock | RenderedDialogueBlock;
+
+interface Props {
+  interview: InterviewEntry;
+  titleHtml: string;
+  blocks: RenderedBlock[];
+  outlineItems: InterviewOutlineItem[];
+}
+
+export async function getStaticPaths() {
+  const processor = await createMarkdownProcessor({
+    remarkPlugins: [remarkMath],
+    rehypePlugins: [rehypeKatex],
+  });
+  const interviews = await getInterviewEntries();
+
+  return Promise.all(
+    interviews.map(async (interview) => {
+      const source = await getInterviewSource(interview.slug);
+      const blocks = interviewParseBlocks(source, interview.name);
+      const renderedTitle = await processor.render(interview.title);
+      const renderedBlocks = await Promise.all(
+        blocks.map(async (block): Promise<RenderedBlock> => {
+          if (block.type === "markdown") {
+            const rendered = await processor.render(block.markdown);
+            return {
+              ...block,
+              html: rendered.code,
+            };
+          }
+
+          const rendered = await processor.render(block.markdown);
+          const { markdown, ...dialogueBlock } = block;
+
+          return {
+            ...dialogueBlock,
+            contentHtml: markdownUnwrapParagraph(rendered.code),
+          };
+        })
+      );
+      const outlineItems = renderedBlocks.flatMap((block) =>
+        block.type === "markdown" ? htmlExtractOutlineItems(block.html) : []
+      );
+
+      return {
+        params: { slug: interview.slug },
+        props: {
+          interview,
+          titleHtml: markdownUnwrapParagraph(renderedTitle.code),
+          blocks: renderedBlocks,
+          outlineItems,
+        },
+      };
+    })
+  );
+}
+
+const { interview, titleHtml, blocks, outlineItems } = Astro.props as Props;
+---
+
+<Layout title={`${interview.title} - Interviews`} description={interview.title}>
+  <GlassHeader client:load />
+  <main class="min-h-screen">
+    <section class="py-12 md:py-16">
+      <div class="container max-w-6xl mx-auto px-6 md:px-4 interview-page">
+        <div class="interview-heading">
+          <div class="interview-heading-spacer"></div>
+          <div class="interview-heading-main">
+            <a
+              href="/interviews/"
+              class="inline-flex items-center text-sm text-muted-foreground hover:text-purple-500 transition-colors mb-4"
+            >
+              Back to Interviews
+            </a>
+            <h1 class="interview-title" set:html={titleHtml} />
+          </div>
+        </div>
+
+        <audio data-interview-audio preload="metadata" src={interview.audioHref}></audio>
+
+        <div class="interview-layout">
+          <aside class="interview-outline-slot">
+            {
+              outlineItems.length === 0 ? (
+                <div class="interview-outline">
+                  <p class="interview-outline-empty">No topics</p>
+                </div>
+              ) : (
+                <div class="interview-outline">
+                  <nav class="interview-outline-list" aria-label="Interview topics">
+                    {outlineItems.map((item) => (
+                      <a
+                        href={`#${item.id}`}
+                        class:list={[
+                          "interview-outline-link",
+                          item.depth === 3 && "interview-outline-link--h3",
+                        ]}
+                        data-outline-link
+                      >
+                        {item.text}
+                      </a>
+                    ))}
+                  </nav>
+                </div>
+              )
+            }
+          </aside>
+
+          <div class="interview-thread">
+            {
+              blocks.map((block) =>
+                block.type === "markdown" ? (
+                  <div class="interview-markdown" set:html={block.html} />
+                ) : (
+                  <article
+                    id={block.id}
+                    class:list={[
+                      "interview-message",
+                      `interview-message--${block.side}`,
+                    ]}
+                  >
+                    <div class="interview-message-row">
+                      <div class="interview-message-control">
+                        <div class="interview-message-meta">
+                          <span>{block.speaker}</span>
+                        </div>
+                        <button
+                          type="button"
+                          class="interview-play-button"
+                          data-audio-play
+                          data-start={String(block.startTime)}
+                          data-end={String(block.endTime)}
+                          aria-label={`Play ${block.speaker} at ${block.timeLabel}`}
+                          aria-pressed="false"
+                        >
+                          <span aria-hidden="true" class="interview-play-icon"></span>
+                        </button>
+                      </div>
+                      <div class="interview-bubble" set:html={block.contentHtml} />
+                    </div>
+                  </article>
+                )
+              )
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer client:load />
+</Layout>
+
+<script>
+  const audio = document.querySelector("[data-interview-audio]");
+  const playButtons = Array.from(document.querySelectorAll("[data-audio-play]"));
+  const outlineLinks = document.querySelectorAll("[data-outline-link]");
+  const externalLinks = document.querySelectorAll(".interview-page a[href]");
+  let activeButton = null;
+  let segmentStart = null;
+  let segmentEnd = null;
+  let stopFrameId = null;
+
+  function playerCancelStopCheck() {
+    if (stopFrameId === null) {
+      return;
+    }
+
+    window.cancelAnimationFrame(stopFrameId);
+    stopFrameId = null;
+  }
+
+  function playerClearButtons() {
+    for (const button of playButtons) {
+      button.classList.remove("interview-play-button--active");
+      button.classList.remove("interview-play-button--playing");
+      button.setAttribute("aria-pressed", "false");
+    }
+  }
+
+  function playerClearActive() {
+    playerCancelStopCheck();
+    playerClearButtons();
+
+    activeButton = null;
+    segmentStart = null;
+    segmentEnd = null;
+  }
+
+  function playerSetActive(button, isPlaying) {
+    playerClearButtons();
+    button.classList.add("interview-play-button--active");
+    button.classList.toggle("interview-play-button--playing", isPlaying);
+    button.setAttribute("aria-pressed", String(isPlaying));
+    activeButton = button;
+  }
+
+  function playerStopAtSegmentEnd() {
+    if (!(audio instanceof HTMLAudioElement) || segmentEnd === null) {
+      return;
+    }
+
+    audio.pause();
+    audio.currentTime = segmentEnd;
+    playerClearActive();
+  }
+
+  function playerCheckSegmentEnd() {
+    stopFrameId = null;
+
+    if (!(audio instanceof HTMLAudioElement) || segmentEnd === null || audio.paused) {
+      return;
+    }
+
+    if (audio.currentTime >= segmentEnd) {
+      playerStopAtSegmentEnd();
+      return;
+    }
+
+    stopFrameId = window.requestAnimationFrame(playerCheckSegmentEnd);
+  }
+
+  function playerScheduleStopCheck() {
+    playerCancelStopCheck();
+    stopFrameId = window.requestAnimationFrame(playerCheckSegmentEnd);
+  }
+
+  function playerPauseActive() {
+    if (!(audio instanceof HTMLAudioElement) || activeButton === null) {
+      return;
+    }
+
+    audio.pause();
+    playerCancelStopCheck();
+    playerSetActive(activeButton, false);
+  }
+
+  function playerPlaySegment(button, start, end, shouldRestart) {
+    if (!(audio instanceof HTMLAudioElement)) {
+      return;
+    }
+
+    segmentStart = start;
+    segmentEnd = end;
+
+    if (shouldRestart || audio.currentTime < start || audio.currentTime >= end) {
+      audio.currentTime = start;
+    }
+
+    playerSetActive(button, true);
+    playerScheduleStopCheck();
+
+    const playResult = audio.play();
+    if (playResult !== undefined) {
+      playResult.catch(() => {
+        playerClearActive();
+      });
+    }
+  }
+
+  if (audio instanceof HTMLAudioElement) {
+    for (const button of playButtons) {
+      button.addEventListener("click", () => {
+        const start = Number(button.getAttribute("data-start"));
+        const end = Number(button.getAttribute("data-end"));
+
+        if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) {
+          return;
+        }
+
+        if (activeButton === button) {
+          if (audio.paused) {
+            playerPlaySegment(button, start, end, false);
+          } else {
+            playerPauseActive();
+          }
+          return;
+        }
+
+        playerPlaySegment(button, start, end, true);
+      });
+    }
+
+    audio.addEventListener("timeupdate", () => {
+      if (segmentEnd === null || audio.currentTime < segmentEnd) {
+        return;
+      }
+
+      audio.pause();
+      audio.currentTime = segmentEnd;
+      playerClearActive();
+    });
+
+    audio.addEventListener("ended", () => {
+      playerClearActive();
+    });
+  }
+
+  for (const outlineLink of outlineLinks) {
+    outlineLink.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      const href = outlineLink.getAttribute("href");
+      if (!href || !href.startsWith("#")) {
+        return;
+      }
+
+      const target = document.getElementById(href.slice(1));
+      if (!target) {
+        return;
+      }
+
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      history.replaceState(history.state, "", href);
+    });
+  }
+
+  for (const externalLink of externalLinks) {
+    const href = externalLink.getAttribute("href");
+    if (!href || href.startsWith("#") || href.startsWith("/")) {
+      continue;
+    }
+
+    externalLink.setAttribute("target", "_blank");
+    externalLink.setAttribute("rel", "noopener noreferrer");
+  }
+</script>
+
+<style is:global>
+  .interview-heading {
+    display: grid;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .interview-heading {
+      grid-template-columns: 15rem minmax(0, 1fr);
+    }
+  }
+
+  .interview-heading-main {
+    min-width: 0;
+  }
+
+  .interview-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.22;
+    margin: 0;
+    max-width: 52rem;
+    overflow-wrap: anywhere;
+  }
+
+  .interview-title a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+  }
+
+  .interview-layout {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .interview-layout {
+      grid-template-columns: 15rem minmax(0, 1fr);
+    }
+  }
+
+  .interview-outline-slot {
+    min-width: 0;
+  }
+
+  .interview-outline {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: color-mix(in oklab, var(--background) 82%, transparent);
+    box-sizing: border-box;
+    max-height: calc(100vh - 7rem);
+    overflow-y: auto;
+    padding: 0.75rem;
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .interview-outline {
+      max-height: min(70vh, 34rem);
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 15rem;
+    }
+  }
+
+  .interview-outline-empty {
+    color: var(--muted-foreground);
+    font-size: 0.78rem;
+  }
+
+  .interview-outline-list {
+    display: grid;
+    gap: 0.15rem;
+  }
+
+  .interview-outline-link {
+    border-left: 2px solid transparent;
+    color: var(--muted-foreground);
+    display: block;
+    font-size: 0.74rem;
+    line-height: 1.28;
+    overflow: hidden;
+    padding: 0.18rem 0.3rem 0.18rem 0.55rem;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      border-color 0.2s ease,
+      color 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  .interview-outline-link:hover {
+    background: color-mix(in oklab, var(--color-purple-500) 8%, transparent);
+    border-left-color: color-mix(in oklab, var(--color-purple-500) 65%, transparent);
+    color: var(--foreground);
+  }
+
+  .interview-outline-link--h3 {
+    font-size: 0.7rem;
+    padding-left: 1.1rem;
+  }
+
+  .interview-thread {
+    display: grid;
+    gap: 0.68rem;
+    min-width: 0;
+  }
+
+  .interview-markdown {
+    color: var(--foreground);
+    margin: 1rem 0 0.25rem;
+  }
+
+  .interview-markdown > :first-child {
+    margin-top: 0;
+  }
+
+  .interview-markdown > :last-child {
+    margin-bottom: 0;
+  }
+
+  .interview-markdown h2,
+  .interview-markdown h3 {
+    font-weight: 700;
+    margin: 1.2em 0 0.5em;
+    scroll-margin-top: 6rem;
+  }
+
+  .interview-markdown h2 {
+    font-size: 1.35rem;
+    line-height: 1.3;
+  }
+
+  .interview-markdown h3 {
+    font-size: 1.12rem;
+    line-height: 1.35;
+  }
+
+  .interview-markdown p,
+  .interview-markdown li {
+    color: var(--muted-foreground);
+    line-height: 1.8;
+  }
+
+  .interview-markdown p,
+  .interview-markdown ul,
+  .interview-markdown ol {
+    margin: 0 0 1rem;
+  }
+
+  .interview-markdown ul,
+  .interview-markdown ol {
+    padding-left: 1.4rem;
+  }
+
+  .interview-markdown ul {
+    list-style: disc;
+  }
+
+  .interview-markdown ol {
+    list-style: decimal;
+  }
+
+  .interview-markdown a,
+  .interview-bubble a {
+    color: var(--color-purple-500);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .interview-message {
+    max-width: min(38rem, 92%);
+  }
+
+  .interview-message--left {
+    justify-self: start;
+  }
+
+  .interview-message--right {
+    justify-self: end;
+  }
+
+  .interview-message-meta {
+    color: var(--muted-foreground);
+    display: flex;
+    gap: 0.45rem;
+    font-size: 0.72rem;
+    line-height: 1.15;
+    padding: 0;
+    white-space: nowrap;
+  }
+
+  .interview-message--right .interview-message-meta {
+    justify-content: flex-end;
+  }
+
+  .interview-message-row {
+    align-items: flex-start;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .interview-message--right .interview-message-row {
+    flex-direction: row-reverse;
+  }
+
+  .interview-message-control {
+    align-items: center;
+    display: grid;
+    flex: 0 0 auto;
+    gap: 0.28rem;
+    justify-items: center;
+  }
+
+  .interview-play-button {
+    align-items: center;
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--foreground);
+    display: inline-flex;
+    flex: 0 0 auto;
+    height: 1.58rem;
+    justify-content: center;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
+    width: 1.58rem;
+  }
+
+  .interview-play-button:hover,
+  .interview-play-button--active {
+    background: color-mix(in oklab, var(--color-purple-500) 12%, var(--background));
+    border-color: color-mix(in oklab, var(--color-purple-500) 45%, var(--border));
+    color: var(--color-purple-500);
+  }
+
+  .interview-play-icon {
+    border-bottom: 0.27rem solid transparent;
+    border-left: 0.42rem solid currentColor;
+    border-top: 0.27rem solid transparent;
+    display: block;
+    height: 0;
+    margin-left: 0.08rem;
+    width: 0;
+  }
+
+  .interview-play-button--playing .interview-play-icon {
+    border: 0;
+    display: flex;
+    gap: 0.16rem;
+    height: 0.72rem;
+    margin-left: 0;
+    width: 0.52rem;
+  }
+
+  .interview-play-button--playing .interview-play-icon::before,
+  .interview-play-button--playing .interview-play-icon::after {
+    background: currentColor;
+    border-radius: 999px;
+    content: "";
+    display: block;
+    height: 0.72rem;
+    width: 0.16rem;
+  }
+
+  .interview-bubble {
+    background: color-mix(in oklab, var(--muted) 72%, transparent);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    color: var(--foreground);
+    font-size: 0.9rem;
+    line-height: 1.52;
+    padding: 0.55rem 0.75rem;
+  }
+
+  .interview-message--right .interview-bubble {
+    background: color-mix(in oklab, var(--color-purple-500) 10%, var(--background));
+    border-color: color-mix(in oklab, var(--color-purple-500) 24%, var(--border));
+  }
+
+  .interview-bubble p {
+    margin: 0 0 0.5rem;
+  }
+
+  .interview-bubble p:last-child {
+    margin-bottom: 0;
+  }
+</style>
