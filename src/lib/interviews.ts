@@ -36,6 +36,36 @@ export interface InterviewOutlineItem {
   text: string;
 }
 
+export interface InterviewSourceParts {
+  content: string;
+  referenceDefinitions: string;
+}
+
+export function interviewSplitReferenceSection(source: string): InterviewSourceParts {
+  const lines = source.split(/\r?\n/);
+  const referenceIndex = lines.findIndex((line) => /^#\s+Reference\s*$/i.test(line.trim()));
+
+  if (referenceIndex === -1) {
+    return {
+      content: source,
+      referenceDefinitions: "",
+    };
+  }
+
+  return {
+    content: lines.slice(0, referenceIndex).join("\n").trimEnd(),
+    referenceDefinitions: lines.slice(referenceIndex + 1).join("\n").trim(),
+  };
+}
+
+export function markdownAppendReferences(markdown: string, referenceDefinitions: string) {
+  if (!referenceDefinitions.trim()) {
+    return markdown;
+  }
+
+  return `${markdown.trimEnd()}\n\n${referenceDefinitions}`;
+}
+
 export function markdownUnwrapParagraph(html: string) {
   const trimmedHtml = html.trim();
   const match = trimmedHtml.match(/^<p>([\s\S]*)<\/p>$/);

@@ -11,6 +11,8 @@ import {
   getInterviewSource,
   htmlExtractOutlineItems,
   interviewParseBlocks,
+  interviewSplitReferenceSection,
+  markdownAppendReferences,
   markdownUnwrapParagraph,
 } from "@/lib/interviews";
 import type {
@@ -47,19 +49,26 @@ export async function getStaticPaths() {
   return Promise.all(
     interviews.map(async (interview) => {
       const source = await getInterviewSource(interview.slug);
-      const blocks = interviewParseBlocks(source, interview.name);
-      const renderedTitle = await processor.render(interview.title);
+      const { content, referenceDefinitions } = interviewSplitReferenceSection(source);
+      const blocks = interviewParseBlocks(content, interview.name);
+      const renderedTitle = await processor.render(
+        markdownAppendReferences(interview.title, referenceDefinitions)
+      );
       const renderedBlocks = await Promise.all(
         blocks.map(async (block): Promise<RenderedBlock> => {
           if (block.type === "markdown") {
-            const rendered = await processor.render(block.markdown);
+            const rendered = await processor.render(
+              markdownAppendReferences(block.markdown, referenceDefinitions)
+            );
             return {
               ...block,
               html: rendered.code,
             };
           }
 
-          const rendered = await processor.render(block.markdown);
+          const rendered = await processor.render(
+            markdownAppendReferences(block.markdown, referenceDefinitions)
+          );
           const { markdown, ...dialogueBlock } = block;
 
           return {
@@ -416,11 +425,11 @@ const { interview, titleHtml, blocks, outlineItems } = Astro.props as Props;
 
   @media (min-width: 768px) {
     .interview-outline {
-      max-height: min(70vh, 34rem);
+      max-height: min(80vh, 40rem);
       position: fixed;
-      top: 50%;
+      top: calc(50% + 40px);
       transform: translateY(-50%);
-      width: 15rem;
+      width: 14rem;
     }
   }
 
