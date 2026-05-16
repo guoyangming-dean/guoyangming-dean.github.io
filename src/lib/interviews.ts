@@ -6,9 +6,18 @@ export interface InterviewEntry {
   name: string;
   slug: string;
   title: string;
+  introduction: string;
+  relationshipCenter: string;
+  relationshipCenterHref?: string;
+  relationshipNodes: InterviewRelationshipNode[];
   href: string;
   markdownHref: string;
   audioHref: string;
+}
+
+export interface InterviewRelationshipNode {
+  label: string;
+  href?: string;
 }
 
 export interface InterviewMarkdownBlock {
@@ -39,6 +48,14 @@ export interface InterviewOutlineItem {
 export interface InterviewSourceParts {
   content: string;
   referenceDefinitions: string;
+}
+
+export interface InterviewAbstractParts {
+  content: string;
+  introduction: string;
+  relationshipCenter: string;
+  relationshipCenterHref?: string;
+  relationshipNodes: InterviewRelationshipNode[];
 }
 
 export function interviewSplitReferenceSection(source: string): InterviewSourceParts {
@@ -76,6 +93,68 @@ function htmlStripTags(value: string) {
   return value.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
 }
 
+function markdownStripInline(value: string) {
+  return value
+    .replace(/\[([^\]]+)\]\[[^\]]+\]/g, "$1")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/\*([^*]+)\*/g, "$1")
+    .replace(/<[^>]+>/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function markdownNormalizeReferenceId(value: string) {
+  return value.trim().replace(/\s+/g, " ").toLowerCase();
+}
+
+function markdownParseReferenceDefinitions(referenceDefinitions: string) {
+  const references = new Map<string, string>();
+
+  for (const line of referenceDefinitions.split(/\r?\n/)) {
+    const match = line.match(/^\s*\[([^\]]+)\]:\s*(\S+)/);
+
+    if (!match) {
+      continue;
+    }
+
+    references.set(markdownNormalizeReferenceId(match[1]), match[2].replace(/^<|>$/g, ""));
+  }
+
+  return references;
+}
+
+function markdownParseLinkedText(
+  value: string,
+  references: Map<string, string>
+): InterviewRelationshipNode {
+  const trimmedValue = value.trim();
+  const referenceLink = trimmedValue.match(/^\[([^\]]+)\]\[([^\]]+)\]$/);
+
+  if (referenceLink) {
+    const href = references.get(markdownNormalizeReferenceId(referenceLink[2]));
+
+    return {
+      label: markdownStripInline(referenceLink[1]),
+      ...(href ? { href } : {}),
+    };
+  }
+
+  const inlineLink = trimmedValue.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+
+  if (inlineLink) {
+    return {
+      label: markdownStripInline(inlineLink[1]),
+      href: inlineLink[2].trim(),
+    };
+  }
+
+  return {
+    label: markdownStripInline(trimmedValue),
+  };
+}
+
 function htmlDecode(value: string) {
   return value
     .replace(/&amp;/g, "&")
@@ -97,6 +176,52 @@ export function htmlExtractOutlineItems(html: string): InterviewOutlineItem[] {
 
 function interviewFolderUrl() {
   return INTERVIEWS_ROOT;
+}
+
+function markdownHeading(line: string) {
+  const match = line.trim().match(/^(#{1,6})\s+(.+?)\s*#*\s*$/);
+
+  if (!match) {
+    return null;
+  }
+
+  return {
+    depth: match[1].length,
+    text: match[2].trim(),
+  };
+}
+
+function markdownFindSectionEnd(lines: string[], startIndex: number, depth: number) {
+  for (let index = startIndex + 1; index < lines.length; index += 1) {
+    const heading = markdownHeading(lines[index]);
+
+    if (heading && heading.depth <= depth) {
+      return index;
+    }
+  }
+
+  return lines.length;
+}
+
+function markdownExtractSubsection(lines: string[], title: string) {
+  const startIndex = lines.findIndex((line) => {
+    const heading = markdownHeading(line);
+    return heading !== null && heading.text.toLowerCase() === title.toLowerCase();
+  });
+
+  if (startIndex === -1) {
+    return "";
+  }
+
+  const heading = markdownHeading(lines[startIndex]);
+
+  if (!heading) {
+    return "";
+  }
+
+  return lines.slice(startIndex + 1, markdownFindSectionEnd(lines, startIndex, heading.depth))
+    .join("\n")
+    .trim();
 }
 
 function interviewFileUrl(fileName: string) {
@@ -156,6 +281,125 @@ function readTitleFromMarkdown(fileName: string, source: string) {
   return firstHeading ? firstHeading.replace(/^#+\s*/, "") : stripExtension(fileName);
 }
 
+function parseRelationshipNodes(
+  markdown: string,
+  sourceName: string,
+  references: Map<string, string>
+) {
+  const relationships = markdown
+    .split(/\r?\n/)
+    .map((line) => line.trim().replace(/^[-*+]\s+/, ""))
+    .filter(Boolean);
+
+  if (relationships.length === 0) {
+    return {
+      relationshipCenter: "",
+      relationshipCenterHref: undefined,
+      relationshipNodes: [],
+    };
+  }
+
+  if (relationships.length > 15) {
+    throw new Error(`Interview relationship supports at most 15 items: ${sourceName}`);
+  }
+
+  const firstMatch = relationships[0].match(/^(.+?)\s+-\s+(.+)$/);
+
+  if (!firstMatch) {
+    throw new Error(
+      `Invalid interview relationship line in ${sourceName}. Expected "Center - Node". Received: ${relationships[0]}`
+    );
+  }
+
+  const relationshipCenterNode = markdownParseLinkedText(firstMatch[1], references);
+  const relationshipNodes: InterviewRelationshipNode[] = [];
+
+  for (const relationship of relationships) {
+    const match = relationship.match(/^(.+?)\s+-\s+(.+)$/);
+
+    if (!match) {
+      throw new Error(
+        `Invalid interview relationship line in ${sourceName}. Expected "Center - Node". Received: ${relationship}`
+      );
+    }
+
+    const center = markdownParseLinkedText(match[1], references);
+    const node = markdownParseLinkedText(match[2], references);
+
+    if (center.label !== relationshipCenterNode.label) {
+      throw new Error(
+        `Interview relationship center must be consistent in ${sourceName}. Expected "${relationshipCenterNode.label}", received "${center.label}".`
+      );
+    }
+
+    if (node.label) {
+      relationshipNodes.push(node);
+    }
+  }
+
+  return {
+    relationshipCenter: relationshipCenterNode.label,
+    relationshipCenterHref: relationshipCenterNode.href,
+    relationshipNodes,
+  };
+}
+
+export function interviewSplitAbstractSection(
+  source: string,
+  sourceName = "interview markdown",
+  referenceDefinitions = ""
+): InterviewAbstractParts {
+  const references = markdownParseReferenceDefinitions(referenceDefinitions);
+  const lines = source.split(/\r?\n/);
+  const abstractIndex = lines.findIndex((line) => {
+    const heading = markdownHeading(line);
+    return heading !== null && heading.text.toLowerCase() === "abstract";
+  });
+
+  if (abstractIndex === -1) {
+    return {
+      content: source,
+      introduction: "",
+      relationshipCenter: "",
+      relationshipCenterHref: undefined,
+      relationshipNodes: [],
+    };
+  }
+
+  const abstractHeading = markdownHeading(lines[abstractIndex]);
+
+  if (!abstractHeading) {
+    return {
+      content: source,
+      introduction: "",
+      relationshipCenter: "",
+      relationshipCenterHref: undefined,
+      relationshipNodes: [],
+    };
+  }
+
+  const abstractEndIndex = markdownFindSectionEnd(lines, abstractIndex, abstractHeading.depth);
+  const abstractLines = lines.slice(abstractIndex + 1, abstractEndIndex);
+  const introduction = markdownStripInline(markdownExtractSubsection(abstractLines, "Introduction"));
+  const relationshipMarkdown = markdownExtractSubsection(abstractLines, "Relationship");
+  const { relationshipCenter, relationshipCenterHref, relationshipNodes } = parseRelationshipNodes(
+    relationshipMarkdown,
+    sourceName,
+    references
+  );
+
+  return {
+    content: [...lines.slice(0, abstractIndex), ...lines.slice(abstractEndIndex)]
+      .join("\n")
+      .replace(/\n{3,}/g, "\n\n")
+      .trimEnd(),
+    introduction,
+    relationshipCenter,
+    relationshipCenterHref,
+    relationshipNodes,
+  };
+}
+
 export async function getInterviewEntries(): Promise<InterviewEntry[]> {
   const fileNames = await readInterviewFolder();
   const markdownFiles = fileNames.filter((fileName) => getExtension(fileName) === ".md");
@@ -172,11 +416,21 @@ export async function getInterviewEntries(): Promise<InterviewEntry[]> {
       }
 
       const source = await readFile(interviewFileUrl(fileName), "utf-8");
+      const { content, referenceDefinitions } = interviewSplitReferenceSection(source);
+      const { introduction, relationshipCenter, relationshipCenterHref, relationshipNodes } = interviewSplitAbstractSection(
+        content,
+        fileName,
+        referenceDefinitions
+      );
 
       return {
         name: fileName,
         slug,
         title: readTitleFromMarkdown(fileName, source),
+        introduction,
+        relationshipCenter,
+        relationshipCenterHref,
+        relationshipNodes,
         href: interviewPageHref(slug),
         markdownHref: interviewAssetHref(fileName),
         audioHref: interviewAssetHref(audioName),

@@ -1,5 +1,28 @@
 # 谢赛宁访谈书面化整理稿：按阶段整理版
 
+## Abstract
+
+### Introduction
+
+本稿整理谢赛宁与张小珺的访谈，按阶段呈现其成长经历、交大与 PhD 选择、计算机视觉研究、FAIR 与 NYU 阶段、代表工作、世界模型判断，以及与 Yann LeCun 共同创业的动机。
+
+### Relationship
+
+[谢赛宁][saining-xie] - [AMI Labs][ami-labs]
+[谢赛宁][saining-xie] - [Yann LeCun][yann-lecun]
+[谢赛宁][saining-xie] - [屠卓文][zhuowen-tu]
+[谢赛宁][saining-xie] - [何恺明][kaiming-he]
+[谢赛宁][saining-xie] - [FAIR][meta-ai-research]
+[谢赛宁][saining-xie] - [NYU][nyu]
+[谢赛宁][saining-xie] - [HED][hed]
+[谢赛宁][saining-xie] - [ResNeXt][resnext]
+[谢赛宁][saining-xie] - [MoCo][moco]
+[谢赛宁][saining-xie] - [MAE][mae]
+[谢赛宁][saining-xie] - [DiT][dit]
+[谢赛宁][saining-xie] - [世界模型][world-models]
+[谢赛宁][saining-xie] - JEPA
+[谢赛宁][saining-xie] - [李飞飞][fei-fei-li]
+
 ## 00 Dumbo与普通人开场
 
 [00:00:12,746 --> 00:01:03,930] 张小珺: 大家好，我是小珺。今天这期节目我们来到了美国纽约，此时正是中国的春节。纽约刚刚下过了一场大雪，这是近几年以来纽约最冷的一个冬天。街道上还有许多没有化开的冰雪，但是今天这场对话，让我感受到了一种，冰冻解封后的人间烟火气息。今天坐在我对面的，是华人青年科学家[谢赛宁][saining-xie]，他刚刚和图灵奖得主[杨立昆][yann-lecun]一起，踏上了创业的旅程。他们的 [AMI Labs][ami-labs]，刚刚完成了第一笔超大规模的融资，目前团队规模为 25 人。[谢赛宁][saining-xie]一直告诉我，他不是那个天选之子，他是普通的那一个，那接下来就是我对[谢赛宁][saining-xie]的访谈。
@@ -1802,7 +1825,7 @@
 [shuicheng-yan]: https://yanshuicheng.info/
 [alexnet]: https://papers.nips.cc/paper_files/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html
 [imagenet]: https://www.image-net.org/
-[zhuowen-tu]: https://cseweb.ucsd.edu/~ztu/
+[zhuowen-tu]: https://pages.ucsd.edu/~ztu/
 [ucla]: https://www.ucla.edu/
 [ucsd]: https://ucsd.edu/
 [serge-belongie]: https://www.belongielab.org/

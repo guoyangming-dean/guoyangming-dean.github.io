@@ -11,6 +11,7 @@ import {
   getInterviewSource,
   htmlExtractOutlineItems,
   interviewParseBlocks,
+  interviewSplitAbstractSection,
   interviewSplitReferenceSection,
   markdownAppendReferences,
   markdownUnwrapParagraph,
@@ -20,10 +21,12 @@ import type {
   InterviewEntry,
   InterviewMarkdownBlock,
   InterviewOutlineItem,
+  InterviewRelationshipNode,
 } from "@/lib/interviews";
 
 interface RenderedMarkdownBlock extends InterviewMarkdownBlock {
   html: string;
+  outlineHtml: string;
 }
 
 interface RenderedDialogueBlock extends Omit<InterviewDialogueBlock, "markdown"> {
@@ -39,7 +42,34 @@ interface Props {
   outlineItems: InterviewOutlineItem[];
 }
 
+function relationshipGraphNodes(nodes: InterviewRelationshipNode[]) {
+  const count = nodes.length;
+
+  if (count === 0) {
+    return [];
+  }
+
+  const radius = count > 10 ? 38 : 34;
+
+  return nodes.map((node, index) => {
+    const angle = -Math.PI / 2 + (Math.PI * 2 * index) / count;
+    const radiusOffset = count > 10 && index % 2 === 1 ? -4 : 0;
+    const nodeRadius = radius + radiusOffset;
+
+    return {
+      label: node.label,
+      href: node.href,
+      x: 50 + Math.cos(angle) * nodeRadius,
+      y: 50 + Math.sin(angle) * nodeRadius,
+    };
+  });
+}
+
 export async function getStaticPaths() {
+  function htmlRemoveTopicPrefix(html: string) {
+    return html.replace(/(<h2\b[^>]*>)\s*(?:\d{1,2}[.\s、-]+)([\s\S]*?<\/h2>)/g, "$1$2");
+  }
+
   const processor = await createMarkdownProcessor({
     remarkPlugins: [remarkMath],
     rehypePlugins: [rehypeKatex],
@@ -50,7 +80,8 @@ export async function getStaticPaths() {
     interviews.map(async (interview) => {
       const source = await getInterviewSource(interview.slug);
       const { content, referenceDefinitions } = interviewSplitReferenceSection(source);
-      const blocks = interviewParseBlocks(content, interview.name);
+      const { content: interviewContent } = interviewSplitAbstractSection(content, interview.name);
+      const blocks = interviewParseBlocks(interviewContent, interview.name);
       const renderedTitle = await processor.render(
         markdownAppendReferences(interview.title, referenceDefinitions)
       );
@@ -62,7 +93,8 @@ export async function getStaticPaths() {
             );
             return {
               ...block,
-              html: rendered.code,
+              outlineHtml: rendered.code,
+              html: htmlRemoveTopicPrefix(rendered.code),
             };
           }
 
@@ -78,7 +110,7 @@ export async function getStaticPaths() {
         })
       );
       const outlineItems = renderedBlocks.flatMap((block) =>
-        block.type === "markdown" ? htmlExtractOutlineItems(block.html) : []
+        block.type === "markdown" ? htmlExtractOutlineItems(block.outlineHtml) : []
       );
 
       return {
@@ -95,6 +127,8 @@ export async function getStaticPaths() {
 }
 
 const { interview, titleHtml, blocks, outlineItems } = Astro.props as Props;
+const summaryGraphNodes = relationshipGraphNodes(interview.relationshipNodes);
+const hasSummary = Boolean(interview.introduction || interview.relationshipNodes.length > 0);
 ---
 
 <Layout title={`${interview.title} - Interviews`} description={interview.title}>
@@ -146,6 +180,71 @@ const { interview, titleHtml, blocks, outlineItems } = Astro.props as Props;
           </aside>
 
           <div class="interview-thread">
+            {
+              hasSummary && (
+                <section class="interview-summary" aria-label="Interview summary">
+                  {interview.introduction && (
+                    <p class="interview-summary-introduction">{interview.introduction}</p>
+                  )}
+                  {summaryGraphNodes.length > 0 && (
+                    <div
+                      class="interview-summary-graph"
+                      aria-label={`${interview.relationshipCenter} relationship graph`}
+                    >
+                      <svg
+                        class="interview-summary-graph-lines"
+                        viewBox="0 0 100 100"
+                        aria-hidden="true"
+                        preserveAspectRatio="none"
+                      >
+                        {summaryGraphNodes.map((node, index) => (
+                          <line
+                            x1="50"
+                            y1="50"
+                            x2={node.x}
+                            y2={node.y}
+                            style={`--line-index: ${index};`}
+                          />
+                        ))}
+                      </svg>
+                      {interview.relationshipCenterHref ? (
+                        <a
+                          class="interview-summary-node interview-summary-node--center"
+                          href={interview.relationshipCenterHref}
+                          title={interview.relationshipCenter}
+                        >
+                          {interview.relationshipCenter}
+                        </a>
+                      ) : (
+                        <span class="interview-summary-node interview-summary-node--center">
+                          {interview.relationshipCenter}
+                        </span>
+                      )}
+                      {summaryGraphNodes.map((node, index) => (
+                        node.href ? (
+                          <a
+                            class="interview-summary-node"
+                            href={node.href}
+                            style={`left: ${node.x}%; top: ${node.y}%; --node-index: ${index};`}
+                            title={node.label}
+                          >
+                            {node.label}
+                          </a>
+                        ) : (
+                          <span
+                            class="interview-summary-node"
+                            style={`left: ${node.x}%; top: ${node.y}%; --node-index: ${index};`}
+                            title={node.label}
+                          >
+                            {node.label}
+                          </span>
+                        )
+                      ))}
+                    </div>
+                  )}
+                </section>
+              )
+            }
             {
               blocks.map((block) =>
                 block.type === "markdown" ? (
@@ -477,6 +576,134 @@ const { interview, titleHtml, blocks, outlineItems } = Astro.props as Props;
     min-width: 0;
   }
 
+  .interview-summary {
+    align-items: center;
+    display: grid;
+    gap: 1.2rem;
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 21rem);
+    margin: 0 0 1.2rem;
+    padding: 1.1rem 1.25rem;
+  }
+
+  .interview-summary-introduction {
+    color: var(--muted-foreground);
+    font-size: 0.95rem;
+    line-height: 1.75;
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .interview-summary-graph {
+    display: block;
+    height: 14rem;
+    min-width: 0;
+    overflow: hidden;
+    position: relative;
+    transform: translateZ(0);
+    width: 100%;
+  }
+
+  .interview-summary-graph-lines {
+    color: color-mix(in oklab, var(--color-purple-500) 42%, var(--muted-foreground));
+    height: 100%;
+    inset: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+  .interview-summary-graph-lines line {
+    animation: interview-summary-line-breathe 4.8s ease-in-out infinite;
+    animation-delay: calc(var(--line-index) * -0.28s);
+    stroke: currentColor;
+    stroke-width: 0.45;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .interview-summary-node {
+    animation: interview-summary-node-float 5.6s ease-in-out infinite;
+    animation-delay: calc(var(--node-index) * -0.32s);
+    background: color-mix(in oklab, var(--background) 88%, transparent);
+    border: 1px solid color-mix(in oklab, var(--border) 78%, transparent);
+    border-radius: 999px;
+    color: var(--muted-foreground);
+    display: block;
+    font-size: 0.74rem;
+    line-height: 1.15;
+    max-width: 6.4rem;
+    overflow: hidden;
+    padding: 0.18rem 0.42rem;
+    position: absolute;
+    text-align: center;
+    text-overflow: ellipsis;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+  }
+
+  a.interview-summary-node {
+    color: var(--color-purple-500);
+    text-decoration: none;
+    transition:
+      border-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  a.interview-summary-node:hover,
+  a.interview-summary-node:focus-visible {
+    border-color: color-mix(in oklab, var(--color-purple-500) 45%, var(--border));
+    color: var(--color-purple-500);
+  }
+
+  .interview-summary-node--center {
+    background: color-mix(in oklab, var(--color-purple-500) 12%, var(--background));
+    border-color: color-mix(in oklab, var(--color-purple-500) 26%, var(--border));
+    color: var(--foreground);
+    font-size: 0.78rem;
+    font-weight: 650;
+    left: 50%;
+    max-width: 7rem;
+    top: 50%;
+  }
+
+  @keyframes interview-summary-node-float {
+    0%,
+    100% {
+      transform: translate(-50%, -50%) translateY(0);
+    }
+
+    50% {
+      transform: translate(-50%, -50%) translateY(-0.24rem);
+    }
+  }
+
+  @keyframes interview-summary-line-breathe {
+    0%,
+    100% {
+      opacity: 0.42;
+    }
+
+    50% {
+      opacity: 0.82;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .interview-summary {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .interview-summary-graph {
+      height: 14rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .interview-summary-graph-lines line,
+    .interview-summary-node {
+      animation: none;
+    }
+  }
+
   .interview-markdown {
     color: var(--foreground);
     margin: 1rem 0 0.25rem;
@@ -498,8 +725,12 @@ const { interview, titleHtml, blocks, outlineItems } = Astro.props as Props;
   }
 
   .interview-markdown h2 {
-    font-size: 1.35rem;
-    line-height: 1.3;
+    color: var(--foreground);
+    font-size: 1.58rem;
+    font-weight: 760;
+    line-height: 1.25;
+    margin: 2.7rem 0 1.2rem;
+    text-align: center;
   }
 
   .interview-markdown h3 {
