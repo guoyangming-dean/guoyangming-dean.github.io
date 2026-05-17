@@ -59,32 +59,52 @@ const sections = [
                   <h2 class="section-heading font-bold">
                     {section.title}
                   </h2>
-                  <span class="text-xs text-muted-foreground bg-background/60 border border-border/50 px-2 py-1 rounded-md">
+                  <span class="asset-section-count">
                     {section.items.length} items
                   </span>
                 </div>
 
                 {section.items.length === 0 ? (
-                  <div class="rounded-md border border-border/50 bg-background/80 backdrop-blur-md px-3 py-2 text-muted-foreground">
+                  <div class="asset-empty">
                     No items yet.
                   </div>
-                ) : section.id === "pictures" ? (
-                  <div class="grid grid-cols-1 gap-1.5">
+                ) : section.id === "files" ? (
+                  <div class="asset-list">
                     {section.items.map((item) => (
                       <a
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="group flex items-center gap-3 rounded-md border border-border/50 bg-background/80 backdrop-blur-md backdrop-filter dark:bg-card/30 dark:backdrop-blur-md px-3 py-2 transition-colors duration-200 hover:border-purple-500/30 hover:bg-purple-500/5"
+                        class="asset-list-item asset-list-item--paper"
+                      >
+                        <span class="asset-item-title asset-paper-title">
+                          {item.title}
+                        </span>
+                        {item.date && (
+                          <span class="asset-paper-date">
+                            {item.date}
+                          </span>
+                        )}
+                      </a>
+                    ))}
+                  </div>
+                ) : section.id === "pictures" ? (
+                  <div class="asset-list">
+                    {section.items.map((item) => (
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="asset-list-item asset-list-item--picture"
                       >
                         <img
                           src={item.href}
                           alt={item.title}
                           loading="lazy"
-                          class="h-9 w-12 shrink-0 object-contain rounded-sm bg-background/60"
+                          class="asset-picture-thumb"
                         />
                         <span class="min-w-0 flex-1">
-                          <span class="block font-medium break-words text-foreground/70 group-hover:text-purple-500 transition-colors">
+                          <span class="asset-item-title asset-picture-title">
                             {item.title}
                           </span>
                         </span>
@@ -92,16 +112,16 @@ const sections = [
                     ))}
                   </div>
                 ) : (
-                  <div class="grid grid-cols-1 gap-1.5">
+                  <div class="asset-list">
                     {section.items.map((item) => (
                       <a
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="group flex items-center rounded-md border border-border/50 bg-background/80 backdrop-blur-md backdrop-filter dark:bg-card/30 dark:backdrop-blur-md px-3 py-2 transition-colors duration-200 hover:border-purple-500/30 hover:bg-purple-500/5"
+                        class="asset-list-item"
                       >
                         <span class="min-w-0 flex-1">
-                          <span class="block font-medium break-words text-foreground/70 group-hover:text-purple-500 transition-colors">
+                          <span class="asset-item-title">
                             {item.title}
                           </span>
                         </span>
@@ -118,3 +138,131 @@ const sections = [
   </main>
   <Footer client:load />
 </Layout>
+
+<style>
+  .asset-section-count {
+    background: linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--color-purple-500) 6%, transparent),
+      color-mix(in oklab, var(--color-pink-500) 6%, transparent)
+    );
+    border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+    border-radius: 0.375rem;
+    color: var(--muted-foreground);
+    font-size: 0.75rem;
+    line-height: 1;
+    padding: 0.32rem 0.5rem;
+    white-space: nowrap;
+  }
+
+  .asset-list {
+    display: grid;
+    gap: 0.4rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .asset-list-item,
+  .asset-empty {
+    background: color-mix(in oklab, var(--background) 86%, transparent);
+    border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+    border-radius: 0.5rem;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+
+  .asset-list-item {
+    align-items: center;
+    color: inherit;
+    display: flex;
+    min-width: 0;
+    padding: 0.5rem 0.75rem;
+    text-decoration: none;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .asset-list-item:hover,
+  .asset-list-item:focus-visible {
+    background: color-mix(in oklab, var(--color-purple-500) 5%, var(--background));
+    border-color: color-mix(in oklab, var(--color-purple-500) 32%, var(--border));
+    box-shadow: 0 0.55rem 1.4rem color-mix(in oklab, var(--color-purple-500) 9%, transparent);
+    outline: none;
+    transform: translateY(-0.08rem);
+  }
+
+  .asset-list-item--picture {
+    gap: 0.75rem;
+  }
+
+  .asset-list-item--paper {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .asset-picture-thumb {
+    background: color-mix(in oklab, var(--background) 82%, transparent);
+    border: 1px solid color-mix(in oklab, var(--border) 58%, transparent);
+    border-radius: 0.25rem;
+    flex-shrink: 0;
+    height: 2.25rem;
+    object-fit: contain;
+    transition: border-color 0.2s ease;
+    width: 3rem;
+  }
+
+  .asset-list-item:hover .asset-picture-thumb,
+  .asset-list-item:focus-visible .asset-picture-thumb {
+    border-color: color-mix(in oklab, var(--color-purple-500) 28%, var(--border));
+  }
+
+  .asset-item-title {
+    color: color-mix(in oklab, var(--foreground) 76%, transparent);
+    display: block;
+    font-weight: 500;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+    transition: color 0.2s ease;
+  }
+
+  .asset-list-item:hover .asset-item-title,
+  .asset-list-item:focus-visible .asset-item-title {
+    color: var(--color-purple-500);
+  }
+
+  .asset-paper-title,
+  .asset-picture-title {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 1rem;
+  }
+
+  .asset-paper-date {
+    align-self: center;
+    color: var(--muted-foreground);
+    font-size: 0.78rem;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .asset-empty {
+    color: var(--muted-foreground);
+    padding: 0.5rem 0.75rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .asset-list-item {
+      transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+    }
+
+    .asset-list-item:hover,
+    .asset-list-item:focus-visible {
+      transform: none;
+    }
+  }
+</style>

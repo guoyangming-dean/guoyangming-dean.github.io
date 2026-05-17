@@ -10,6 +10,7 @@ export interface AssetEntry {
   title: string;
   href: string;
   extension: string;
+  date?: string;
 }
 
 export interface NoteEntry extends AssetEntry {
@@ -49,6 +50,47 @@ function formatTitle(fileName: string) {
     .trim();
 }
 
+function formatPictureTitle(fileName: string) {
+  return stripExtension(fileName)
+    .replace(/^pic\d+_/, "")
+    .replace(/[_-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function getPictureSortNumber(fileName: string) {
+  const match = stripExtension(fileName).match(/^pic(\d+)_/);
+  return match ? Number(match[1]) : undefined;
+}
+
+function formatPaperTitle(rawTitle: string) {
+  return rawTitle
+    .replace(/%+/g, ": ")
+    .replace(/_+/g, " ")
+    .replace(/\s+/g, " ")
+    .replace(/\s+:/g, ":")
+    .replace(/:\s*/g, ": ")
+    .trim();
+}
+
+function parsePaperFileName(fileName: string) {
+  const baseName = stripExtension(fileName);
+  const match = baseName.match(/^(\d{4})(\d{2})_(.+)$/);
+
+  if (!match) {
+    return {
+      title: formatTitle(fileName),
+    };
+  }
+
+  const [, year, month, rawTitle] = match;
+
+  return {
+    title: formatPaperTitle(rawTitle),
+    date: `${year}-${month}`,
+  };
+}
+
 function assetHref(folder: AssetFolder, fileName: string) {
   return `/assets/${folder}/${encodeURIComponent(fileName)}`;
 }
@@ -62,13 +104,47 @@ async function readAssetFolder(folder: AssetFolder) {
     const entries = await readdir(assetFolderUrl(folder), { withFileTypes: true });
     return entries
       .filter((entry) => entry.isFile() && !entry.name.startsWith("."))
-      .map((entry) => ({
-        name: entry.name,
-        title: formatTitle(entry.name),
-        href: assetHref(folder, entry.name),
-        extension: getExtension(entry.name).replace(".", "").toUpperCase() || "FILE",
-      }))
-      .sort((left, right) => left.title.localeCompare(right.title));
+      .map((entry) => {
+        const paperFile = folder === "files" ? parsePaperFileName(entry.name) : undefined;
+        const pictureTitle = folder === "pictures" ? formatPictureTitle(entry.name) : undefined;
+
+        return {
+          name: entry.name,
+          title: paperFile?.title ?? pictureTitle ?? formatTitle(entry.name),
+          href: assetHref(folder, entry.name),
+          extension: getExtension(entry.name).replace(".", "").toUpperCase() || "FILE",
+          date: paperFile?.date,
+        };
+      })
+      .sort((left, right) => {
+        if (folder === "files") {
+          return (
+            (left.date ?? "").localeCompare(right.date ?? "") ||
+            left.title.localeCompare(right.title)
+          );
+        }
+
+        if (folder === "pictures") {
+          const leftNumber = getPictureSortNumber(left.name);
+          const rightNumber = getPictureSortNumber(right.name);
+
+          if (leftNumber !== undefined && rightNumber !== undefined) {
+            return leftNumber - rightNumber || left.name.localeCompare(right.name);
+          }
+
+          if (leftNumber !== undefined) {
+            return -1;
+          }
+
+          if (rightNumber !== undefined) {
+            return 1;
+          }
+
+          return left.name.localeCompare(right.name);
+        }
+
+        return left.title.localeCompare(right.title);
+      });
   } catch (error) {
     if ((error as { code?: string }).code === "ENOENT") {
       return [];
