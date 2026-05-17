@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import {
   getInterviewEntries,
   getInterviewSource,
+  getInterviewSubtitles,
   htmlExtractOutlineItems,
   interviewParseBlocks,
   interviewSplitAbstractSection,
@@ -17,16 +18,22 @@ import {
   markdownUnwrapParagraph,
 } from "@/lib/interviews";
 import type {
+  InterviewBlock,
   InterviewDialogueBlock,
   InterviewEntry,
   InterviewMarkdownBlock,
   InterviewOutlineItem,
   InterviewRelationshipNode,
+  InterviewSubtitleCue,
 } from "@/lib/interviews";
 
 interface RenderedMarkdownBlock extends InterviewMarkdownBlock {
   html: string;
   outlineHtml: string;
+  topicRange?: {
+    startTime: number;
+    endTime: number;
+  };
 }
 
 interface RenderedDialogueBlock extends Omit<InterviewDialogueBlock, "markdown"> {
@@ -40,6 +47,7 @@ interface Props {
   titleHtml: string;
   blocks: RenderedBlock[];
   outlineItems: InterviewOutlineItem[];
+  subtitleCues: InterviewSubtitleCue[];
 }
 
 function relationshipGraphNodes(nodes: InterviewRelationshipNode[]) {
@@ -65,9 +73,52 @@ function relationshipGraphNodes(nodes: InterviewRelationshipNode[]) {
   });
 }
 
+function jsonSerializeForScript(value: unknown) {
+  return (JSON.stringify(value) ?? "null").replace(/</g, "\\u003c");
+}
+
 export async function getStaticPaths() {
   function htmlRemoveTopicPrefix(html: string) {
     return html.replace(/(<h2\b[^>]*>)\s*(?:\d{1,2}[.\s、-]+)([\s\S]*?<\/h2>)/g, "$1$2");
+  }
+
+  function markdownBlockStartsTopic(markdown: string) {
+    return /^##\s+/m.test(markdown);
+  }
+
+  function blockGetTopicRange(blocks: InterviewBlock[], blockIndex: number) {
+    const block = blocks[blockIndex];
+
+    if (block.type !== "markdown" || !markdownBlockStartsTopic(block.markdown)) {
+      return undefined;
+    }
+
+    let startTime: number | undefined;
+    let endTime: number | undefined;
+
+    for (let index = blockIndex + 1; index < blocks.length; index += 1) {
+      const nextBlock = blocks[index];
+
+      if (nextBlock.type === "markdown" && markdownBlockStartsTopic(nextBlock.markdown)) {
+        break;
+      }
+
+      if (nextBlock.type !== "dialogue") {
+        continue;
+      }
+
+      startTime ??= nextBlock.startTime;
+      endTime = nextBlock.endTime;
+    }
+
+    if (startTime === undefined || endTime === undefined || endTime <= startTime) {
+      return undefined;
+    }
+
+    return {
+      startTime,
+      endTime,
+    };
   }
 
   const processor = await createMarkdownProcessor({
@@ -79,6 +130,7 @@ export async function getStaticPaths() {
   return Promise.all(
     interviews.map(async (interview) => {
       const source = await getInterviewSource(interview.slug);
+      const subtitleCues = await getInterviewSubtitles(interview.slug);
       const { content, referenceDefinitions } = interviewSplitReferenceSection(source);
       const { content: interviewContent } = interviewSplitAbstractSection(content, interview.name);
       const blocks = interviewParseBlocks(interviewContent, interview.name);
@@ -86,13 +138,14 @@ export async function getStaticPaths() {
         markdownAppendReferences(interview.title, referenceDefinitions)
       );
       const renderedBlocks = await Promise.all(
-        blocks.map(async (block): Promise<RenderedBlock> => {
+        blocks.map(async (block, blockIndex): Promise<RenderedBlock> => {
           if (block.type === "markdown") {
             const rendered = await processor.render(
               markdownAppendReferences(block.markdown, referenceDefinitions)
             );
             return {
               ...block,
+              topicRange: blockGetTopicRange(blocks, blockIndex),
               outlineHtml: rendered.code,
               html: htmlRemoveTopicPrefix(rendered.code),
             };
@@ -120,15 +173,17 @@ export async function getStaticPaths() {
           titleHtml: markdownUnwrapParagraph(renderedTitle.code),
           blocks: renderedBlocks,
           outlineItems,
+          subtitleCues,
         },
       };
     })
   );
 }
 
-const { interview, titleHtml, blocks, outlineItems } = Astro.props as Props;
+const { interview, titleHtml, blocks, outlineItems, subtitleCues } = Astro.props as Props;
 const summaryGraphNodes = relationshipGraphNodes(interview.relationshipNodes);
 const hasSummary = Boolean(interview.introduction || interview.relationshipNodes.length > 0);
+const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
 ---
 
 <Layout title={`${interview.title} - Interviews`} description={interview.title}>
@@ -150,6 +205,7 @@ const hasSummary = Boolean(interview.introduction || interview.relationshipNodes
         </div>
 
         <audio data-interview-audio preload="metadata" src={interview.audioHref}></audio>
+        <script type="application/json" data-subtitle-cues set:html={subtitleCuesJson}></script>
 
         <div class="interview-layout">
           <aside class="interview-outline-slot">
@@ -248,10 +304,24 @@ const hasSummary = Boolean(interview.introduction || interview.relationshipNodes
             {
               blocks.map((block) =>
                 block.type === "markdown" ? (
-                  <div class="interview-markdown" set:html={block.html} />
+                  block.topicRange ? (
+                    <section
+                      class="interview-topic"
+                      data-topic
+                      data-topic-start={String(block.topicRange.startTime)}
+                      data-topic-end={String(block.topicRange.endTime)}
+                    >
+                      <div class="interview-markdown interview-topic-markdown" set:html={block.html} />
+                    </section>
+                  ) : (
+                    <div class="interview-markdown" set:html={block.html} />
+                  )
                 ) : (
                   <article
                     id={block.id}
+                    data-dialogue
+                    data-start={String(block.startTime)}
+                    data-end={String(block.endTime)}
                     class:list={[
                       "interview-message",
                       `interview-message--${block.side}`,
@@ -265,7 +335,7 @@ const hasSummary = Boolean(interview.introduction || interview.relationshipNodes
                         <button
                           type="button"
                           class="interview-play-button"
-                          data-audio-play
+                          data-dialogue-play
                           data-start={String(block.startTime)}
                           data-end={String(block.endTime)}
                           aria-label={`Play ${block.speaker} at ${block.timeLabel}`}
@@ -282,6 +352,42 @@ const hasSummary = Boolean(interview.introduction || interview.relationshipNodes
             }
           </div>
         </div>
+
+        <div class="interview-floating-player" data-floating-player hidden>
+          <div class="interview-floating-topic">
+            <span class="interview-floating-title" data-floating-topic-title></span>
+          </div>
+          <p class="interview-floating-subtitle" data-floating-subtitle aria-live="polite"></p>
+          <div class="interview-floating-controls">
+            <button
+              type="button"
+              class="interview-floating-skip-button"
+              data-floating-skip
+              data-skip="-15"
+              aria-label="当前主题后退 15 秒"
+            >
+              <span aria-hidden="true">-15</span>
+            </button>
+            <button
+              type="button"
+              class="interview-floating-play-button"
+              data-floating-topic-play
+              aria-label="播放当前主题"
+              aria-pressed="false"
+            >
+              <span aria-hidden="true" class="interview-play-icon"></span>
+            </button>
+            <button
+              type="button"
+              class="interview-floating-skip-button"
+              data-floating-skip
+              data-skip="15"
+              aria-label="当前主题前进 15 秒"
+            >
+              <span aria-hidden="true">+15</span>
+            </button>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -290,12 +396,58 @@ const hasSummary = Boolean(interview.introduction || interview.relationshipNodes
 
 <script>
   const audio = document.querySelector("[data-interview-audio]");
-  const playButtons = Array.from(document.querySelectorAll("[data-audio-play]"));
+  const interviewPage = document.querySelector(".interview-page");
+  const floatingPlayer = document.querySelector("[data-floating-player]");
+  const floatingTopicTitle = document.querySelector("[data-floating-topic-title]");
+  const floatingSubtitle = document.querySelector("[data-floating-subtitle]");
+  const floatingTopicPlayButton = document.querySelector("[data-floating-topic-play]");
+  const floatingSkipButtons = Array.from(document.querySelectorAll("[data-floating-skip]"));
+  const subtitleCuesElement = document.querySelector("[data-subtitle-cues]");
+  const playButtons = Array.from(document.querySelectorAll("[data-dialogue-play], [data-floating-topic-play]"));
   const outlineLinks = document.querySelectorAll("[data-outline-link]");
   const externalLinks = document.querySelectorAll(".interview-page a[href]");
+  const subtitleCues = subtitleReadCues(subtitleCuesElement);
+  const topicItems = Array.from(document.querySelectorAll("[data-topic]"))
+    .map((element, index) => {
+      const start = Number(element.getAttribute("data-topic-start"));
+      const end = Number(element.getAttribute("data-topic-end"));
+      const title = element.querySelector("h2")?.textContent?.trim() || `Topic ${index + 1}`;
+
+      return {
+        element,
+        end,
+        index,
+        start,
+        title,
+      };
+    })
+    .filter((item) => Number.isFinite(item.start) && Number.isFinite(item.end) && item.end > item.start);
+  const dialogueItems = Array.from(document.querySelectorAll("[data-dialogue]"))
+    .map((element, index) => {
+      const button = element.querySelector("[data-dialogue-play]");
+      const start = Number(element.getAttribute("data-start"));
+      const end = Number(element.getAttribute("data-end"));
+
+      return {
+        button,
+        element,
+        end,
+        index,
+        start,
+      };
+    })
+    .filter(
+      (item) =>
+        item.button instanceof HTMLButtonElement &&
+        Number.isFinite(item.start) &&
+        Number.isFinite(item.end) &&
+        item.end > item.start
+    );
   let activeButton = null;
-  let segmentStart = null;
-  let segmentEnd = null;
+  let activeDialogueItem = null;
+  let activeSegment = null;
+  let currentTopicItem = null;
+  let playRequestId = 0;
   let stopFrameId = null;
 
   function playerCancelStopCheck() {
@@ -309,47 +461,537 @@ const hasSummary = Boolean(interview.introduction || interview.relationshipNodes
 
   function playerClearButtons() {
     for (const button of playButtons) {
-      button.classList.remove("interview-play-button--active");
-      button.classList.remove("interview-play-button--playing");
+      button.classList.remove("interview-player-button--active");
+      button.classList.remove("interview-player-button--playing");
       button.setAttribute("aria-pressed", "false");
     }
   }
 
+  function playerScrollDialogueIntoView(dialogueItem) {
+    if (!dialogueItem?.element) {
+      return;
+    }
+
+    window.requestAnimationFrame(() => {
+      const rect = dialogueItem.element.getBoundingClientRect();
+      const targetTop = window.scrollY + rect.top - window.innerHeight * 0.3;
+
+      window.scrollTo({
+        behavior: "smooth",
+        top: Math.max(0, targetTop),
+      });
+    });
+  }
+
+  function playerSetDialogueItem(dialogueItem, isPlaying) {
+    const shouldScroll = isPlaying && activeDialogueItem !== dialogueItem;
+
+    if (activeDialogueItem && activeDialogueItem !== dialogueItem) {
+      activeDialogueItem.element.classList.remove("interview-message--active");
+      activeDialogueItem.element.classList.remove("interview-message--playing");
+    }
+
+    activeDialogueItem = dialogueItem;
+
+    if (!dialogueItem) {
+      return;
+    }
+
+    dialogueItem.element.classList.add("interview-message--active");
+    dialogueItem.element.classList.toggle("interview-message--playing", isPlaying);
+
+    if (shouldScroll) {
+      playerScrollDialogueIntoView(dialogueItem);
+    }
+  }
+
+  function playerClearDialogueItem() {
+    if (!activeDialogueItem) {
+      return;
+    }
+
+    activeDialogueItem.element.classList.remove("interview-message--active");
+    activeDialogueItem.element.classList.remove("interview-message--playing");
+    activeDialogueItem = null;
+  }
+
   function playerClearActive() {
+    playRequestId += 1;
     playerCancelStopCheck();
     playerClearButtons();
+    playerClearDialogueItem();
 
     activeButton = null;
-    segmentStart = null;
-    segmentEnd = null;
+    activeSegment = null;
+    floatingSyncState();
   }
 
   function playerSetActive(button, isPlaying) {
     playerClearButtons();
-    button.classList.add("interview-play-button--active");
-    button.classList.toggle("interview-play-button--playing", isPlaying);
+    button.classList.add("interview-player-button--active");
+    button.classList.toggle("interview-player-button--playing", isPlaying);
     button.setAttribute("aria-pressed", String(isPlaying));
     activeButton = button;
   }
 
-  function playerStopAtSegmentEnd() {
-    if (!(audio instanceof HTMLAudioElement) || segmentEnd === null) {
+  function playerFindDialogueByButton(button) {
+    return dialogueItems.find((item) => item.button === button) || null;
+  }
+
+  function playerFindDialogueByTime(time) {
+    return (
+      dialogueItems.find((item) => time >= item.start && time < item.end) ||
+      dialogueItems.find((item) => Math.abs(time - item.end) < 0.05) ||
+      null
+    );
+  }
+
+  function playerReadRange(button) {
+    const start = Number(button.getAttribute("data-start"));
+    const end = Number(button.getAttribute("data-end"));
+
+    if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) {
+      return null;
+    }
+
+    return { start, end };
+  }
+
+  function subtitleReadCues(element) {
+    if (!element?.textContent) {
+      return [];
+    }
+
+    try {
+      const parsedCues = JSON.parse(element.textContent);
+
+      if (!Array.isArray(parsedCues)) {
+        return [];
+      }
+
+      return parsedCues
+        .map((cue) => ({
+          start: Number(cue.startTime),
+          end: Number(cue.endTime),
+          text: String(cue.text || "").trim(),
+        }))
+        .filter(
+          (cue) =>
+            Number.isFinite(cue.start) &&
+            Number.isFinite(cue.end) &&
+            cue.end > cue.start &&
+            cue.text
+        );
+    } catch {
+      return [];
+    }
+  }
+
+  function subtitleFindByTime(time) {
+    return (
+      subtitleCues.find((cue) => time >= cue.start && time < cue.end) ||
+      subtitleCues.find((cue) => Math.abs(time - cue.end) < 0.05) ||
+      null
+    );
+  }
+
+  function subtitleFindByTopic(topicItem) {
+    if (!topicItem) {
+      return null;
+    }
+
+    return (
+      subtitleCues.find((cue) => cue.end > topicItem.start && cue.start < topicItem.end) || null
+    );
+  }
+
+  function floatingSyncSubtitle(currentTime = null) {
+    if (!(floatingSubtitle instanceof HTMLElement)) {
       return;
     }
 
+    let subtitleCue = null;
+
+    if (audio instanceof HTMLAudioElement && activeSegment) {
+      subtitleCue = subtitleFindByTime(currentTime ?? audio.currentTime);
+    }
+
+    if (!subtitleCue && (!activeSegment || audio?.paused)) {
+      subtitleCue = subtitleFindByTopic(currentTopicItem);
+    }
+
+    const subtitleText = subtitleCue?.text || "";
+    floatingSubtitle.textContent = subtitleText;
+    floatingSubtitle.title = subtitleText;
+  }
+
+  function playerClampTime(time, start, end) {
+    return Math.min(Math.max(time, start), Math.max(start, end - 0.05));
+  }
+
+  function topicContainsTime(topicItem, time) {
+    return topicItem !== null && time >= topicItem.start && time < topicItem.end;
+  }
+
+  function floatingSetDisabled(isDisabled) {
+    if (floatingTopicPlayButton instanceof HTMLButtonElement) {
+      floatingTopicPlayButton.disabled = isDisabled;
+    }
+
+    for (const button of floatingSkipButtons) {
+      if (button instanceof HTMLButtonElement) {
+        button.disabled = isDisabled;
+      }
+    }
+  }
+
+  function floatingSetTopic(topicItem) {
+    if (!(floatingPlayer instanceof HTMLElement)) {
+      return;
+    }
+
+    if (!topicItem) {
+      floatingPlayer.hidden = true;
+      floatingSetDisabled(true);
+      floatingSyncSubtitle();
+      return;
+    }
+
+    floatingPlayer.hidden = false;
+    floatingSetDisabled(false);
+
+    if (floatingTopicTitle) {
+      floatingTopicTitle.textContent = topicItem.title;
+    }
+
+    const start = String(topicItem.start);
+    const end = String(topicItem.end);
+
+    if (floatingTopicPlayButton instanceof HTMLButtonElement) {
+      floatingTopicPlayButton.setAttribute("data-start", start);
+      floatingTopicPlayButton.setAttribute("data-end", end);
+      floatingTopicPlayButton.setAttribute("aria-label", `播放 ${topicItem.title}`);
+    }
+
+    for (const button of floatingSkipButtons) {
+      button.setAttribute("data-start", start);
+      button.setAttribute("data-end", end);
+    }
+
+    floatingSyncSubtitle();
+  }
+
+  function floatingSyncState(currentTime = null, isPlayingOverride = null) {
+    if (!(floatingTopicPlayButton instanceof HTMLButtonElement)) {
+      floatingSyncSubtitle(currentTime);
+      return;
+    }
+
+    floatingTopicPlayButton.classList.remove("interview-player-button--active");
+    floatingTopicPlayButton.classList.remove("interview-player-button--playing");
+    floatingTopicPlayButton.setAttribute("aria-pressed", "false");
+    floatingSyncSubtitle(currentTime);
+
+    if (!(audio instanceof HTMLAudioElement) || !currentTopicItem || !activeSegment) {
+      return;
+    }
+
+    const audioTime = currentTime ?? audio.currentTime;
+
+    if (!topicContainsTime(currentTopicItem, audioTime)) {
+      return;
+    }
+
+    floatingTopicPlayButton.classList.add("interview-player-button--active");
+
+    const isPlaying = isPlayingOverride ?? !audio.paused;
+    floatingTopicPlayButton.setAttribute(
+      "aria-label",
+      `${isPlaying ? "暂停" : "播放"} ${currentTopicItem.title}`
+    );
+
+    if (isPlaying) {
+      floatingTopicPlayButton.classList.add("interview-player-button--playing");
+      floatingTopicPlayButton.setAttribute("aria-pressed", "true");
+    }
+  }
+
+  function topicFindByScroll() {
+    if (topicItems.length === 0) {
+      return null;
+    }
+
+    const threshold = Math.min(Math.max(window.innerHeight * 0.18, 96), 150);
+    let currentTopic = topicItems[0];
+
+    for (const topicItem of topicItems) {
+      const rect = topicItem.element.getBoundingClientRect();
+
+      if (rect.top <= threshold) {
+        currentTopic = topicItem;
+      } else {
+        break;
+      }
+    }
+
+    return currentTopic;
+  }
+
+  function topicSetCurrent(topicItem) {
+    if (currentTopicItem === topicItem) {
+      floatingSyncState();
+      return;
+    }
+
+    currentTopicItem = topicItem;
+    floatingSetTopic(topicItem);
+    floatingSyncState();
+  }
+
+  function topicUpdateFromScroll() {
+    topicSetCurrent(topicFindByScroll());
+  }
+
+  function playerSyncDialogueState(isPlaying, currentTime = null) {
+    if (!(audio instanceof HTMLAudioElement) || !activeSegment) {
+      playerClearDialogueItem();
+      return;
+    }
+
+    if (activeSegment.kind === "dialogue") {
+      playerSetDialogueItem(activeSegment.dialogueItem, isPlaying);
+      return;
+    }
+
+    playerSetDialogueItem(playerFindDialogueByTime(currentTime ?? audio.currentTime), isPlaying);
+  }
+
+  function playerPlayAudio(requestId) {
+    if (!(audio instanceof HTMLAudioElement) || requestId !== playRequestId) {
+      return;
+    }
+
+    const playResult = audio.play();
+    playerScheduleStopCheck();
+
+    if (playResult !== undefined) {
+      playResult.catch(() => {
+        if (requestId === playRequestId) {
+          playerClearActive();
+        }
+      });
+    }
+  }
+
+  function playerSeekAndPlay(targetTime, requestId) {
+    if (!(audio instanceof HTMLAudioElement) || requestId !== playRequestId) {
+      return;
+    }
+
+    let timeoutId = null;
+
+    function cleanup() {
+      audio.removeEventListener("seeked", handleSeeked);
+
+      if (timeoutId !== null) {
+        window.clearTimeout(timeoutId);
+        timeoutId = null;
+      }
+    }
+
+    function playAfterSeek() {
+      cleanup();
+
+      if (requestId !== playRequestId) {
+        return;
+      }
+
+      playerPlayAudio(requestId);
+    }
+
+    function handleSeeked() {
+      playAfterSeek();
+    }
+
+    audio.addEventListener("seeked", handleSeeked);
+
+    try {
+      audio.currentTime = targetTime;
+    } catch {
+      cleanup();
+      playerClearActive();
+      return;
+    }
+
+    timeoutId = window.setTimeout(playAfterSeek, 180);
+  }
+
+  function playerPlaySegment(button, start, end, options) {
+    if (!(audio instanceof HTMLAudioElement)) {
+      return;
+    }
+
+    const requestId = playRequestId + 1;
+    const currentInSegment = audio.currentTime >= start && audio.currentTime < end;
+    const shouldRestart = options.restart || !currentInSegment;
+    const requestedTime =
+      typeof options.seekTime === "number"
+        ? options.seekTime
+        : shouldRestart
+          ? start
+          : audio.currentTime;
+    const nextTime = playerClampTime(requestedTime, start, end);
+
+    playRequestId = requestId;
+    playerCancelStopCheck();
     audio.pause();
-    audio.currentTime = segmentEnd;
+    activeSegment = {
+      autoAdvance: options.autoAdvance,
+      dialogueItem: options.dialogueItem || null,
+      end,
+      kind: options.kind,
+      start,
+    };
+
+    playerSetActive(button, true);
+    playerSyncDialogueState(true, nextTime);
+    floatingSyncState(nextTime, true);
+
+    if (Math.abs(audio.currentTime - nextTime) > 0.02) {
+      playerSeekAndPlay(nextTime, requestId);
+      return;
+    }
+
+    playerPlayAudio(requestId);
+  }
+
+  function playerGetNextDialogue(dialogueItem) {
+    if (!dialogueItem) {
+      return null;
+    }
+
+    return dialogueItems[dialogueItem.index + 1] || null;
+  }
+
+  function playerGetPreviousDialogue(dialogueItem) {
+    if (!dialogueItem) {
+      return null;
+    }
+
+    return dialogueItems[dialogueItem.index - 1] || null;
+  }
+
+  function playerPlayDialogueItem(dialogueItem) {
+    if (!dialogueItem || !(dialogueItem.button instanceof HTMLButtonElement)) {
+      return;
+    }
+
+    playerPlaySegment(dialogueItem.button, dialogueItem.start, dialogueItem.end, {
+      autoAdvance: true,
+      dialogueItem,
+      kind: "dialogue",
+      restart: true,
+    });
+  }
+
+  function playerFindKeyboardBaseDialogue(direction) {
+    if (!activeSegment && !activeDialogueItem) {
+      return null;
+    }
+
+    if (activeSegment?.kind === "dialogue" && activeSegment.dialogueItem) {
+      return activeSegment.dialogueItem;
+    }
+
+    if (activeDialogueItem) {
+      return activeDialogueItem;
+    }
+
+    if (!(audio instanceof HTMLAudioElement)) {
+      return null;
+    }
+
+    const currentDialogueItem = playerFindDialogueByTime(audio.currentTime);
+
+    if (currentDialogueItem) {
+      return currentDialogueItem;
+    }
+
+    if (direction > 0) {
+      return dialogueItems.find((item) => item.start > audio.currentTime) || null;
+    }
+
+    return [...dialogueItems].reverse().find((item) => item.end < audio.currentTime) || null;
+  }
+
+  function keyboardShouldIgnoreEvent(event) {
+    if (event.altKey || event.ctrlKey || event.metaKey) {
+      return true;
+    }
+
+    const target = event.target instanceof Element ? event.target : null;
+
+    if (!target) {
+      return false;
+    }
+
+    return Boolean(
+      target.closest("input, textarea, select, [contenteditable='true'], [role='textbox']")
+    );
+  }
+
+  function keyboardMoveDialogue(direction) {
+    const baseDialogueItem = playerFindKeyboardBaseDialogue(direction);
+    const targetDialogueItem =
+      direction > 0
+        ? playerGetNextDialogue(baseDialogueItem)
+        : playerGetPreviousDialogue(baseDialogueItem);
+
+    if (!targetDialogueItem) {
+      return false;
+    }
+
+    playerPlayDialogueItem(targetDialogueItem);
+    return true;
+  }
+
+  function keyboardIsSpaceKey(event) {
+    return event.key === " " || event.key === "Spacebar" || event.code === "Space";
+  }
+
+  function playerStopAtSegmentEnd() {
+    if (!(audio instanceof HTMLAudioElement) || !activeSegment) {
+      return;
+    }
+
+    const segment = activeSegment;
+    const nextDialogueItem =
+      segment.kind === "dialogue" && segment.autoAdvance
+        ? playerGetNextDialogue(segment.dialogueItem)
+        : null;
+
+    audio.pause();
+    audio.currentTime = segment.end;
+
+    if (nextDialogueItem) {
+      playerPlayDialogueItem(nextDialogueItem);
+      return;
+    }
+
     playerClearActive();
   }
 
   function playerCheckSegmentEnd() {
     stopFrameId = null;
 
-    if (!(audio instanceof HTMLAudioElement) || segmentEnd === null || audio.paused) {
+    if (!(audio instanceof HTMLAudioElement) || !activeSegment || audio.paused) {
       return;
     }
 
-    if (audio.currentTime >= segmentEnd) {
+    playerSyncDialogueState(true);
+    floatingSyncState();
+
+    if (audio.currentTime >= activeSegment.end - 0.02) {
       playerStopAtSegmentEnd();
       return;
     }
@@ -367,70 +1009,188 @@ const hasSummary = Boolean(interview.introduction || interview.relationshipNodes
       return;
     }
 
+    playRequestId += 1;
     audio.pause();
     playerCancelStopCheck();
     playerSetActive(activeButton, false);
+    playerSyncDialogueState(false);
+    floatingSyncState(null, false);
   }
 
-  function playerPlaySegment(button, start, end, shouldRestart) {
-    if (!(audio instanceof HTMLAudioElement)) {
+  function playerResumeActive() {
+    if (!(audio instanceof HTMLAudioElement) || activeButton === null || !activeSegment) {
+      return false;
+    }
+
+    playerPlaySegment(activeButton, activeSegment.start, activeSegment.end, {
+      autoAdvance: activeSegment.autoAdvance,
+      dialogueItem: activeSegment.dialogueItem,
+      kind: activeSegment.kind,
+      restart: false,
+    });
+    return true;
+  }
+
+  function keyboardTogglePlayback() {
+    if (!(audio instanceof HTMLAudioElement) || activeButton === null || !activeSegment) {
+      return false;
+    }
+
+    if (audio.paused) {
+      return playerResumeActive();
+    }
+
+    playerPauseActive();
+    return true;
+  }
+
+  function playerToggleDialogue(button) {
+    const range = playerReadRange(button);
+    const dialogueItem = playerFindDialogueByButton(button);
+
+    if (!range || !dialogueItem) {
       return;
     }
 
-    segmentStart = start;
-    segmentEnd = end;
-
-    if (shouldRestart || audio.currentTime < start || audio.currentTime >= end) {
-      audio.currentTime = start;
+    if (activeButton === button) {
+      if (audio.paused) {
+        playerPlaySegment(button, range.start, range.end, {
+          autoAdvance: true,
+          dialogueItem,
+          kind: "dialogue",
+          restart: false,
+        });
+      } else {
+        playerPauseActive();
+      }
+      return;
     }
 
-    playerSetActive(button, true);
-    playerScheduleStopCheck();
-
-    const playResult = audio.play();
-    if (playResult !== undefined) {
-      playResult.catch(() => {
-        playerClearActive();
-      });
-    }
+    playerPlaySegment(button, range.start, range.end, {
+      autoAdvance: true,
+      dialogueItem,
+      kind: "dialogue",
+      restart: true,
+    });
   }
 
-  if (audio instanceof HTMLAudioElement) {
-    for (const button of playButtons) {
-      button.addEventListener("click", () => {
-        const start = Number(button.getAttribute("data-start"));
-        const end = Number(button.getAttribute("data-end"));
-
-        if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) {
-          return;
-        }
-
-        if (activeButton === button) {
-          if (audio.paused) {
-            playerPlaySegment(button, start, end, false);
-          } else {
-            playerPauseActive();
-          }
-          return;
-        }
-
-        playerPlaySegment(button, start, end, true);
-      });
+  function playerToggleFloatingTopic(button) {
+    if (!(audio instanceof HTMLAudioElement) || !currentTopicItem) {
+      return;
     }
 
-    audio.addEventListener("timeupdate", () => {
-      if (segmentEnd === null || audio.currentTime < segmentEnd) {
+    const audioInCurrentTopic = topicContainsTime(currentTopicItem, audio.currentTime);
+
+    if (activeSegment && audioInCurrentTopic && !audio.paused) {
+      playerPauseActive();
+      return;
+    }
+
+    playerPlaySegment(button, currentTopicItem.start, currentTopicItem.end, {
+      autoAdvance: false,
+      kind: "topic",
+      restart: !(activeSegment && audioInCurrentTopic),
+    });
+  }
+
+  function playerSkipFloatingTopic(button) {
+    const skipSeconds = Number(button.getAttribute("data-skip"));
+
+    if (
+      !currentTopicItem ||
+      !(floatingTopicPlayButton instanceof HTMLButtonElement) ||
+      !Number.isFinite(skipSeconds) ||
+      !(audio instanceof HTMLAudioElement)
+    ) {
+      return;
+    }
+
+    const currentInTopic = topicContainsTime(currentTopicItem, audio.currentTime);
+    const baseTime = currentInTopic ? audio.currentTime : currentTopicItem.start;
+    const seekTime = playerClampTime(
+      baseTime + skipSeconds,
+      currentTopicItem.start,
+      currentTopicItem.end
+    );
+
+    playerPlaySegment(floatingTopicPlayButton, currentTopicItem.start, currentTopicItem.end, {
+      autoAdvance: false,
+      kind: "topic",
+      restart: false,
+      seekTime,
+    });
+  }
+
+  if (audio instanceof HTMLAudioElement && interviewPage) {
+    interviewPage.addEventListener("click", (event) => {
+      const target = event.target instanceof Element ? event.target : null;
+
+      if (!target) {
         return;
       }
 
-      audio.pause();
-      audio.currentTime = segmentEnd;
-      playerClearActive();
+      const dialogueButton = target.closest("[data-dialogue-play]");
+      if (dialogueButton instanceof HTMLButtonElement) {
+        playerToggleDialogue(dialogueButton);
+        return;
+      }
+
+      const floatingTopicButton = target.closest("[data-floating-topic-play]");
+      if (floatingTopicButton instanceof HTMLButtonElement) {
+        playerToggleFloatingTopic(floatingTopicButton);
+        return;
+      }
+
+      const floatingSkipButton = target.closest("[data-floating-skip]");
+      if (floatingSkipButton instanceof HTMLButtonElement) {
+        playerSkipFloatingTopic(floatingSkipButton);
+      }
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      if (!activeSegment || audio.currentTime < activeSegment.end - 0.02) {
+        playerSyncDialogueState(!audio.paused);
+        floatingSyncState();
+        return;
+      }
+
+      playerStopAtSegmentEnd();
     });
 
     audio.addEventListener("ended", () => {
       playerClearActive();
     });
+
+    window.addEventListener("keydown", (event) => {
+      if (keyboardShouldIgnoreEvent(event)) {
+        return;
+      }
+
+      if (keyboardIsSpaceKey(event)) {
+        event.preventDefault();
+        keyboardTogglePlayback();
+        return;
+      }
+
+      if (event.key === "ArrowRight" && keyboardMoveDialogue(1)) {
+        event.preventDefault();
+        return;
+      }
+
+      if (event.key === "ArrowLeft" && keyboardMoveDialogue(-1)) {
+        event.preventDefault();
+      }
+    });
+
+    window.addEventListener("keyup", (event) => {
+      if (!keyboardShouldIgnoreEvent(event) && keyboardIsSpaceKey(event)) {
+        event.preventDefault();
+      }
+    });
+
+    topicUpdateFromScroll();
+    window.addEventListener("scroll", topicUpdateFromScroll, { passive: true });
+    window.addEventListener("resize", topicUpdateFromScroll);
   }
 
   for (const outlineLink of outlineLinks) {
@@ -494,6 +1254,10 @@ const hasSummary = Boolean(interview.introduction || interview.relationshipNodes
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 4px;
+  }
+
+  .interview-page {
+    padding-bottom: 6rem;
   }
 
   .interview-layout {
@@ -574,6 +1338,153 @@ const hasSummary = Boolean(interview.introduction || interview.relationshipNodes
     display: grid;
     gap: 0.68rem;
     min-width: 0;
+  }
+
+  .interview-topic {
+    margin: 2.7rem 0 1.2rem;
+    min-width: 0;
+  }
+
+  .interview-markdown.interview-topic-markdown {
+    margin: 0;
+    min-width: 0;
+  }
+
+  .interview-markdown.interview-topic-markdown h2 {
+    margin: 0;
+  }
+
+  .interview-floating-player {
+    backdrop-filter: blur(18px);
+    background: color-mix(in oklab, var(--background) 88%, transparent);
+    border: 1px solid color-mix(in oklab, var(--border) 82%, transparent);
+    border-radius: 0.7rem;
+    bottom: 1rem;
+    box-shadow: 0 0.9rem 2rem color-mix(in oklab, var(--foreground) 11%, transparent);
+    display: grid;
+    gap: 0.7rem;
+    grid-template-columns: minmax(8rem, 13rem) minmax(0, 1fr) auto;
+    left: 50%;
+    max-width: calc(100vw - 2rem);
+    min-width: 0;
+    padding: 0.62rem 0.78rem;
+    position: fixed;
+    transform: translateX(-50%);
+    width: min(38.4rem, calc(100vw - 2rem));
+    z-index: 45;
+  }
+
+  .interview-floating-player[hidden] {
+    display: none;
+  }
+
+  .interview-floating-topic {
+    align-self: center;
+    min-width: 0;
+  }
+
+  .interview-floating-title {
+    color: var(--foreground);
+    display: block;
+    font-size: 0.86rem;
+    font-weight: 700;
+    line-height: 1.25;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .interview-floating-subtitle {
+    align-self: center;
+    color: var(--muted-foreground);
+    font-size: 0.82rem;
+    line-height: 1.25;
+    margin: 0;
+    min-width: 0;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .interview-floating-subtitle:empty::before {
+    content: " ";
+  }
+
+  .interview-floating-controls {
+    align-items: center;
+    display: flex;
+    flex: 0 0 auto;
+    gap: 0.38rem;
+  }
+
+  .interview-floating-skip-button,
+  .interview-floating-play-button {
+    align-items: center;
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--foreground);
+    display: inline-flex;
+    flex: 0 0 auto;
+    height: 1.58rem;
+    justify-content: center;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .interview-floating-skip-button {
+    font-size: 0.68rem;
+    font-weight: 650;
+    min-width: 2.25rem;
+    padding: 0 0.42rem;
+  }
+
+  .interview-floating-play-button {
+    width: 1.58rem;
+  }
+
+  .interview-floating-skip-button:hover,
+  .interview-floating-play-button:hover,
+  .interview-floating-play-button.interview-player-button--active {
+    background: color-mix(in oklab, var(--color-purple-500) 12%, var(--background));
+    border-color: color-mix(in oklab, var(--color-purple-500) 45%, var(--border));
+    color: var(--color-purple-500);
+  }
+
+  .interview-floating-skip-button:hover,
+  .interview-floating-play-button:hover {
+    transform: translateY(-0.05rem);
+  }
+
+  .interview-floating-skip-button:disabled,
+  .interview-floating-play-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    transform: none;
+  }
+
+  @media (max-width: 767px) {
+    .interview-floating-player {
+      gap: 0.45rem;
+      grid-template-columns: minmax(5.8rem, 0.8fr) minmax(0, 1fr) auto;
+      max-width: calc(100vw - 1rem);
+      padding: 0.58rem 0.62rem;
+      width: calc(100vw - 1rem);
+    }
+
+    .interview-floating-title {
+      font-size: 0.78rem;
+    }
+
+    .interview-floating-subtitle {
+      font-size: 0.76rem;
+      text-align: left;
+    }
   }
 
   .interview-summary {
@@ -688,6 +1599,10 @@ const hasSummary = Boolean(interview.introduction || interview.relationshipNodes
   }
 
   @media (max-width: 767px) {
+    .interview-topic {
+      margin: 2.35rem 0 1rem;
+    }
+
     .interview-summary {
       grid-template-columns: minmax(0, 1fr);
     }
@@ -832,7 +1747,7 @@ const hasSummary = Boolean(interview.introduction || interview.relationshipNodes
   }
 
   .interview-play-button:hover,
-  .interview-play-button--active {
+  .interview-play-button.interview-player-button--active {
     background: color-mix(in oklab, var(--color-purple-500) 12%, var(--background));
     border-color: color-mix(in oklab, var(--color-purple-500) 45%, var(--border));
     color: var(--color-purple-500);
@@ -848,7 +1763,7 @@ const hasSummary = Boolean(interview.introduction || interview.relationshipNodes
     width: 0;
   }
 
-  .interview-play-button--playing .interview-play-icon {
+  .interview-player-button--playing .interview-play-icon {
     border: 0;
     display: flex;
     gap: 0.16rem;
@@ -857,8 +1772,8 @@ const hasSummary = Boolean(interview.introduction || interview.relationshipNodes
     width: 0.52rem;
   }
 
-  .interview-play-button--playing .interview-play-icon::before,
-  .interview-play-button--playing .interview-play-icon::after {
+  .interview-player-button--playing .interview-play-icon::before,
+  .interview-player-button--playing .interview-play-icon::after {
     background: currentColor;
     border-radius: 999px;
     content: "";
@@ -875,11 +1790,41 @@ const hasSummary = Boolean(interview.introduction || interview.relationshipNodes
     font-size: 0.9rem;
     line-height: 1.52;
     padding: 0.55rem 0.75rem;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
   }
 
   .interview-message--right .interview-bubble {
     background: color-mix(in oklab, var(--color-purple-500) 10%, var(--background));
     border-color: color-mix(in oklab, var(--color-purple-500) 24%, var(--border));
+  }
+
+  .interview-message--left .interview-bubble {
+    transform-origin: left top;
+  }
+
+  .interview-message--right .interview-bubble {
+    transform-origin: right top;
+  }
+
+  .interview-message--active .interview-bubble {
+    background: color-mix(in oklab, var(--color-purple-500) 12%, var(--muted));
+    border-color: color-mix(in oklab, var(--color-purple-500) 62%, var(--border));
+    box-shadow:
+      0 0.55rem 1.35rem color-mix(in oklab, var(--color-purple-500) 18%, transparent),
+      inset 0 0 0 1px color-mix(in oklab, var(--color-purple-500) 22%, transparent);
+    color: var(--foreground);
+  }
+
+  .interview-message--playing .interview-bubble {
+    background: color-mix(in oklab, var(--color-purple-500) 18%, var(--muted));
+    border-color: color-mix(in oklab, var(--color-purple-500) 78%, var(--border));
+    box-shadow:
+      0 0.9rem 2.15rem color-mix(in oklab, var(--color-purple-500) 32%, transparent),
+      inset 0 0 0 1px color-mix(in oklab, var(--color-purple-500) 38%, transparent);
+    transform: scale(1.025);
   }
 
   .interview-bubble p {

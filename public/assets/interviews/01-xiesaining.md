@@ -1505,7 +1505,7 @@
 
 ## 20 两拒Ilya与选择Yann
 
-[05:33:01,728 --> 05:33:08,969] 张小珺: 你对 [Ilya][ilya-sutskever] 两次 say no，然后你对 LeCunsay yes，这是为什么？在你眼里他是一个什么样的人？
+[05:33:01,728 --> 05:33:08,969] 张小珺: 你对 [Ilya][ilya-sutskever] 两次 say no，然后你对 [LeCun][yann-lecun] say yes，这是为什么？在你眼里他是一个什么样的人？
 
 [05:33:09,169 --> 05:33:13,506] 谢赛宁: [Yann][yann-lecun]，在网上是一个斗士？
 

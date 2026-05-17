@@ -39,6 +39,12 @@ export interface InterviewDialogueBlock {
 
 export type InterviewBlock = InterviewMarkdownBlock | InterviewDialogueBlock;
 
+export interface InterviewSubtitleCue {
+  startTime: number;
+  endTime: number;
+  text: string;
+}
+
 export interface InterviewOutlineItem {
   id: string;
   depth: number;
@@ -459,6 +465,17 @@ export async function getInterviewSource(slug: string) {
   return readFile(interviewFileUrl(interview.name), "utf-8");
 }
 
+export async function getInterviewSubtitles(slug: string): Promise<InterviewSubtitleCue[]> {
+  const subtitleName = `${slug}.srt`;
+
+  if (!(await fileExists(subtitleName))) {
+    return [];
+  }
+
+  const source = await readFile(interviewFileUrl(subtitleName), "utf-8");
+  return interviewParseSubtitleCues(source, subtitleName);
+}
+
 function parseTimestamp(timeLabel: string) {
   const match = timeLabel.match(/^(\d{2}):(\d{2}):(\d{2}),(\d{3})$/);
 
@@ -476,6 +493,63 @@ function parseTimestamp(timeLabel: string) {
   }
 
   return hours * 3600 + minutes * 60 + seconds + milliseconds / 1000;
+}
+
+export function interviewParseSubtitleCues(
+  source: string,
+  sourceName = "interview subtitles"
+): InterviewSubtitleCue[] {
+  const cues: InterviewSubtitleCue[] = [];
+  const chunks = source.replace(/^\uFEFF/, "").split(/\r?\n\s*\r?\n/);
+
+  for (const chunk of chunks) {
+    const lines = chunk
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter(Boolean);
+
+    if (lines.length === 0) {
+      continue;
+    }
+
+    if (/^\d+$/.test(lines[0])) {
+      lines.shift();
+    }
+
+    const timeLine = lines.shift();
+    const match = timeLine?.match(
+      /^(\d{2}:\d{2}:\d{2},\d{3})\s*-->\s*(\d{2}:\d{2}:\d{2},\d{3})(?:\s+.*)?$/
+    );
+
+    if (!match) {
+      throw new Error(`Invalid subtitle time line in ${sourceName}: ${timeLine ?? chunk}`);
+    }
+
+    const startTime = parseTimestamp(match[1]);
+    const endTime = parseTimestamp(match[2]);
+
+    if (endTime <= startTime) {
+      throw new Error(`Subtitle cue end must be after start in ${sourceName}: ${timeLine}`);
+    }
+
+    const text = lines
+      .join(" ")
+      .replace(/<[^>]+>/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    if (!text) {
+      continue;
+    }
+
+    cues.push({
+      startTime,
+      endTime,
+      text,
+    });
+  }
+
+  return cues;
 }
 
 function parseDialogueLine(line: string, sourceName: string, lineNumber: number) {
