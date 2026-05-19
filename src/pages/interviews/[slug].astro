@@ -36,8 +36,9 @@ interface RenderedMarkdownBlock extends InterviewMarkdownBlock {
   };
 }
 
-interface RenderedDialogueBlock extends Omit<InterviewDialogueBlock, "markdown"> {
+interface RenderedDialogueBlock extends Omit<InterviewDialogueBlock, "markdown" | "note"> {
   contentHtml: string;
+  noteHtml?: string;
 }
 
 type RenderedBlock = RenderedMarkdownBlock | RenderedDialogueBlock;
@@ -154,11 +155,17 @@ export async function getStaticPaths() {
           const rendered = await processor.render(
             markdownAppendReferences(block.markdown, referenceDefinitions)
           );
-          const { markdown, ...dialogueBlock } = block;
+          const renderedNote = block.note
+            ? await processor.render(
+                markdownAppendReferences(block.note.markdown, referenceDefinitions)
+              )
+            : null;
+          const { markdown, note, ...dialogueBlock } = block;
 
           return {
             ...dialogueBlock,
             contentHtml: markdownUnwrapParagraph(rendered.code),
+            ...(renderedNote ? { noteHtml: markdownUnwrapParagraph(renderedNote.code) } : {}),
           };
         })
       );
@@ -205,6 +212,7 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
               版权说明：本页仅为个人学习记录。原始访谈内容的著作权及相关权利归原权利人所有。本站不提供商业使用，不替代原始发布渠道，不主张任何原始内容权利。如涉及权利问题，请联系我处理。
             </p>
           </div>
+          <div class="interview-heading-spacer"></div>
         </div>
 
         <audio data-interview-audio preload="metadata" src={interview.audioHref}></audio>
@@ -330,25 +338,34 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
                       `interview-message--${block.side}`,
                     ]}
                   >
-                    <div class="interview-message-row">
-                      <div class="interview-message-control">
-                        <div class="interview-message-meta">
-                          <span>{block.speaker}</span>
+                    <div class="interview-message-main">
+                      <div class="interview-message-row">
+                        <div class="interview-message-control">
+                          <div class="interview-message-meta">
+                            <span>{block.speaker}</span>
+                          </div>
+                          <button
+                            type="button"
+                            class="interview-play-button"
+                            data-dialogue-play
+                            data-start={String(block.startTime)}
+                            data-end={String(block.endTime)}
+                            aria-label={`Play ${block.speaker} at ${block.timeLabel}`}
+                            aria-pressed="false"
+                          >
+                            <span aria-hidden="true" class="interview-play-icon"></span>
+                          </button>
                         </div>
-                        <button
-                          type="button"
-                          class="interview-play-button"
-                          data-dialogue-play
-                          data-start={String(block.startTime)}
-                          data-end={String(block.endTime)}
-                          aria-label={`Play ${block.speaker} at ${block.timeLabel}`}
-                          aria-pressed="false"
-                        >
-                          <span aria-hidden="true" class="interview-play-icon"></span>
-                        </button>
+                        <div class="interview-bubble" set:html={block.contentHtml} />
                       </div>
-                      <div class="interview-bubble" set:html={block.contentHtml} />
                     </div>
+                    {
+                      block.noteHtml && (
+                        <aside class="interview-message-note" aria-label="Knowledge note">
+                          <div class="interview-note-bubble" set:html={block.noteHtml} />
+                        </aside>
+                      )
+                    }
                   </article>
                 )
               )
@@ -1233,14 +1250,22 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
     margin-bottom: 2rem;
   }
 
+  .interview-page {
+    --interview-content-width: 44rem;
+    max-width: 86rem;
+    padding-bottom: 6rem;
+  }
+
   @media (min-width: 768px) {
     .interview-heading {
-      grid-template-columns: 15rem minmax(0, 1fr);
+      grid-template-columns: 15rem minmax(0, 1fr) 15rem;
     }
   }
 
   .interview-heading-main {
+    justify-self: center;
     min-width: 0;
+    width: min(100%, var(--interview-content-width));
   }
 
   .interview-title {
@@ -1257,10 +1282,6 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 4px;
-  }
-
-  .interview-page {
-    padding-bottom: 6rem;
   }
 
   .interview-layout {
@@ -1294,8 +1315,37 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
       max-height: min(80vh, 40rem);
       position: fixed;
       top: calc(50% + 40px);
-      transform: translateY(-50%);
+      transform: translate(3.5rem, -50%);
       width: 14rem;
+    }
+  }
+
+  .interview-note-bubble {
+    background: color-mix(in oklab, var(--color-purple-500) 8%, var(--background));
+    border: 1px solid color-mix(in oklab, var(--color-purple-500) 22%, var(--border));
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    color: var(--foreground);
+    font-size: 0.78rem;
+    line-height: 1.52;
+    overflow-wrap: anywhere;
+    padding: 0.62rem 0.75rem;
+    width: 100%;
+  }
+
+  .interview-note-bubble p {
+    margin: 0;
+  }
+
+  .interview-note-bubble a {
+    color: var(--color-purple-500);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 767px) {
+    .interview-heading-spacer {
+      display: none;
     }
   }
 
@@ -1343,9 +1393,18 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
     min-width: 0;
   }
 
+  @media (min-width: 768px) {
+    .interview-thread {
+      grid-template-columns: minmax(0, 1fr) 15rem;
+    }
+  }
+
   .interview-topic {
+    grid-column: 1;
+    justify-self: center;
     margin: 2.7rem 0 1.2rem;
     min-width: 0;
+    width: min(100%, var(--interview-content-width));
   }
 
   .interview-markdown.interview-topic-markdown {
@@ -1495,8 +1554,10 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
     display: grid;
     gap: 1.2rem;
     grid-template-columns: minmax(0, 1fr) minmax(18rem, 21rem);
+    justify-self: center;
     margin: 0 0 1.2rem;
     padding: 1.1rem 1.25rem;
+    width: min(100%, var(--interview-content-width));
   }
 
   .interview-summary-introduction {
@@ -1624,7 +1685,10 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
 
   .interview-markdown {
     color: var(--foreground);
+    grid-column: 1;
+    justify-self: center;
     margin: 1rem 0 0.25rem;
+    width: min(100%, var(--interview-content-width));
   }
 
   .interview-markdown > :first-child {
@@ -1689,15 +1753,36 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
   }
 
   .interview-message {
+    display: grid;
+    gap: 0.7rem 1.5rem;
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+
+  @media (min-width: 768px) {
+    .interview-message {
+      grid-template-columns: minmax(0, 44rem) 15rem;
+      justify-self: center;
+      width: min(100%, calc(44rem + 1.5rem + 15rem));
+    }
+  }
+
+  .interview-message-main {
+    min-width: 0;
     max-width: min(38rem, 92%);
   }
 
-  .interview-message--left {
+  .interview-message--left .interview-message-main {
     justify-self: start;
   }
 
-  .interview-message--right {
+  .interview-message--right .interview-message-main {
     justify-self: end;
+  }
+
+  .interview-message-note {
+    align-self: start;
+    min-width: 0;
   }
 
   .interview-message-meta {

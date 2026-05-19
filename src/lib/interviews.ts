@@ -35,6 +35,14 @@ export interface InterviewDialogueBlock {
   startTime: number;
   endTime: number;
   markdown: string;
+  note?: InterviewDialogueNote;
+}
+
+export interface InterviewDialogueNote {
+  timeLabel: string;
+  startTime: number;
+  endTime: number;
+  markdown: string;
 }
 
 export type InterviewBlock = InterviewMarkdownBlock | InterviewDialogueBlock;
@@ -552,7 +560,7 @@ export function interviewParseSubtitleCues(
   return cues;
 }
 
-function parseDialogueLine(line: string, sourceName: string, lineNumber: number) {
+function parseTimestampedInterviewLine(line: string, sourceName: string, lineNumber: number) {
   const match = line.match(
     /^\s*\[(\d{2}:\d{2}:\d{2},\d{3})\s*-->\s*(\d{2}:\d{2}:\d{2},\d{3})\]\s*([^:：]+?)\s*[:：]\s*(.*)$/
   );
@@ -583,6 +591,10 @@ function parseDialogueLine(line: string, sourceName: string, lineNumber: number)
   };
 }
 
+function interviewIsNoteSpeaker(speaker: string) {
+  return speaker.trim().toLowerCase() === "note";
+}
+
 function speakerGetSide(speakerSides: Map<string, "left" | "right">, speaker: string) {
   const side = speakerSides.get(speaker);
 
@@ -605,6 +617,10 @@ export function interviewParseBlocks(source: string, sourceName = "interview mar
   const markdownBuffer: string[] = [];
   let skippedTitle = false;
   let dialogueIndex = 0;
+
+  function markdownBufferHasContent() {
+    return markdownBuffer.join("\n").trim().length > 0;
+  }
 
   function markdownFlush() {
     const markdown = markdownBuffer.join("\n").trim();
@@ -632,10 +648,47 @@ export function interviewParseBlocks(source: string, sourceName = "interview mar
       continue;
     }
 
-    const dialogue = parseDialogueLine(line, sourceName, lineNumber);
+    const dialogue = parseTimestampedInterviewLine(line, sourceName, lineNumber);
 
     if (!dialogue) {
       markdownBuffer.push(line);
+      continue;
+    }
+
+    if (interviewIsNoteSpeaker(dialogue.speaker)) {
+      const previousBlock = blocks[blocks.length - 1];
+
+      if (markdownBufferHasContent()) {
+        throw new Error(
+          `Interview NOTE must directly follow its dialogue segment at ${sourceName}:${lineNumber}.`
+        );
+      }
+
+      markdownBuffer.length = 0;
+
+      if (
+        !previousBlock ||
+        previousBlock.type !== "dialogue" ||
+        previousBlock.startTime !== dialogue.startTime ||
+        previousBlock.endTime !== dialogue.endTime
+      ) {
+        throw new Error(
+          `Interview NOTE timestamp must match the preceding dialogue segment at ${sourceName}:${lineNumber}.`
+        );
+      }
+
+      if (previousBlock.note) {
+        throw new Error(
+          `Interview dialogue segment can only have one NOTE at ${sourceName}:${lineNumber}.`
+        );
+      }
+
+      previousBlock.note = {
+        timeLabel: dialogue.timeLabel,
+        startTime: dialogue.startTime,
+        endTime: dialogue.endTime,
+        markdown: dialogue.markdown,
+      };
       continue;
     }
 
