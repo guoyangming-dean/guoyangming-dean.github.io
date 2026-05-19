@@ -133,6 +133,17 @@
     line-height: 30px;
   }
 
+  .interview-rights-notice {
+    background: color-mix(in oklab, var(--background) 82%, transparent);
+    border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+    border-radius: 0.5rem;
+    color: var(--muted-foreground);
+    font-size: 0.86rem;
+    line-height: 1.7;
+    margin-top: 1rem;
+    padding: 0.75rem 0.9rem;
+  }
+
   @media (min-width: 768px) {
     .section-heading {
       font-size: 24px;
