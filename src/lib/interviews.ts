@@ -1,6 +1,6 @@
 import { access, readdir, readFile } from "node:fs/promises";
 
-const INTERVIEWS_ROOT = new URL("../../public/assets/interviews/", import.meta.url);
+const INTERVIEWS_ROOT = new URL("../../public/interviews/", import.meta.url);
 
 export interface InterviewEntry {
   name: string;
@@ -245,7 +245,7 @@ function getExtension(fileName: string) {
 }
 
 function interviewAssetHref(fileName: string) {
-  return `/assets/interviews/${encodeURIComponent(fileName)}`;
+  return `/interviews/${encodeURIComponent(fileName)}`;
 }
 
 function interviewPageHref(slug: string) {
@@ -417,7 +417,7 @@ export async function getInterviewEntries(): Promise<InterviewEntry[]> {
 
       if (!(await fileExists(audioName))) {
         throw new Error(
-          `Interview audio not found for ${fileName}. Expected public/assets/interviews/${audioName}.`
+          `Interview audio not found for ${fileName}. Expected public/interviews/${audioName}.`
         );
       }
 

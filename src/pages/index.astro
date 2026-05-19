@@ -4,9 +4,12 @@ import GlassHeader from "@/components/GlassHeader";
 import HeroSection from "@/components/HeroSection";
 import ExperienceSection from "@/components/ExperienceSection";
 import ProjectsSection from "@/components/ProjectsSection";
-import AwardsSection from "@/components/AwardsSection";
+import PublicationsSection from "@/components/PublicationsSection";
 import EducationSection from "@/components/EducationSection";
 import Footer from "@/components/Footer";
+import { getPublicationsMineEntries } from "@/lib/publications-mine";
+
+const publicationsMineEntries = await getPublicationsMineEntries();
 ---
 
 <Layout>
@@ -15,7 +18,7 @@ import Footer from "@/components/Footer";
     <HeroSection client:load />
     <ExperienceSection client:load />
     <ProjectsSection client:load />
-    <AwardsSection client:load />
+    <PublicationsSection publications={publicationsMineEntries} client:load />
     <EducationSection client:load />
   </main>
   <Footer client:load />
