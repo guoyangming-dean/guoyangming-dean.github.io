@@ -33,9 +33,13 @@
 
 [00:01:37,397 --> 00:02:04,257] 谢赛宁: 是，我认为 Dumbo 这边当然非常艺术了。很多电影里面，之前有个韩国电影的叫[《过往人生》][past-lives]。他们那里面你可能看到了，旋转木马，那边的 Dumbo 大桥。时代广场只有游客才会去，我就是游客，真正的纽约人是不会去的。但其实 [NYU][nyu] 附近也很好，那边叫做，Greenwich Village，那边也是一个村，那边也很有生活气息。
 
+[00:01:37,397 --> 00:02:04,257] NOTE: [Dumbo][dumbo] 是 [Brooklyn Bridge][brooklyn-bridge] 与 [Manhattan Bridge][manhattan-bridge] 之间的滨水街区，以鹅卵石街道、桥景和艺术空间闻名。![Dumbo 街景](/interviews/media/01-xiesaining/01-dumbo.jpeg)
+
 [00:02:04,390 --> 00:02:10,196] 张小珺: 你为什么会来纽约做学术？这好像不是一个很多人的选择。
 
 [00:02:10,430 --> 00:03:06,853] 谢赛宁: 并非如此，但是历史比较长了，确实是，各种原因。我认为，当然，也是因为我确实比较向往这个城市，向往这个城市里面的很多的元素。它的一些人，包括 [NYU][nyu]，其实也是，当然主要的原因还是因为 [Yann LeCun][yann-lecun]，然后像 AI 的这些 efforts。[NYU][nyu] 其实确实做的很不错，但另一方面，[NYU][nyu] 还有很强的电影学院，我喜欢的很多导演，像什么 [Martin Scorsese][martin-scorsese]，包括最近赵婷，都是 [NYU][nyu] 的毕业生。所以也是 partly the reason，也是一些原因。我昨天跟你说，我来美国现在多少年了，2013 年过来，然后 13 年左右了。我现在的后训练有点崩。所以中英夹杂的问题。观众朋友们不好意思，我尽量尽量解释。
+
+[00:02:10,430 --> 00:03:06,853] NOTE: [Yann LeCun][yann-lecun] 是法裔美国计算机科学家，深度学习奠基人之一，以卷积神经网络（CNN）研究闻名。2018 年，他与 [Geoffrey Hinton][geoffrey-hinton]、[Yoshua Bengio][yoshua-bengio] 共同获得 [图灵奖][turing-award-2018]（Turing Award），被誉为“AI教父”之一。![YannLecun](/interviews/media/01-xiesaining/02-2018TuringAwardWinner.jpeg)
 
 [00:03:06,853 --> 00:03:07,987] 张小珺: 多多见谅。
 
@@ -87,6 +91,8 @@
 
 [00:08:46,726 --> 00:09:17,990] 谢赛宁: 可能。但我认为我，我唯一想说的还是，在这种非常轻松的家庭环境成长起来，确实塑造了我自己的[世界模型][world-models]。我自己对它，我还是觉得很 proud of 的，很骄傲的，因为我会，或者说你刚刚问为什么会来纽约，这也是其中的一部分。我可能会希望自己，或者希望身边的人，都更加 open-minded 的去看待这个世界。
 
+[00:08:46,726 --> 00:09:17,990] NOTE: 这里的[世界模型][world-models]不是严格算法名，更像个人对世界运行规律的内部表征。谢赛宁把它和宽松家庭、旅行经验、纽约选择放在一起，重点是开放性如何影响长期判断。
+
 ## 02 交大ACM班与宽松教育
 
 [00:09:18,925 --> 00:09:22,828] 张小珺: 你是学习成绩一直很好吗，因为你是保送到交大 ACM 班的？
@@ -113,7 +119,7 @@
 
 [00:12:42,595 --> 00:17:26,979] 谢赛宁: 我其实是看跟谁比，跟那些最顶尖的竞赛选手。像我刚刚描述的这个，非常顺利的这个，姚班大神，然后四大 PhD 四大教授来比，那我真的是，远远不如。但另一方面，我认为，我还很感恩我所有这一段经历的，因为，就接下往后讲的话，其实还很有意思的。比如说在我去交大的时候，其实交大也不一定是一个，在计算机方面，人工智能方面。一个特别领先的，这样一个学校？到现在，比如像 ACM 班已经变成了一个。当然这跟我没什么关系，但我的学弟学妹们，包括我的学长们，不管是做创业还是在做学术，之后在各个地方发光发热。并且，我们有一个很强的，这样一个校友的网络，大家联系在一起然后做事情，我认为，还是，是一个向上的这样一个 trajectory，向上的一个轨迹。再到后来，这里面还有一个很有意思的事情，我想提一下，我 ACM 班面试，然后面试的过程。会有老教授，当初是这个[沈恩绍教授][shen-enshao]面试我们，这个面试，其实不是问你一些技术的问题。他会问你你喜欢读什么书？我认为这件事情是冥冥注定，有一些缘分，因为我当初非常着急，差点答不上来。我跟他说，我其实很喜欢看的一本书，也是我最近刚看完的一本书是这个，这本书叫[《What Is Mathematics?》][what-is-mathematics]然后[沈恩绍老师][shen-enshao]接着就问，那这本书的作者是谁，要考考我？我有点懵，然后你这个。一个高中生，人家这个外国人名我也记不住。想了想，最终还是答出来了。是这个 [Richard Courant][richard-courant]，[理查德·柯朗][richard-courant]。[沈老师][shen-enshao]也就是说，你一定要记住这个名字，因为这是相当于，20 世纪最伟大的一名数学家。为什么这件事情让我觉得，冥冥之中自有天意，或者有一些巧合在这里面？是因为现在在 [NYU][nyu]，我在的这个系，这个院就是[柯朗数学科学研究所][courant]，[Richard Courant][richard-courant]，拿铲子挖的第一勺土，他建起来的这个系。所以我认为还很有意思的，后来申请其实也是一样。我认为，或者从另外一个角度来说这件事。我认为，好像这个世界，总是不想让我去做我想要做的事情，为什么，但是我偏偏要做我想要做的事情。比如说本科的时候，我一开始就对计算机视觉，或者说，对人工智能产生了一些兴趣。那时候也是，刚开始是在 ACM 班。大家会在大二开始进行这种，这种科研实习，会到这个学校里面的，不同实验室里面去。我去的这个实验室，是一个做，神经科学+AI 的这样一个实验室，叫做 [BCMI][bcmi-sjtu]。书架上放着很多关于意识，关于大脑，关于图像，然后，关于我们怎么样对真实世界产生认知。这样的书，我看了之后觉得哇，太有意思了。后来在这个过程中，我还认识了我的一个学长，这个学长是侯晓迪。他也是鼎鼎大名。他之前也创业，然后现在也在创业。我每每跟他聊起来，他总会说，这个世界变了，但我们都没变，我们特指我跟他。因为我认为我们每次聊的东西，就像我们十几年前聊的东西一模一样。那时候他是这个学校的一个传奇，他干了两件传奇的事，第一件传奇的事是，他作为一个本科生。发表了一篇 [CVPR][cvpr] 的论文，这个论文里面，是一个非常精巧的算法，一共只有 7 行代码，解决了一个很重要的问题，然后发表了一篇论文。现在 [CVPR][cvpr] 已经每年接收可能几千，几千篇论文，好几万篇投稿。所以现在你像我们要招本科生，大家人手都三篇四篇五篇，[CVPR][cvpr] 已经不算什么了。但在那个时候，在大陆的学校，能发表这样一个顶会的工作，其实是非常困难的。
 
-[00:12:42,595 --> 00:17:26,979] NOTE: 《What Is Mathematics?》是数学家 Richard Courant 与 Herbert Robbins 合著的经典数学通识著作，后来由 Ian Stewart 修订。它不是一本普通教材，而是试图回答“数学到底是什么”：数学并不只是公式、计算和考试，而是一种理解结构、规律和抽象关系的思维方式。全书涵盖数论、几何、拓扑、微积分、变分法等内容，强调直觉、问题意识和数学思想，而不是机械证明。它适合有一定数学基础、想真正理解数学本质的人阅读。对工程、算法、AI 背景的人来说，这本书的价值在于训练抽象思维和严谨推理能力。
+[00:12:42,595 --> 00:17:26,979] NOTE: [《What Is Mathematics?》][what-is-mathematics] 是数学家 [Richard Courant][richard-courant] 与 [Herbert Robbins][herbert-robbins] 合著的经典数学通识著作，后来由 [Ian Stewart][ian-stewart] 修订。它不是一本普通教材，而是试图回答“数学到底是什么”：数学并不只是公式、计算和考试，而是一种理解结构、规律和抽象关系的思维方式。全书涵盖数论、几何、拓扑、微积分、变分法等内容，强调直觉、问题意识和数学思想，而不是机械证明。它适合有一定数学基础、想真正理解数学本质的人阅读。对工程、算法、AI 背景的人来说，这本书的价值在于训练抽象思维和严谨推理能力。
 
 [00:17:26,979 --> 00:17:27,813] 张小珺: 非常罕见。
 
@@ -123,9 +129,11 @@
 
 [00:17:49,268 --> 00:18:48,193] 谢赛宁: 应该是他主笔，我不确定，后面应该有一个团队跟他一起。这个东西现在网上还有存档，我认为欢迎大家，线下可以去看一下，这个手册里面讲的什么东西。有些，有些话，我前两天又回头又重温了一下，我认为非常有意思。他讲的事情是什么，讲说，人为什么要学习？中国的教育体制，大学的模式，到底哪里错了？你应该把时间花在什么样的地方上，去达到你想要的人生。或者说他也指导大家说怎么样做研究，做研究的目的是什么？做研究的目的不是要灌水发论文，而是真的对这种无限的未知的探索。类似于这样的事情，当然，里面也会教大家什么怎么样逃课，怎么样，完成作业，比较快速的方式完成一些作业。是一个这种小册子。
 
-[00:17:49,268 --> 00:18:48,193] NOTE: 《交大生存手册》是一份由上海交通大学学生自发编写的大学生活指南，原版诞生于2008年前后，后来被整理为开源项目持续更新。它不是官方学生手册，也不是简单的选课、刷绩点攻略，而是围绕大学生如何建立目标、摆脱被动学习、理解科研、就业、保研、出国等选择，提出较尖锐的反思。它的核心价值在于提醒学生：大学不是高中延续，分数不是唯一目标，更重要的是找到自我驱动、兴趣方向和长期能力。虽然部分内容有时代和学校局限，但对多数大学生仍有启发。 
+[00:17:49,268 --> 00:18:48,193] NOTE: [《交大生存手册》][sjtu-survival-manual] 是一份由[上海交通大学][sjtu]学生自发编写的大学生活指南，原版诞生于 2008 年前后，后来被整理为开源项目持续更新。它不是官方学生手册，也不是简单的选课、刷绩点攻略，而是围绕大学生如何建立目标、摆脱被动学习、理解科研、就业、保研、出国等选择，提出较尖锐的反思。它的核心价值在于提醒学生：大学不是高中延续，分数不是唯一目标，更重要的是找到自我驱动、兴趣方向和长期能力。
 
 [00:18:48,727 --> 00:18:55,567] 张小珺: 我也去读了一下。他说如果一个人，把政策评分作为自己的至高追求，那么他就是这个政策的牺牲品。
+
+[00:18:48,727 --> 00:18:55,567] NOTE:  “如果一个人，把政策评分作为自己的至高追求，那么他就是这个政策的牺牲品”，出自 [《交大生存手册》][sjtu-survival-manual] “励志篇 / 失败的思维方式”中的[《高考思维》][gao-kao-si-wei]。
 
 [00:18:55,667 --> 00:19:03,275] 谢赛宁: 我完全同意，我认为这些事情现在回想起来，可能潜移默化，真的影响了我对很多事情的认知。
 
@@ -173,7 +181,9 @@
 
 [00:26:20,612 --> 00:26:23,014] 张小珺: 生物也是，不只是人。
 
-[00:26:23,081 --> 00:28:26,137] 谢赛宁: 不只是人对，你说的非常对，所有的东西其实不完全是这样。因为其实在 530 million，years ago 就 530 个百万年前，地球上，是这些生物是没有眼睛的。大家都在这种深海里面生活，暗无天日，大家都在深海里面。光打不进来，然后突然有一天，有一些生物能够，发展出来他们的视觉了。虽然还是很弱，只能看到一点渺茫的这个，这个信号，但这时候他们就很厉害了，他们就能看到自己想要捕食的对象。在哪我就可以很快的游过去，然后把它吃掉，它还能躲避天敌，有人要过来要抓我了，我立刻逃跑。一旦视觉诞生了，其他的生物在进化的过程中，不得不演化出更强的这个视觉。因为如果你不有更强的视觉的话，你就会被吃掉，所以就展开了一场军备竞赛。所以这是所谓的寒武纪大爆发，所谓的 Cambrian Era。也就是说地球上在这个寒武纪之前，可能只有屈指可数的这些物种。但是过了寒武纪之后，突然大爆炸似的，多了几十万种这种物种。一个 leading 的 theory 就一个，一个理论，其实是说这种大爆炸的，来源，是因为大家在视觉层面，展开了这种军备竞赛。是的，所以你说的完全对，我认为，这其实是不是一个人特有的事情，所有的动物也是这样，所以，我对这件事情还是还是很感兴趣的。而且你知道，视觉这件事情，其实也不只是一个感官。有一种说法是，其实眼睛是唯一一个，它是大脑的一部分。但它是唯一一个，暴露在真实世界里面的大脑部分，因为其他的大脑部分，都藏在我们的头骨背后。
+[00:26:23,081 --> 00:28:26,137] 谢赛宁: 不只是人对，你说的非常对，所有的东西其实不完全是这样。因为其实在 530 million，years ago 就 530 个百万年前，地球上，是这些生物是没有眼睛的。大家都在这种深海里面生活，暗无天日，大家都在深海里面。光打不进来，然后突然有一天，有一些生物能够，发展出来他们的视觉了。虽然还是很弱，只能看到一点渺茫的这个，这个信号，但这时候他们就很厉害了，他们就能看到自己想要捕食的对象。在哪我就可以很快的游过去，然后把它吃掉，它还能躲避天敌，有人要过来要抓我了，我立刻逃跑。一旦视觉诞生了，其他的生物在进化的过程中，不得不演化出更强的这个视觉。因为如果你不有更强的视觉的话，你就会被吃掉，所以就展开了一场军备竞赛。所以这是所谓的寒武纪大爆发，所谓的 Cambrian Era。也就是说地球上在这个寒武纪之前，可能只有屈指可数的这些物种。但是过了寒武纪之后，突然大爆炸似的，多了几十万种这种物种。一个 leading 的 theory 就一个，一个理论，其实是说这种大爆炸的，来源，是因为大家在视觉层面，展开了这种军备竞赛。是的，所以你说的完全对，我认为，这其实是不是一个人特有的事情，所有的动物也是这样，所以，我对这件事情还是还是很感兴趣的。而且你知道，视觉这件事情，其实也不只是一个感官。有一种说法是，其实[眼睛是唯一一个，它是大脑的一部分][retina-cns]。但它是唯一一个，暴露在真实世界里面的大脑部分，因为其他的大脑部分，都藏在我们的头骨背后。
+
+[00:26:23,081 --> 00:28:26,137] NOTE: 这里的说法更准确地说主要指[视网膜][retina-cns]：视网膜在胚胎发育中来自前脑，通常被视为中枢神经系统的一部分。它不是单纯的相机传感器，而是在信号进入大脑皮层前就会进行初步神经处理，所以视觉更像智能系统对世界的主动组织，而不是被动接收像素。
 
 [00:28:26,538 --> 00:28:27,338] 张小珺: 对？
 
@@ -197,7 +207,7 @@
 
 [00:30:15,580 --> 00:31:01,192] 谢赛宁: 我认为，有。首先是我交了很多很好的朋友，之后我可以也可以慢慢展开，但我认识了。比如说，其实当初带我的主要的这个，这我的 mentor 是冯佳时，他当初是 PhD 学生，他带着我，然后做了一些工作。我们发表了一篇，也不是顶会，很不幸本科还是没能发出一篇 [CVPR][cvpr]，但发表了一篇，还不错的。这个 BMVC 的 paper，是一个，是一个没那么顶会的计算机视觉的，这样一个论文。所以，我认为，还是有很大很大的收获。我第一次知道了，research，是怎么回事。真正写过一篇 paper 跟没写这篇 paper，我认为差别还是很大的。
 
-[00:30:15,580 --> 00:31:01,192] NOTE: 《Perception Preserving Projections》是谢赛宁等人发表于 BMVC 2013 的论文，作者包括 Saining Xie、Jiashi Feng、Shuicheng Yan、Hongtao Lu。论文提出 PPP 方法，目标不是单纯让图像重建误差最小，而是在降维/投影后尽量保留机器感知所需的特征信息。它以人脸识别作为实验应用，比较 PCA 与 PPP 重建图像后的识别效果。整体看，这篇论文更偏机器学习和表示学习，只是应用场景落在人脸识别，因此谢赛宁说它“像 CV paper，但其实更像 ML paper”是合理的。
+[00:30:15,580 --> 00:31:01,192] NOTE: [《Perception Preserving Projections》][perception-preserving-projections] 是[谢赛宁][saining-xie]等人发表于 [BMVC 2013][bmvc-2013] 的论文，作者包括 Saining Xie、Jiashi Feng、Shuicheng Yan、Hongtao Lu。论文提出 PPP 方法，目标不是单纯让图像重建误差最小，而是在降维/投影后尽量保留机器感知所需的特征信息。它以人脸识别作为实验应用，比较 PCA 与 PPP 重建图像后的识别效果。整体看，这篇论文更偏机器学习和表示学习，只是应用场景落在人脸识别，因此谢赛宁说它“像 CV paper，但其实更像 ML paper”是合理的。
 
 [00:31:01,192 --> 00:31:03,261] 张小珺: 那是你关于 CV 的第一篇 paper。
 
@@ -219,7 +229,7 @@
 
 [00:33:03,448 --> 00:34:14,252] 谢赛宁: 我认为可能 ACM 班没那么卷。一个差别是 again，这件事情，其实还是[俞老师][yong-yu]的一个设计，他我认为是一个，很伟大的一个教育家，我可以这么去说。像我们当初，其实我们的课程设计上，会有很多，看起来还是很奇怪的这些设定。比如说我们有一门课程，[俞老师][yong-yu]其实很自豪的。叫做学子讲坛，这个学子讲坛是什么，也就是说大家要到这个课上。花可能 45 分钟到 1 小时，去做一个 presentation，给一个 talk，这个 talk 不能是跟学习有关的，它可以是关于这世界上任何事情的，但不能与学习有关系。所以，有人会讲哲学，有人会讲历史，有人会讲社会，有人会讲很多很有趣的东西，当然也可以讲科学。我认为，这可能是一个培养机制的不同。当然我也没去过姚班，所以我也不清楚。但我认为，大家还是在一个相对来说比较宽松，并且比较强调通识的这种，这种设定下往前走的。
 
-[00:33:03,448 --> 00:34:14,252] NOTE: 清华姚班，全称“清华学堂计算机科学实验班”，由图灵奖得主姚期智院士于 2005 年创办，目标是培养国际顶尖计算机科学及交叉创新人才。它不是普通计算机专业班级，而是拔尖人才培养项目，强调数学基础、理论计算机、人工智能、量子信息等方向。培养方式上，前两年强化计算机科学基础，后两年进入更深入的专业训练，核心课程多采用英文授课，并重视科研训练和国际视野。姚班的特点是选拔门槛高、课程强度大、学术导向明显，适合有强数学与计算机兴趣、希望走科研或顶尖技术路线的学生。
+[00:33:03,448 --> 00:34:14,252] NOTE: [清华姚班][tsinghua-yao-class]，全称“清华学堂计算机科学实验班”，由图灵奖得主[姚期智][andrew-yao]院士于 2005 年创办，目标是培养国际顶尖计算机科学及交叉创新人才。它不是普通计算机专业班级，而是拔尖人才培养项目，强调数学基础、理论计算机、人工智能、量子信息等方向。培养方式上，前两年强化计算机科学基础，后两年进入更深入的专业训练，核心课程多采用英文授课，并重视科研训练和国际视野。姚班的特点是选拔门槛高、课程强度大、学术导向明显，适合有强数学与计算机兴趣、希望走科研或顶尖技术路线的学生。
 
 [00:34:14,252 --> 00:34:18,523] 张小珺: 你给我的感觉是，你好像不是一个喜欢过度竞争的人。
 
@@ -253,7 +263,7 @@
 
 [00:36:36,060 --> 00:37:43,594] 谢赛宁: 那时候其实做计算机视觉的老师不多，然后，我认为[屠老师][zhuowen-tu]，当然是一个，我非常敬佩的一位老师，所以他也是我的一个 top choice。当然了，还会有很多，你当然说，像在斯坦福，伯克利对？MIT 都会有，有很多这些计算机视觉的先驱。但那时候，超过我的能力范围之内，对。所以我跟[屠老师][zhuowen-tu]发这个邮件，他就回复了我，我还记得非常清楚，因为有时差，所以[屠老师][zhuowen-tu]说我们要不要打个电话，你什么时候有时间？我说我任何时候都有时间。所以我半夜 3 点，在宿舍的楼下，跟[屠老师][zhuowen-tu]打了这么一个电话。告诉他为什么我认为，我想做这件事儿，我之前做了哪些事儿，并且我为什么，很欣赏你的 research？我认为我们可以一起工作一起共事。所以，后来[屠老师][zhuowen-tu]就把我捞起来了，非常非常幸运。
 
-[00:36:36,060 --> 00:37:43,594] NOTE: 屠卓文是国际知名计算机视觉与机器学习学者，现任加州大学圣迭戈分校教授，研究方向包括计算机视觉、机器学习、深度学习、医学影像、神经计算等。他早年获得清华大学硕士学位，后在俄亥俄州立大学获得博士学位，曾在微软亚洲研究院、UCLA、UCSD 等机构工作。屠卓文在结构化预测、图像理解、边缘检测等方向影响很大，代表性工作包括 **HED（Holistically-Nested Edge Detection）** 和深监督网络相关研究。他曾获得计算机视觉领域重要奖项 Marr Prize，并入选 IEEE Fellow。谢赛宁、吴佳俊等后来在视觉和 AI 领域很有影响力的学者，也曾受其指导。
+[00:36:36,060 --> 00:37:43,594] NOTE: [屠卓文][zhuowen-tu]是国际知名计算机视觉与机器学习学者，现任 [UCSD][ucsd] 教授，研究方向包括计算机视觉、机器学习、深度学习、医学影像、神经计算等。他早年获得清华大学硕士学位，后在俄亥俄州立大学获得博士学位，曾在微软亚洲研究院、[UCLA][ucla]、[UCSD][ucsd] 等机构工作。屠卓文在结构化预测、图像理解、边缘检测等方向影响很大，代表性工作包括 [HED][hed] 和深监督网络相关研究。他曾获得计算机视觉领域重要奖项 [Marr Prize][marr-prize]，并入选 [IEEE Fellow][ieee-fellow]。谢赛宁、吴佳俊等后来在视觉和 AI 领域很有影响力的学者，也曾受其指导。![屠卓文教授](/interviews/media/01-xiesaining/03-tuzhuowen.jpg)
 
 [00:37:43,728 --> 00:37:44,762] 张小珺: 最后几天。
 
@@ -271,7 +281,7 @@
 
 [00:38:46,791 --> 00:39:30,668] 谢赛宁: 我认为我不在意学校，并且我还是觉得。我认为这些事情都很有意思，因为当初其实你如果看 [UCSD][ucsd] 的话，可能感觉什么综合排名，什么都不如什么 [UCLA][ucla]，现在完全不是这样了。如果你看这个 CS ranking。或者说从 AI 的这种招人，然后学生，包括这种师资的储备，AI 的这种力量来看，我认为 [UCSD][ucsd]，都已经是前几名的这种级别了。在当初完全不是这样，在当初，而且我其实还一直很想合作一个老师，叫 [Serge Belongie][serge-belongie]，他刚刚决定也要跳槽离开 [UCSD][ucsd]，好所以我认为一切都很绝望。我要去的地方似乎排名也没那么高。
 
-[00:38:46,791 --> 00:39:30,668] NOTE: UCSD 指 **University of California San Diego**，即**加州大学圣迭戈分校**，位于美国加州圣迭戈 La Jolla，是加州大学系统中的重要公立研究型大学。学校以理工、生命科学、医学、海洋科学、数据科学和计算机科学见长，官方称其为世界领先的公立研究型大学之一。 UCSD 学术氛围偏研究型，和 Salk Institute、Scripps Research 等科研机构联系紧密，适合做 AI、计算机视觉、机器学习、医学影像、生物医学等交叉方向研究。它不是传统意义上的“藤校”，但在科研实力、STEM 声誉和国际影响力上很强，经常被视为美国顶尖公立大学之一。
+[00:38:46,791 --> 00:39:30,668] NOTE: [UCSD][ucsd] 指 University of California San Diego，即加州大学圣迭戈分校，位于美国加州圣迭戈 [La Jolla][la-jolla]，是加州大学系统中的重要公立研究型大学。学校以理工、生命科学、医学、海洋科学、数据科学和计算机科学见长，官方称其为世界领先的公立研究型大学之一。UCSD 学术氛围偏研究型，和 [Salk Institute][salk-institute]、[Scripps Research][scripps-research] 等科研机构联系紧密，适合做 AI、计算机视觉、机器学习、医学影像、生物医学等交叉方向研究。它不是传统意义上的“藤校”，但在科研实力、STEM 声誉和国际影响力上很强，经常被视为美国顶尖公立大学之一。
 
 [00:39:30,835 --> 00:39:34,038] 张小珺: 师资也在外流，师资也在外流。
 
@@ -353,7 +363,7 @@
 
 [00:54:55,592 --> 00:55:47,477] 谢赛宁: 一般都是 3 个月到 6 个月。所以我大概一半的一年，一半的时间在学校，一半的时间在湾区，当然低谷的时候在伦敦。我认为没有什么喜欢不喜欢，我会尽量的去 diversify，就我会，希望我去的每一个地方都不一样，我希望它是一个更多元的经历。所以 [NEC Labs America][nec-labs-america]，它当然是我第一个去的地方，我认为在那里，我也发了一篇 [CVPR][cvpr] 的论文，那边有很多很好的小伙伴，主要还是华人居多。大家中午下班了就一起去，Cupertino 去吃饭，我这是我对它的印象。我非常喜欢这个集体，非常喜欢大家做研究的态度。我也发表了一篇我自己的论文，所以我认为我非常高兴这段经历。
 
-[00:54:55,592 --> 00:55:47,477] NOTE: NEC Labs America 全称 **NEC Laboratories America**，是日本 NEC Corporation 在美国的核心企业研究院，成立于 1988 年，目前主要位于 **Princeton, New Jersey** 和 **San Jose, California**。它定位类似微软研究院、IBM Research 这类工业界研究机构，既做前沿科研，也强调技术落地。研究方向包括人工智能、机器学习、数据科学、系统安全、媒体分析、集成系统、光网络与传感等。对 AI/CV/ML 领域来说，NEC Labs America 曾是很有影响力的工业研究机构，产出过不少高质量论文和技术成果。它的特点是学术研究氛围较强，同时服务 NEC 的产业技术布局。([nec.com](https://www.nec.com/en/global/rd/labs/america/index.html?utm_source=chatgpt.com))
+[00:54:55,592 --> 00:55:47,477] NOTE: [NEC Labs America][nec-labs-america] 全称 NEC Laboratories America，是日本 [NEC Corporation][nec-corporation] 在美国的核心企业研究院，成立于 1988 年，目前主要位于 [Princeton, New Jersey][princeton-nj] 和 [San Jose, California][san-jose]。它定位类似微软研究院、IBM Research 这类工业界研究机构，既做前沿科研，也强调技术落地。研究方向包括人工智能、机器学习、数据科学、系统安全、媒体分析、集成系统、光网络与传感等。对 AI/CV/ML 领域来说，NEC Labs America 曾是很有影响力的工业研究机构，产出过不少高质量论文和技术成果。它的特点是学术研究氛围较强，同时服务 NEC 的产业技术布局。
 
 [00:55:47,577 --> 00:55:52,982] 张小珺: [NEC Labs America][nec-labs-america] 当年应该也是深度学习的聚集地，余凯博士（地平线创始人兼 CEO） 也在那里待过。
 
@@ -362,6 +372,8 @@
 [00:56:26,483 --> 00:56:27,117] 张小珺: make sense
 
 [00:56:27,117 --> 00:59:23,726] 谢赛宁: 我在那时候在三番，然后，让我做一些跟 design 相关，跟这种 crowdsourcing，也就是说你要在互联网上去写一些，这种 Mechanical Turk，就是一些互联网的，这种用户 feedback 的这种系统，然后一些用户反馈系统。用它来指导一些，机器学习跟这种，计算机视觉的一些任务，比如说 Segmentation，这件事情，我就没做好，我还对我的 mentor 心怀愧疚，当然他们也都很友善，但这，这也是一次让我体会到其实 it's OK。没有做出来什么东西，其实也不是 the end of the world，也不是世界末日。但那段时间其实还是很消沉的，这段消沉期，一直持续到了我去 [Meta][meta] 实习。是在学校里，好像也没有做出来什么有趣的工作，后来到了 [Meta][meta] 之后，之后然后，实习只有可能三个月的时间。我在前两个月基本上也，我在 explore 一些东西，在探索一些东西，也是跟神经网络的架构相关，的一些东西，但也没探索出来什么东西。什么名堂？突然一个转机发生了，这个，[何恺明][kaiming-he]（残差神经网络主要发明人） 加入了 [FAIR][meta-ai-research]。在那个时候。所以这大概是我实习的一半的时候。[何恺明老师][kaiming-he]然后加入了 [FAIR][meta-ai-research]，然后成为了一个，full-time 的研究员。所以，那是我第一次跟[恺明][kaiming-he]共事，那是我第一次，向他学习。然后，那时候也建立了一些深厚的友情。我认为，因为那时候他第一次来美国，他第一次，他有很多第一次是在 [FAIR][meta-ai-research] 的时候，发生的。他那时候也不会开车，第一次来美国也人生地不熟。我要开着车带着他出去吃饭，然后送他回家有时候，但他后来也会自己学车了，他也不会用 Linux，这件事情也很有意思，因为在微软的时候他们都用，他们只能用 Windows 来编程。所以我要教[恺明][kaiming-he]怎么样用这些 Cluster，怎么样用 Linux。但你会发现，[恺明][kaiming-he]，这个是[恺明][kaiming-he]，不是没有原因的。我认为，像他身上真的是有这种，可以叫它光环，或者我可以叫它某种，现实扭曲引力场。这其实是 [Steve Jobs][steve-jobs] 的说法，也就是说，[Steve Jobs][steve-jobs] 周围的人受到他的这个影响，都会觉得现实发生了扭曲。有些本来完全做不到的事情，现在慢慢竟然可以做到了。我认为[恺明][kaiming-he]也是有这样的魔力的。所以这是我第一次看到说，一个真正顶尖的研究员是怎么样做 research 的。
+
+[00:56:27,117 --> 00:59:23,726] NOTE: [何恺明][kaiming-he]是计算机视觉和深度学习领域的重要学者，现任 [MIT EECS][mit-eecs] 终身副教授，并兼职担任 [Google DeepMind][google-deepmind] Distinguished Scientist。他本科毕业于[清华大学][tsinghua-university]，博士毕业于[香港中文大学][cuhk]，曾任职于[微软亚洲研究院][microsoft-research-asia]和 [Facebook AI Research][meta-ai-research]。他最知名的贡献是提出 [ResNet][resnet]，使极深神经网络训练变得可行，显著推动了图像分类、检测和分割任务的发展。其代表工作还包括 [Mask R-CNN][mask-r-cnn]、[Faster R-CNN][faster-r-cnn]、[He Initialization][he-initialization] 等，在学术界和工业界影响极大。![何恺明](/interviews/media/01-xiesaining/05-hekaiming.jpg)
 
 [00:59:23,726 --> 00:59:28,264] 张小珺: 你那个时候实习期只剩一个月了，你们为什么能够建立起深厚的友谊？
 
@@ -460,6 +472,8 @@
 [01:18:49,725 --> 01:19:02,170] 张小珺: 因为如果你想找教职的话，你留在[何恺明][kaiming-he]的那个团队里面，你可能会能发更多的 paper，你有更多的结果，在那个时间段，它可能能够更加顺畅的，通往一个确定的目的。
 
 [01:19:02,671 --> 01:19:44,880] 谢赛宁: 我不确定是不是一个确定目的，我真的我认为很玄学的。所有这些决策都是说，我只考虑的事情是我应该去做哪里。做我最想做的事情，最好是跟我最想要共事的人一起，共事。我认为，其实这个想法非常单纯。所以在当初找工作也是，其实我，也四处都在找，各大厂也有不少 offer。我之前也讲过我当初面试 [OpenAI][openai] 的经历，其实还是很酷的。总之在一个小黑屋里面，关了五六个小时，做一道题目，出来的时候天都黑了。我认为我对那个体验也比较奇妙，感觉也比较奇妙，但那时候其实我。
+
+[01:19:02,671 --> 01:19:44,880] NOTE: [谢赛宁后来在 X 上贴出][saining-openai-interview-tweet]当年 [OpenAI][openai] 面试题的手写页。题目围绕 Cross-Entropy Method 中的 variance collapse，要求候选人实现实验、写一页数学说明，并进行白板讨论。这个细节对应他这里说的“小黑屋里面，关了五六个小时，做一道题目”。![谢赛宁 OpenAI 面试题手写页](/interviews/media/01-xiesaining/06-xiesaining-openai-interview.png)
 
 [01:19:44,880 --> 01:19:45,447] 张小珺: 谁是面试官在 [OpenAI][openai]？
 
@@ -703,6 +717,8 @@
 
 [01:51:20,807 --> 01:54:31,965] 谢赛宁: 大约 18 年 19 年这个时间，然后，所以他从一开始对这件事情的认定。也就是说，我们一定需要把模型变得更大，把数据变得更大，这样就能够得到一个，就能推演到一个更好的结果。我认为[恺明][kaiming-he]很早很早之前，就有这样的一个 vision，然后，所以我们也，在这条路上有一些努力，所以。一开始大家讨论[自监督学习][self-supervised-learning]，包括 [Yann][yann-lecun]，他是一个 big advocate，也就是说他是，他是非常在乎这个，[自监督学习][self-supervised-learning]。他有这个经典的这个蛋糕的这个 analogy，这个比喻，底层是你的，蛋糕的这个 body。这一部分必须是 [Self Supervised Learning][self-supervised-learning]，在上面你可以有一个 Supervised Learning，这一部分是它的 icing on the cake，你蛋糕上的这些奶油，然后再往上有一个 Reinforcement Learning。它只是 Cherry on top，它只是上最上面的一点樱桃。这个蛋糕上面的每一层其实都很重要，但是它没有主次之分。如果你没有蛋糕的这个底座，你是没办法只靠着上面的一个 Cherry，能够通向这个智能的。所以因为我们在 [FAIR][meta-ai-research]，因为我们做 vision，所以其实我们很早就在关注这件事情。但这一部分 research 的进程是这样的。也就是说大概在 15 年 16 年的时候，大家已经开始知道[自监督学习][self-supervised-learning]，其实是 vision 的一个未来，所以那时候，大家会 design，就设计各种各样的。我们叫做 pretext task，或者说它是一种代理的，这种 objective 代理的目标，一些代理任务，也就是说，什么是[自监督学习][self-supervised-learning]？也就是说我现在没有一个 label 直接给你，不像 [ImageNet][imagenet] 一样，我有 1000 个 classes，那我可以直接去训练，一个 supervised 的 classifier。通过这种方式拿到这个 representation，在过去的时代，其实大家做的都是这件事。通过 1000 个 class label by the way，这一千个 class 里面有两百个狗的，不同的这个种类。即使这样，这也是为什么 [ImageNet][imagenet] 很强：即使是这样的分布，它还是能让，我们的神经网络学到很好的表征。我认为这件事情非常厉害，但是大家也能看到这件事情的局限性。一旦你所有的事情都只是 Supervised Learning，很多东西你是没办法去刻画的。因为它学到的东西。比如我们现在坐在这里，我们看有这些椅子，我们现在有大量的这些图片，有不同的椅子。有些椅子可能比较正常，是在我们这种 studio 里的椅子，有可能是在家里的椅子，有可能是一些这种设计师的椅子。或者说是一个 avocado chair，一个长得像牛油果的椅子。那对于监督学习来说，你需要把所有的这一切，映射到一个 label，这个 label 就叫做椅子。所以你的 network 其实要学的，这个映射，是非常困难的。
 
+[01:51:20,807 --> 01:54:31,965] NOTE: [自监督学习][self-supervised-learning] 用数据自身构造训练信号，不依赖人工类别标签。[Yann LeCun][yann-lecun] 的“蛋糕”比喻把它放在智能系统的底座位置，因为大量感知经验通常没有明确标签，却决定模型能否学到稳健表征。
+
 [01:54:32,332 --> 01:54:34,834] 张小珺: 而且它是无穷的映射。
 
 [01:54:34,834 --> 01:55:22,448] 谢赛宁: 它是无穷的映射，所以它只能要么去 memorize，要么去记忆。背诵下你见过的所有的椅子，要么就，这个，通过一些我们叫做 spurious correlation，一些假的一些相关性，来告诉你是一个椅子，比如说它也许没有看这把椅子，但是看的是椅子背后的背景。或者说它觉得，所有的椅子都会在一个桌子旁边。所以它基于这个来有一个决策的分界，然后说，这是一把椅子。但这件事情不是我们想要的。我们想要做到的事情，是从这种非常 diverse 的 visual knowledge 里面，visual observation 里面去能够有某种 common sense，有某种这种直觉。
@@ -718,6 +734,8 @@
 [01:58:41,380 --> 01:58:42,482] 张小珺: 也就是动量对比学习。
 
 [01:58:42,482 --> 02:01:39,959] 谢赛宁: 这个中文名字听起来都很有趣，是的，动量对比学习。其实我认为，不用深究它里面，具体的这些技术细节，因为现在看起来，已经很多东西已经不重要了。但它总之，它是第一个把这种叫做对比学习的，这样的一个框架，把它真正做 work 的一篇论文。什么是对比学习？也很简单。也就是说我们现在在这个 Representation Space，这个表征的空间里面。有不同的点。这些点可能是同样的一个 object，有可能是完全不一样的 object。比如说，我有好几张关于这个椅子的图片。也有一些可能是桌子的，图片或者是一只猫猫狗狗的图片，这些图片都不一样。但在这个空间里面，我们能够去度量它们的距离，或者说我们知道，这些所有的不同的椅子。它的这种图片应该离得更近，它的 representation 应该离得更近，但是一个椅子跟一只猫，他们距离应该更远。所以这是一个对比，学习的一个基本的一个逻辑。这件事情，其实也不新，这件事情，也已经做了很多年了。By the way，这件事情，初期的一些论文，其实还是 [Yann][yann-lecun] 第一个跟他的学生，一起做到的。对很有意思。当然在解决的问题，不直接是 Representation Learning 的问题，而是一些 Metric Learning 的问题，一些度量学习的问题。但是没关系，这大概是 2019 年的时时候，我认为我们又赋予了这个对比学习，一些新的意义。但，这件事情也不是这个横空出世，其实在之前，整个领域已经慢慢在往这个方向，去拓展。比如说有一篇 paper 叫做 CPC，还有一篇 paper 叫叫这个 Memory Bank，这两篇 paper 已经是在朝这个方向。通过对比学习来做，[自监督学习][self-supervised-learning]这条路线上已经走了几步。这，我就不得不佩服[恺明][kaiming-he]的本事了。我认为，这也是，一个时间点让哇，这个一个顶尖的研究员，然后，或者说不能说顶尖的研究员。我认为[恺明][kaiming-he]在我心里面，最厉害的研究员。他到底平时怎么做事情的，好，有好几点，也许我们可以简单聊一聊。我认为他是有某种极致的专注力，然后，这个专注力能够让他有某种心流。叫做这种 mind flow。他能够沉浸在这个问题上，不需要考虑这个世界上发生的，所有的其他事情。我特别佩服这一点。另外一件事情是。
+
+[01:58:42,482 --> 02:01:39,959] NOTE: [MoCo][moco] 是[何恺明][kaiming-he]、[谢赛宁][saining-xie]等人在 2019 年提出的动量对比学习框架，用动态字典和动量编码器稳定对比学习训练。它的重要性不只在单个技巧，而在于证明对比学习可以在视觉自监督预训练中接近甚至超过监督预训练。
 
 ## 11 何恺明的研究方法
 
@@ -1127,6 +1145,8 @@
 
 [03:40:12,365 --> 03:44:11,671] 谢赛宁: 我认为我不沮丧，完全不沮丧，像我说的。我要感谢这个 LLM，对没有 LLM 的话，Vision 也没办法拓展到现在这种真正的，多模态智能的这样一个大的 scope。就其实在视觉的发展史看来，也有两根轴，可以画这根轴。是说在古早时期，在最 early 的 stage，计算机视觉所要 handle 的事情，永远是这些最单一，最具体最简单的任务。比如说 MNIST 的数字识别对，1234 我要把它，显示出来到底是数字几？到后面有一些小的数据集，像 CIFAR 这样的数据，是一个 32*32 的像素，上面的十分类的问题，是猫是狗，是汽车是飞机，然后再到后面。像有 [ImageNet][imagenet] 这样的 dataset 出现，它变成了一个在 256 乘 256 的这种 level。做 classification 的问题。但这些时候，还比较相对来说比较可控。再到后面，会有 detection segmentation，这种更结构化的这种，这种认知的过程。这些是 composition，然后再到后面。这根轴继续往前推演就会到，比如说这种 Multimodal large-scale model 兴起。当因为多模态的介入，我们可可以很容易的放弃很多，这些具体的，比较固化的这种 task 的 design，这种任务的 design。那我现在就可以拿着一张图，问各种各样的问题，suppose 这件事情，语言作为一个很好的 interface，它是可以，或者语言作为一种很好的界面，它是可以去帮你解决很多问题的，所以你可以看到这个时间，这个轴，这这根轴，是从 task 从简单到复杂的，的这样一根轴。但也是一个语言开始，慢慢介入到 computer vision 的一根轴。那么，这里面会有两个问题。第一件事情是语言进入到 vision 之后，带给我们巨大的好处。让我们可以很自由的定义问题，我们可以问任何事情，我们可以得到任何答案。但第二个很重要的风险在于，语言的介入导致，你对语言的依赖也变多了。所以导致所谓很多的多模态的时候，这些任务其实跟语，跟视觉没有什么关系，纯粹是一个语言的问题。从这这个角度来讲，那我当然是觉得对，vision 好像变得边缘化了。但我当然不会觉得沮丧，这是一个巨大的机会。因为等到最后，如果你现在解决的问题，比较简单的时候，那无所谓。你用语言能解决的问题，那就用语言去解决就好了？虽然我没有看到，我没有办法做所谓的 grounding，就我没有办法知道。你描述给我的这个红色的苹果，到底什么，什么叫做红色，到底什么叫做苹果？但 somehow 通过这种统计信息，在语言里面，我还是能够去完成一些决策的任务，这件事情你们无可厚非，我认为没有问题。但这里面暗藏的巨大的机会是说，等到真的有一天，我们需要去 deal with 这种真实世界里面，真实的 task，去 build 某种真实的 intelligence。那现在这种不够完美的这种，这种视觉的表征，就会是一个重大的缺陷。所以[杨立昆][yann-lecun]的说法是，现在大家都是只是拄着拐杖，这个拐杖就是语言模型本身，虽然你可以走走路，然后你会觉得，我还走的很好的，但是你可能跑不起来。你也没有办法去参加这个奥运会，因为你有一根腿，这部分是所谓视觉的表征这一根腿，现在还是，还是不够好。
 
+[03:40:12,365 --> 03:44:11,671] NOTE: 这一段把计算机视觉的发展分成两条线：任务从 [MNIST][mnist]、[CIFAR][cifar]、[ImageNet][imagenet] 走向开放式多模态问答；语言从外部标注变成视觉系统的交互界面。谢赛宁的担忧是，语言提升了表达自由度，也可能让视觉表征本身的问题被遮住。
+
 [03:44:12,338 --> 03:44:16,476] 张小珺: 为什么你说是真实的 intelligence，LLM 为什么不是真实的 intelligence。
 
 [03:44:16,743 --> 03:44:22,615] 谢赛宁: 因为我认为，LLM 是虚拟的 intelligence。
@@ -1270,6 +1290,8 @@
 [04:25:46,897 --> 04:25:55,506] 张小珺: 关于[世界模型][world-models]，现在好像它的定义是没有收敛的，比如说你们定义的[世界模型][world-models]，和[李飞飞][fei-fei-li]他们团队定义的[世界模型][world-models]，的区别是什么？
 
 [04:25:55,806 --> 04:29:23,981] 谢赛宁: 所以我刚刚阐述的，其实都是在我们定义下的时间模型。但我认为现在遇到很多的问题是，说这个时间模型不好定义。原因，其实是因为它不是一个技术路线，它不是一个算法，它是一个目的，我们所有人，不管你在做 LLM，还是做什么 Video Diffusion Model，还是做这个 [Gaussian Splatting][gaussian-splatting]，我们所有人，都在通往[世界模型][world-models]的道路上。所以，我说，有时候这些竞争，或者说这些 arguments，我认为再过不了多久，可能过 1 到 2 年时间，都会显得异常可笑。因为我们其实都在往这条路线发展。每个人也都知道，这件事情是应该，通向，应该，是正确的道路，只是，大家从不同的方向在思考这个问题。那比如说，在我们定义下，或者说我先说其他人定义？比如说，对于一个 Video Diffusion Model 的 company。比如像 Sora，像 ByteDance 的模型，像 [Genie][genie]，然后，所有这些模型。包括 Runway，Luma。每一个做这种生成模型的公司，都在做这件事情，都在 position themselves as a [World Model][world-models] company。但他们其实还是主要聚焦在，构建一个世界模模型的模拟器上，一个世界的模拟器上，所谓的 world simulator。他们的目标还是，能够渲染出来足够好看的视频，使得它能够有某种一致性，能够有足够长的这种内容。等等并且你可以在在上面施加控制。你可以选择，像 [Genie][genie] 一样。向前走两步，向后走两步。你要保证你有一定的 memory，或者 whatever。这件事情，是他们的这种 world，world simulator，或者说这种生成派的 world simulator，想要解决的事情。，[飞飞老师][fei-fei-li]那边，在 World Labs 里面，我认为它更像是一个 Frontend，一个 asset 的一个 interface，这件事情也很重要，因为它是一个强 3D 的 representation。所以，By the way，也要恭喜，他们最近不也刚刚融资成功。如果你可以看到，他们融资的这些 lead investor，他们在讨论的人。比如说我看到新闻，Autodesk 给他们投了 2 亿美美元。那，Autodesk 是一个什么样的公司？Autodesk 是一个做 3DCAD，或者 whatever design 这样一个公司。所以在这个场景里面，你需要有一个非常具象化的 3D 的，一个。你也，可以叫它表征，它也是某种表征，但它是说你这个东西，不是一个抽象的概念？它不是藏在你的参数里面，它得要有 explicit 的 3D 的这种，形式在那？这样的话，你才能够在这个空间里面，去掌握某种空间智能，你才能够在这个空间里面去探索。并且你能够 one hundred percent 的确定，你不会出错。对于一个 World Simulator，Generative World Simulator 来说，这件事情，不一定，虽然你可以通过更长的 context，有更好的 memory，但它是它是不能不能保证的。我们想要做的事情，其实更像是，要去打造这样一个 predictive brain，对就是。我们，我们看待这个问题的核心，还是说怎么样去提升，智能本身。
+
+[04:25:55,806 --> 04:29:23,981] NOTE: 这里的[世界模型][world-models]被定义为目标，而不是单一技术路线。生成视频公司更接近 world simulator，[World Labs][world-labs] 这类路线更强调显式 3D 表征，[AMI Labs][ami-labs] 更关注可预测、可规划、可用于行动的 predictive brain。
 
 [04:29:24,781 --> 04:29:28,185] 张小珺: 那这意味着，你觉得 LLM 是不够智能的？
 
@@ -1683,6 +1705,8 @@
 
 [06:02:54,886 --> 06:06:31,769] 谢赛宁: 我认为进展到了，我们现在有事情可以做，并且我们还觉得会有一些，很快会有一些很 promising 结果的，这样一个地步，但这件事情，具体的是什么，我们可以过几个月之后，可以再聊，但是，这件事情，其实外面的人对这个公司，对于 [Yann][yann-lecun] 还有一个错误的认知。就大家其实不知道什么是 JEPA，然后，我个人也经历了好几个阶段，我从质疑 JEPA 到理解 JEPA，再到成为 JEPA，这样人生的三个 stage。这件事情我认为也很好玩的，因为一开始质疑 JEPA，是因为我们刚开始做 [self-supervised learning][self-supervised-learning]，做 [MoCo][moco] 做 [MAE][mae]，JEPA 好像是 yet another [self-supervised learning][self-supervised-learning] algorithmthat's it 然后后来慢慢理解 JEPA，是因为觉得 JEPA 其实，比我们想象的走的要更深，它里面会有很多背后的逻辑，有很多数学的原理，并且我们也需要有人在这条路线上，继续坚守下去，因为我们当初发现东西，Scale up 不起来，然后就不做。但后来 JEPA，比如说包括我，举个简单例子，比如最近有篇 paper 叫了 LeJEPA，他们就以一个非常严格的证明说，如果你要有一个很好的 representation，如果你想要让这个 representation，agnostic to your downstream task，那它一定是一个 isotropic Gaussian distribution，这有点技术（技术层面），它本质上也就是说，它是对这种表征的，某种性质的一个刻画，我发现，这件事情其实还是有它的道理，真正成为 JEPA，是因为我认为 JEPA 不是一个模型。JEPA 不是一个具体的算法，JEPA 是整个一套的 cognitive architecture，一套认知体系，这件事情，是 [Yann][yann-lecun] 在他的 2022 年的 paper 里面，写到的事情，所以这个认知体系在我看来，是通往一个智能，universal 的智能体的。一个在我现在看起来，一个很合理的道路，所以它需要 full JEPA，JEPA 不止是 [Self-Supervised Learning][self-supervised-learning]，它需要有这种 world understanding 的能力，它需要就是理解世界的能力。它需要能够有做 prediction 的能力，它需要有能做 planning 的能力，预测跟计划，对。我认为，这件事情让我对 JEPA 有了新的认知，我发现 JEPA 其实不是一个具体的，像大家外面说的一样，好像说 [Yann][yann-lecun] 有这样一个方法，他一定要基于这样的方法，然后把它做成一个什么样的事情，不是这样的，JEPA 是一个非常广阔的海洋，在这个海洋里面可以有好多好多的船。在上面，开，然后，最后，这个整个一套系统会有很多的协作，并且 LLM 也是其中的一部分。所以这件事情让我认为，这个公司可以做，并且有很大的机会可以做成功，原因他不是把事情做小了，现在很多 LLM 的 setting 下面，大家是把事情往小里做，但 [Yann][yann-lecun] 的公司是刻意的把事情做大，他有足够的空间让我们去做探索，让我们去做 scale up，直到最后。我们可以有一个某种新的 breakthrough，这件事情到底什么时候来，会不会发生，我们没办法判断，但我认为这，是一条我愿意投入我的生命去，去走的路。
 
+[06:02:54,886 --> 06:06:31,769] NOTE: [JEPA][jepa] 是 [Yann LeCun][yann-lecun] 推动的 Joint Embedding Predictive Architecture 思路，核心是预测表征空间里的未来或缺失部分，而不是直接重建像素。谢赛宁强调的“认知体系”指它还需要理解、预测、规划等模块协作。
+
 [06:06:32,971 --> 06:06:36,607] 张小珺: 创业以后感觉怎么样？真实的感受？
 
 [06:06:36,607 --> 06:07:17,281] 谢赛宁: 有变忙变累，有变忙变累，当然是有了，我认为会有很多 ups and downs，会有，很多繁琐的事情，但是也会因为，看着这个公司一点点成长起来，看着一些，因为我们有 4 个 office，有这么多的这个 legal problemwhatever，这么多的这种 internal friction，慢慢就是这种本来的，内部的摩擦，慢慢变得润滑，这个过程其实也是很开心的，之后在这个过程中，我们也得到了很多人的帮助，所以，暂时看下来，我做了一个正确的选择。
@@ -1812,42 +1836,71 @@
 # Reference
 [saining-xie]: https://www.sainingxie.com/
 [yann-lecun]: https://yann.lecun.com/
+[geoffrey-hinton]: https://awards.acm.org/award_winners/hinton_4791679
+[yoshua-bengio]: https://awards.acm.org/award_winners/bengio_3406375
+[turing-award-2018]: https://www.acm.org/media-center/2019/march/turing-award-2018
 [ami-labs]: https://amilabs.xyz/
 [ilya-sutskever]: https://ssi.inc/
 [openai]: https://openai.com/
+[saining-openai-interview-tweet]: https://x.com/sainingxie/status/1961232442720706705
 [past-lives]: https://www.imdb.com/title/tt13238346/
+[dumbo]: https://en.wikipedia.org/wiki/Dumbo,_Brooklyn
+[brooklyn-bridge]: https://www.nyc.gov/html/dot/html/infrastructure/brooklyn-bridge.shtml
+[manhattan-bridge]: https://www.nyc.gov/html/dot/html/infrastructure/manhattan-bridge.shtml
 [nyu]: https://www.nyu.edu/
 [martin-scorsese]: https://www.imdb.com/name/nm0000217/
 [world-models]: https://arxiv.org/abs/1803.10122
 [shen-enshao]: https://acm.sjtu.edu.cn/%E7%8F%AD%E7%BA%A7%E4%BB%8B%E7%BB%8D/%E4%BB%BB%E8%AF%BE%E6%95%99%E5%B8%88/%E5%B8%B8%E4%BB%BB%E6%95%99%E5%B8%88/%E6%B2%88%E6%81%A9%E7%BB%8D
 [what-is-mathematics]: https://academic.oup.com/book/52817
 [richard-courant]: https://math.nyu.edu/people/profiles/COURANT_Richard.html
+[herbert-robbins]: https://en.wikipedia.org/wiki/Herbert_Robbins
+[ian-stewart]: https://ianstewartjoat.weebly.com/
 [courant]: https://cims.nyu.edu/
 [bcmi-sjtu]: https://bcmi.sjtu.edu.cn/index.cn.html
 [cvpr]: https://cvpr.thecvf.com/
-[sjtu-survival-manual]: http://www.houxiaodi.com/assets/misc/manual.pdf
+[sjtu-survival-manual]: https://github.com/SurviveSJTU/SurviveSJTUManual
+[gao-kao-si-wei]: https://github.com/SurviveSJTU/SurviveSJTUManual/blob/master/li-zhi-pian/shi-bai-de-si-wei-fang-shi/gao-kao-si-wei.md
+[sjtu]: https://www.sjtu.edu.cn/
 [caltech]: https://www.caltech.edu/
 [yong-yu]: https://acm.sjtu.edu.cn/%E7%8F%AD%E7%BA%A7%E4%BB%8B%E7%BB%8D/%E4%BB%BB%E8%AF%BE%E6%95%99%E5%B8%88/%E5%B8%B8%E4%BB%BB%E6%95%99%E5%B8%88/%E4%BF%9E%E5%8B%87
 [microsoft-research-asia]: https://www.microsoft.com/en-us/research/lab/microsoft-research-asia/
 [yi-ma]: https://people.eecs.berkeley.edu/~yima/
 [jian-sun]: https://www.microsoft.com/en-us/research/people/jiansun/
 [kaiming-he]: https://people.csail.mit.edu/kaiming/
+[mit-eecs]: https://www.eecs.mit.edu/
+[tsinghua-university]: https://www.tsinghua.edu.cn/en/
+[cuhk]: https://www.cuhk.edu.hk/english/
 [nus]: https://www.nus.edu.sg/
+[perception-preserving-projections]: https://www.bmva-archive.org.uk/bmvc/2013/Papers/paper0009/index.html
+[bmvc-2013]: https://www.bmva-archive.org.uk/bmvc/2013/ToC.html
 [shuicheng-yan]: https://yanshuicheng.info/
 [alexnet]: https://papers.nips.cc/paper_files/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html
 [imagenet]: https://www.image-net.org/
+[retina-cns]: https://en.wikipedia.org/wiki/Retina#:~:text=the%20retina%20is%20considered%20part%20of%20the%20central%20nervous%20system
+[tsinghua-yao-class]: https://iiis.tsinghua.edu.cn/ybbks/ybpy.htm
+[andrew-yao]: https://amturing.acm.org/award_winners/yao_1611524.cfm
 [zhuowen-tu]: https://pages.ucsd.edu/~ztu/
 [ucla]: https://www.ucla.edu/
 [ucsd]: https://ucsd.edu/
+[la-jolla]: https://en.wikipedia.org/wiki/La_Jolla
+[salk-institute]: https://www.salk.edu/
+[scripps-research]: https://www.scripps.edu/
 [serge-belongie]: https://www.belongielab.org/
 [song-chun-zhu]: https://www.stat.ucla.edu/~sczhu/
 [fei-fei-li]: https://profiles.stanford.edu/fei-fei-li
 [dsn]: https://arxiv.org/abs/1409.5185
 [svm]: https://en.wikipedia.org/wiki/Support_vector_machine
 [resnet]: https://arxiv.org/abs/1512.03385
+[mask-r-cnn]: https://arxiv.org/abs/1703.06870
+[faster-r-cnn]: https://arxiv.org/abs/1506.01497
+[he-initialization]: https://arxiv.org/abs/1502.01852
 [hed]: https://arxiv.org/abs/1504.06375
 [marr-prize]: https://www.thecvf.com/?page_id=413
+[ieee-fellow]: https://www.ieee.org/membership/fellows/index.html
 [nec-labs-america]: https://www.nec-labs.com/
+[nec-corporation]: https://www.nec.com/
+[princeton-nj]: https://www.princetonnj.gov/
+[san-jose]: https://www.sanjoseca.gov/
 [adobe]: https://www.adobe.com/
 [meta]: https://about.meta.com/
 [google-research]: https://research.google/
@@ -1868,6 +1921,8 @@
 [unsupervised-learning]: https://en.wikipedia.org/wiki/Unsupervised_learning
 [context-encoders]: https://arxiv.org/abs/1604.07379
 [moco]: https://arxiv.org/abs/1911.05722
+[mnist]: http://yann.lecun.com/exdb/mnist/
+[cifar]: https://www.cs.toronto.edu/~kriz/cifar.html
 [dit]: https://arxiv.org/abs/2212.09748
 [vit]: https://arxiv.org/abs/2010.11929
 [nerf]: https://arxiv.org/abs/2003.08934
@@ -1888,6 +1943,8 @@
 [rae]: https://arxiv.org/abs/2510.11690
 [richard-sutton]: http://incompleteideas.net/
 [genie]: https://arxiv.org/abs/2402.15391
+[world-labs]: https://www.worldlabs.ai/
+[jepa]: https://openreview.net/forum?id=BZ5a1r-kVsf
 [ami-position-paper]: https://openreview.net/pdf?id=BZ5a1r-kVsf
 [jojo]: https://www.imdb.com/title/tt2359704/
 [pascale-fung]: https://ece.hkust.edu.hk/pascale

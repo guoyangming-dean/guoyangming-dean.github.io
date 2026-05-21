@@ -1337,10 +1337,34 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
     margin: 0;
   }
 
+  .interview-note-bubble p + p {
+    margin-top: 0.48rem;
+  }
+
   .interview-note-bubble a {
     color: var(--color-purple-500);
     text-decoration: underline;
     text-underline-offset: 3px;
+  }
+
+  .interview-note-bubble img {
+    background: color-mix(in oklab, var(--muted) 72%, transparent);
+    border: 1px solid color-mix(in oklab, var(--border) 76%, transparent);
+    border-radius: 0.42rem;
+    display: block;
+    height: auto;
+    margin: 0.58rem 0 0.38rem;
+    max-height: 10rem;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .interview-note-bubble img:first-child {
+    margin-top: 0;
+  }
+
+  .interview-note-bubble img:last-child {
+    margin-bottom: 0;
   }
 
   @media (max-width: 767px) {
