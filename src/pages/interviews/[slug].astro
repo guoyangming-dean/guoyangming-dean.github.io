@@ -1113,16 +1113,14 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
     });
   }
 
-  function playerSkipFloatingTopic(button) {
-    const skipSeconds = Number(button.getAttribute("data-skip"));
-
+  function playerSkipFloatingTopicBySeconds(skipSeconds) {
     if (
       !currentTopicItem ||
       !(floatingTopicPlayButton instanceof HTMLButtonElement) ||
       !Number.isFinite(skipSeconds) ||
       !(audio instanceof HTMLAudioElement)
     ) {
-      return;
+      return false;
     }
 
     const currentInTopic = topicContainsTime(currentTopicItem, audio.currentTime);
@@ -1139,6 +1137,11 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
       restart: false,
       seekTime,
     });
+    return true;
+  }
+
+  function playerSkipFloatingTopic(button) {
+    return playerSkipFloatingTopicBySeconds(Number(button.getAttribute("data-skip")));
   }
 
   if (audio instanceof HTMLAudioElement && interviewPage) {
@@ -1192,12 +1195,22 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
         return;
       }
 
-      if (event.key === "ArrowRight" && keyboardMoveDialogue(1)) {
+      if (event.key === "ArrowDown" && keyboardMoveDialogue(1)) {
         event.preventDefault();
         return;
       }
 
-      if (event.key === "ArrowLeft" && keyboardMoveDialogue(-1)) {
+      if (event.key === "ArrowUp" && keyboardMoveDialogue(-1)) {
+        event.preventDefault();
+        return;
+      }
+
+      if (event.key === "ArrowRight" && playerSkipFloatingTopicBySeconds(15)) {
+        event.preventDefault();
+        return;
+      }
+
+      if (event.key === "ArrowLeft" && playerSkipFloatingTopicBySeconds(-15)) {
         event.preventDefault();
       }
     });
