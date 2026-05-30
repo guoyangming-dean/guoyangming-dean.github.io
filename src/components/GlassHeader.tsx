@@ -17,7 +17,7 @@ export default function GlassHeader() {
 
   return (
     <header className="sticky z-50 w-full backdrop-blur-md backdrop-filter bg-background/70 dark:bg-background/40 border-b border-border/40 supports-[backdrop-filter]:bg-background/60">
-      <div className="container max-w-3xl mx-auto p-4 flex justify-between items-center">
+      <div className="container max-w-3xl mx-auto px-4 py-2 flex justify-between items-center">
         <motion.a
           className="flex items-center text-lg font-medium"
           href="/"

@@ -38,17 +38,7 @@ function relationshipGraphNodes(nodes: InterviewRelationshipNode[]) {
   <main class="min-h-screen">
     <section class="py-12 md:py-16">
       <div class="container max-w-3xl mx-auto px-6 md:px-4">
-        <div class="mb-10">
-          <a
-            href="/"
-            class="inline-flex items-center text-sm text-muted-foreground hover:text-purple-500 transition-colors mb-4"
-          >
-            Back to Portfolio
-          </a>
-          <h1 class="text-3xl font-bold mb-3">Interviews</h1>
-          <p class="text-muted-foreground max-w-2xl">
-            Interview transcripts with audio segments.
-          </p>
+        <div class="interview-index-heading mb-10">
           <p class="interview-rights-notice">
             版权说明：本页仅为个人学习记录。原始访谈内容的著作权及相关权利归原权利人所有。本站不提供商业使用，不替代原始发布渠道，不主张任何原始内容权利。如涉及权利问题，请联系我处理。
           </p>
@@ -133,13 +123,14 @@ function relationshipGraphNodes(nodes: InterviewRelationshipNode[]) {
 
   .interview-card {
     background: color-mix(in oklab, var(--background) 86%, transparent);
-    border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+    border: 1px solid color-mix(in oklab, var(--muted-foreground) 26%, var(--border));
     border-radius: 0.5rem;
     display: flex;
     flex-direction: column;
     min-height: 14rem;
     overflow: hidden;
     text-decoration: none;
+    box-shadow: 0 0.45rem 1.2rem color-mix(in oklab, var(--foreground) 5%, transparent);
     transition:
       background-color 0.2s ease,
       border-color 0.2s ease,
@@ -157,6 +148,10 @@ function relationshipGraphNodes(nodes: InterviewRelationshipNode[]) {
 
   .interview-card--plain {
     min-height: 0;
+  }
+
+  .interview-index-heading .interview-rights-notice {
+    margin-top: 0;
   }
 
   .interview-card-header {

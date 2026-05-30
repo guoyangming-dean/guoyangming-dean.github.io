@@ -4,7 +4,11 @@
 
 ### Introduction
 
-本稿整理谢赛宁与张小珺的访谈，按阶段呈现其成长经历、交大与 PhD 选择、计算机视觉研究、FAIR 与 NYU 阶段、代表工作、世界模型判断，以及与 Yann LeCun 共同创业的动机。
+-  [AMI Labs][ami-labs]
+- New York University
+- Facebook AI Research
+- 加州大学圣迭戈分校 UCSD
+- 上海交通大学
 
 ### Relationship
 

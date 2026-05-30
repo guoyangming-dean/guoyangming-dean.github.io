@@ -7,6 +7,7 @@ export interface InterviewEntry {
   slug: string;
   title: string;
   introduction: string;
+  introductionMarkdown: string;
   relationshipCenter: string;
   relationshipCenterHref?: string;
   relationshipNodes: InterviewRelationshipNode[];
@@ -67,6 +68,7 @@ export interface InterviewSourceParts {
 export interface InterviewAbstractParts {
   content: string;
   introduction: string;
+  introductionMarkdown: string;
   relationshipCenter: string;
   relationshipCenterHref?: string;
   relationshipNodes: InterviewRelationshipNode[];
@@ -121,6 +123,15 @@ function markdownStripInline(value: string) {
 
 function markdownNormalizeReferenceId(value: string) {
   return value.trim().replace(/\s+/g, " ").toLowerCase();
+}
+
+function markdownStripBlock(value: string) {
+  const normalizedValue = value
+    .split(/\r?\n/)
+    .map((line) => line.trim().replace(/^[-*+]\s+/, "").replace(/^\d+[.)]\s+/, ""))
+    .join("\n");
+
+  return markdownStripInline(normalizedValue);
 }
 
 function markdownParseReferenceDefinitions(referenceDefinitions: string) {
@@ -374,6 +385,7 @@ export function interviewSplitAbstractSection(
     return {
       content: source,
       introduction: "",
+      introductionMarkdown: "",
       relationshipCenter: "",
       relationshipCenterHref: undefined,
       relationshipNodes: [],
@@ -386,6 +398,7 @@ export function interviewSplitAbstractSection(
     return {
       content: source,
       introduction: "",
+      introductionMarkdown: "",
       relationshipCenter: "",
       relationshipCenterHref: undefined,
       relationshipNodes: [],
@@ -394,7 +407,8 @@ export function interviewSplitAbstractSection(
 
   const abstractEndIndex = markdownFindSectionEnd(lines, abstractIndex, abstractHeading.depth);
   const abstractLines = lines.slice(abstractIndex + 1, abstractEndIndex);
-  const introduction = markdownStripInline(markdownExtractSubsection(abstractLines, "Introduction"));
+  const introductionMarkdown = markdownExtractSubsection(abstractLines, "Introduction");
+  const introduction = markdownStripBlock(introductionMarkdown);
   const relationshipMarkdown = markdownExtractSubsection(abstractLines, "Relationship");
   const { relationshipCenter, relationshipCenterHref, relationshipNodes } = parseRelationshipNodes(
     relationshipMarkdown,
@@ -408,6 +422,7 @@ export function interviewSplitAbstractSection(
       .replace(/\n{3,}/g, "\n\n")
       .trimEnd(),
     introduction,
+    introductionMarkdown,
     relationshipCenter,
     relationshipCenterHref,
     relationshipNodes,
@@ -431,17 +446,20 @@ export async function getInterviewEntries(): Promise<InterviewEntry[]> {
 
       const source = await readFile(interviewFileUrl(fileName), "utf-8");
       const { content, referenceDefinitions } = interviewSplitReferenceSection(source);
-      const { introduction, relationshipCenter, relationshipCenterHref, relationshipNodes } = interviewSplitAbstractSection(
-        content,
-        fileName,
-        referenceDefinitions
-      );
+      const {
+        introduction,
+        introductionMarkdown,
+        relationshipCenter,
+        relationshipCenterHref,
+        relationshipNodes,
+      } = interviewSplitAbstractSection(content, fileName, referenceDefinitions);
 
       return {
         name: fileName,
         slug,
         title: readTitleFromMarkdown(fileName, source),
         introduction,
+        introductionMarkdown,
         relationshipCenter,
         relationshipCenterHref,
         relationshipNodes,
