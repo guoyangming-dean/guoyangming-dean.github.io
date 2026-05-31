@@ -768,6 +768,13 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
     width: min(100%, var(--interview-content-width));
   }
 
+  @media (min-width: 768px) {
+    .interview-summary {
+      grid-column: 1 / -1;
+      width: min(100%, calc(var(--interview-content-width) + 1.5rem + 15rem));
+    }
+  }
+
   .interview-summary-introduction {
     color: var(--muted-foreground);
     font-size: 0.95rem;

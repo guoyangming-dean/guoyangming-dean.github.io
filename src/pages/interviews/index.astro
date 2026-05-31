@@ -3,30 +3,14 @@ import Layout from "@/layouts/Layout.astro";
 import GlassHeader from "@/components/GlassHeader";
 import Footer from "@/components/Footer";
 import { getInterviewEntries } from "@/lib/interviews";
-import type { InterviewRelationshipNode } from "@/lib/interviews";
 
 const interviews = await getInterviewEntries();
 
-function relationshipGraphNodes(nodes: InterviewRelationshipNode[]) {
-  const count = nodes.length;
-
-  if (count === 0) {
-    return [];
-  }
-
-  const radius = count > 10 ? 38 : 34;
-
-  return nodes.map((node, index) => {
-    const angle = -Math.PI / 2 + (Math.PI * 2 * index) / count;
-    const radiusOffset = count > 10 && index % 2 === 1 ? -4 : 0;
-    const nodeRadius = radius + radiusOffset;
-
-    return {
-      label: node.label,
-      x: 50 + Math.cos(angle) * nodeRadius,
-      y: 50 + Math.sin(angle) * nodeRadius,
-    };
-  });
+function interviewIntroductionItems(introduction: string, fallback: string) {
+  return (introduction || fallback)
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0);
 }
 ---
 
@@ -52,13 +36,7 @@ function relationshipGraphNodes(nodes: InterviewRelationshipNode[]) {
           ) : (
             <div class="interview-card-list">
               {interviews.map((interview) => (
-                <a
-                  href={interview.href}
-                  class:list={[
-                    "interview-card",
-                    interview.relationshipNodes.length === 0 && "interview-card--plain",
-                  ]}
-                >
+                <a href={interview.href} class="interview-card">
                   <span class="interview-card-header">
                     <span class="interview-card-title">
                       {interview.title}
@@ -66,43 +44,10 @@ function relationshipGraphNodes(nodes: InterviewRelationshipNode[]) {
                   </span>
                   <span class="interview-card-body">
                     <span class="interview-card-introduction">
-                      {interview.introduction || interview.slug}
+                      {interviewIntroductionItems(interview.introduction, interview.slug).map((line) => (
+                        <span class="interview-card-introduction-item">{line}</span>
+                      ))}
                     </span>
-                    {interview.relationshipNodes.length > 0 && (
-                      <span
-                        class="interview-relationship-graph"
-                        aria-label={`${interview.relationshipCenter} relationship graph`}
-                      >
-                        <svg
-                          class="interview-relationship-lines"
-                          viewBox="0 0 100 100"
-                          aria-hidden="true"
-                          preserveAspectRatio="none"
-                        >
-                          {relationshipGraphNodes(interview.relationshipNodes).map((node, index) => (
-                            <line
-                              x1="50"
-                              y1="50"
-                              x2={node.x}
-                              y2={node.y}
-                              style={`--line-index: ${index};`}
-                            />
-                          ))}
-                        </svg>
-                        <span class="interview-relationship-node interview-relationship-node--center">
-                          {interview.relationshipCenter}
-                        </span>
-                        {relationshipGraphNodes(interview.relationshipNodes).map((node, index) => (
-                          <span
-                            class="interview-relationship-node"
-                            style={`left: ${node.x}%; top: ${node.y}%; --node-index: ${index};`}
-                            title={node.label}
-                          >
-                            {node.label}
-                          </span>
-                        ))}
-                      </span>
-                    )}
                   </span>
                 </a>
               ))}
@@ -127,7 +72,7 @@ function relationshipGraphNodes(nodes: InterviewRelationshipNode[]) {
     border-radius: 0.5rem;
     display: flex;
     flex-direction: column;
-    min-height: 14rem;
+    min-height: 0;
     overflow: hidden;
     text-decoration: none;
     box-shadow: 0 0.45rem 1.2rem color-mix(in oklab, var(--foreground) 5%, transparent);
@@ -144,10 +89,6 @@ function relationshipGraphNodes(nodes: InterviewRelationshipNode[]) {
     border-color: color-mix(in oklab, var(--color-purple-500) 32%, var(--border));
     box-shadow: 0 1.1rem 2.6rem color-mix(in oklab, var(--color-purple-500) 12%, transparent);
     transform: translateY(-0.16rem);
-  }
-
-  .interview-card--plain {
-    min-height: 0;
   }
 
   .interview-index-heading .interview-rights-notice {
@@ -178,16 +119,8 @@ function relationshipGraphNodes(nodes: InterviewRelationshipNode[]) {
   }
 
   .interview-card-body {
-    align-items: center;
-    display: grid;
-    gap: 1.1rem;
-    grid-template-columns: minmax(0, 1fr) minmax(18rem, 21rem);
     min-width: 0;
     padding: 1.05rem 1.25rem 1.15rem;
-  }
-
-  .interview-card--plain .interview-card-body {
-    grid-template-columns: minmax(0, 1fr);
   }
 
   .interview-card-title {
@@ -207,113 +140,30 @@ function relationshipGraphNodes(nodes: InterviewRelationshipNode[]) {
 
   .interview-card-introduction {
     color: var(--muted-foreground);
-    display: block;
+    display: grid;
     font-size: 0.92rem;
-    line-height: 1.65;
+    gap: 0.26rem;
+    line-height: 1.36;
     overflow-wrap: anywhere;
   }
 
-  .interview-relationship-graph {
-    display: block;
-    height: 14rem;
-    min-width: 0;
-    overflow: hidden;
-    position: relative;
-    transform: translateZ(0);
-    transition: transform 0.25s ease;
-    width: 100%;
+  .interview-card-introduction-item {
+    background: color-mix(in oklab, var(--muted) 42%, transparent);
+    border: 1px solid color-mix(in oklab, var(--border) 68%, transparent);
+    border-radius: 0.42rem;
+    display: grid;
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    gap: 0.38rem;
+    grid-template-columns: auto minmax(0, 1fr);
+    padding: 0.26rem 0.5rem;
   }
 
-  .interview-card:hover .interview-relationship-graph,
-  .interview-card:focus-visible .interview-relationship-graph {
-    transform: scale(1.025);
-  }
-
-  .interview-relationship-lines {
-    color: color-mix(in oklab, var(--color-purple-500) 42%, var(--muted-foreground));
-    height: 100%;
-    inset: 0;
-    position: absolute;
-    width: 100%;
-  }
-
-  .interview-relationship-lines line {
-    animation: interview-line-breathe 4.8s ease-in-out infinite;
-    animation-delay: calc(var(--line-index) * -0.28s);
-    stroke: currentColor;
-    stroke-width: 0.45;
-    vector-effect: non-scaling-stroke;
-  }
-
-  .interview-relationship-node {
-    animation: interview-node-float 5.6s ease-in-out infinite;
-    animation-delay: calc(var(--node-index) * -0.32s);
-    background: color-mix(in oklab, var(--background) 88%, transparent);
-    border: 1px solid color-mix(in oklab, var(--border) 78%, transparent);
+  .interview-card-introduction-item::before {
+    background: color-mix(in oklab, var(--color-purple-500) 62%, var(--muted-foreground));
     border-radius: 999px;
-    color: var(--muted-foreground);
-    display: block;
-    font-size: 0.74rem;
-    line-height: 1.15;
-    max-width: 6.4rem;
-    overflow: hidden;
-    padding: 0.18rem 0.42rem;
-    position: absolute;
-    text-align: center;
-    text-overflow: ellipsis;
-    transform: translate(-50%, -50%);
-    white-space: nowrap;
-  }
-
-  .interview-relationship-node--center {
-    background: color-mix(in oklab, var(--color-purple-500) 12%, var(--background));
-    border-color: color-mix(in oklab, var(--color-purple-500) 26%, var(--border));
-    color: var(--foreground);
-    font-size: 0.78rem;
-    font-weight: 650;
-    left: 50%;
-    max-width: 7rem;
-    top: 50%;
-  }
-
-  @keyframes interview-node-float {
-    0%,
-    100% {
-      transform: translate(-50%, -50%) translateY(0);
-    }
-
-    50% {
-      transform: translate(-50%, -50%) translateY(-0.24rem);
-    }
-  }
-
-  @keyframes interview-line-breathe {
-    0%,
-    100% {
-      opacity: 0.42;
-    }
-
-    50% {
-      opacity: 0.82;
-    }
-  }
-
-  @media (max-width: 767px) {
-    .interview-card-body {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    .interview-relationship-graph {
-      height: 14rem;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .interview-relationship-graph,
-    .interview-relationship-lines line,
-    .interview-relationship-node {
-      animation: none;
-      transition: none;
-    }
+    content: "";
+    height: 0.28rem;
+    margin-top: 0.55em;
+    width: 0.28rem;
   }
 </style>

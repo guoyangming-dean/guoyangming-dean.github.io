@@ -126,12 +126,13 @@ function markdownNormalizeReferenceId(value: string) {
 }
 
 function markdownStripBlock(value: string) {
-  const normalizedValue = value
+  return value
     .split(/\r?\n/)
-    .map((line) => line.trim().replace(/^[-*+]\s+/, "").replace(/^\d+[.)]\s+/, ""))
+    .map((line) =>
+      markdownStripInline(line.trim().replace(/^[-*+]\s+/, "").replace(/^\d+[.)]\s+/, ""))
+    )
+    .filter((line) => line.length > 0)
     .join("\n");
-
-  return markdownStripInline(normalizedValue);
 }
 
 function markdownParseReferenceDefinitions(referenceDefinitions: string) {
