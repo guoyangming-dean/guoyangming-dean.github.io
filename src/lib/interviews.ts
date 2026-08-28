@@ -250,8 +250,8 @@ function markdownExtractSubsection(lines: string[], title: string) {
     .trim();
 }
 
-function interviewFileUrl(fileName: string) {
-  return new URL(fileName, INTERVIEWS_ROOT);
+function interviewFileUrl(filePath: string) {
+  return new URL(filePath, INTERVIEWS_ROOT);
 }
 
 function stripExtension(fileName: string) {
@@ -259,22 +259,17 @@ function stripExtension(fileName: string) {
   return index > 0 ? fileName.slice(0, index) : fileName;
 }
 
-function getExtension(fileName: string) {
-  const index = fileName.lastIndexOf(".");
-  return index > 0 ? fileName.slice(index).toLowerCase() : "";
-}
-
-function interviewAssetHref(fileName: string) {
-  return `/interviews/${encodeURIComponent(fileName)}`;
+function interviewAssetHref(filePath: string) {
+  return `/interviews/${filePath.split("/").map(encodeURIComponent).join("/")}`;
 }
 
 function interviewPageHref(slug: string) {
   return `/interviews/${encodeURIComponent(slug)}/`;
 }
 
-async function fileExists(fileName: string) {
+async function fileExists(filePath: string) {
   try {
-    await access(interviewFileUrl(fileName));
+    await access(interviewFileUrl(filePath));
     return true;
   } catch (error) {
     if ((error as { code?: string }).code === "ENOENT") {
@@ -284,11 +279,11 @@ async function fileExists(fileName: string) {
   }
 }
 
-async function readInterviewFolder() {
+async function readInterviewFolders() {
   try {
     const entries = await readdir(interviewFolderUrl(), { withFileTypes: true });
     return entries
-      .filter((entry) => entry.isFile() && !entry.name.startsWith("."))
+      .filter((entry) => entry.isDirectory() && !entry.name.startsWith("."))
       .map((entry) => entry.name);
   } catch (error) {
     if ((error as { code?: string }).code === "ENOENT") {
@@ -431,21 +426,29 @@ export function interviewSplitAbstractSection(
 }
 
 export async function getInterviewEntries(): Promise<InterviewEntry[]> {
-  const fileNames = await readInterviewFolder();
-  const markdownFiles = fileNames.filter((fileName) => getExtension(fileName) === ".md");
+  const folderNames = await readInterviewFolders();
 
   const interviews = await Promise.all(
-    markdownFiles.map(async (fileName) => {
-      const slug = stripExtension(fileName);
+    folderNames.map(async (folderName) => {
+      const slug = folderName;
+      const markdownName = `${slug}.md`;
       const audioName = `${slug}.mp3`;
+      const markdownPath = `${slug}/${markdownName}`;
+      const audioPath = `${slug}/${audioName}`;
 
-      if (!(await fileExists(audioName))) {
+      if (!(await fileExists(markdownPath))) {
         throw new Error(
-          `Interview audio not found for ${fileName}. Expected public/interviews/${audioName}.`
+          `Interview markdown not found for ${slug}. Expected public/interviews/${markdownPath}.`
         );
       }
 
-      const source = await readFile(interviewFileUrl(fileName), "utf-8");
+      if (!(await fileExists(audioPath))) {
+        throw new Error(
+          `Interview audio not found for ${slug}. Expected public/interviews/${audioPath}.`
+        );
+      }
+
+      const source = await readFile(interviewFileUrl(markdownPath), "utf-8");
       const { content, referenceDefinitions } = interviewSplitReferenceSection(source);
       const {
         introduction,
@@ -453,20 +456,20 @@ export async function getInterviewEntries(): Promise<InterviewEntry[]> {
         relationshipCenter,
         relationshipCenterHref,
         relationshipNodes,
-      } = interviewSplitAbstractSection(content, fileName, referenceDefinitions);
+      } = interviewSplitAbstractSection(content, markdownPath, referenceDefinitions);
 
       return {
-        name: fileName,
+        name: markdownPath,
         slug,
-        title: readTitleFromMarkdown(fileName, source),
+        title: readTitleFromMarkdown(markdownName, source),
         introduction,
         introductionMarkdown,
         relationshipCenter,
         relationshipCenterHref,
         relationshipNodes,
         href: interviewPageHref(slug),
-        markdownHref: interviewAssetHref(fileName),
-        audioHref: interviewAssetHref(audioName),
+        markdownHref: interviewAssetHref(markdownPath),
+        audioHref: interviewAssetHref(audioPath),
       };
     })
   );
@@ -493,7 +496,7 @@ export async function getInterviewSource(slug: string) {
 }
 
 export async function getInterviewSubtitles(slug: string): Promise<InterviewSubtitleCue[]> {
-  const subtitleName = `${slug}.srt`;
+  const subtitleName = `${slug}/${slug}.srt`;
 
   if (!(await fileExists(subtitleName))) {
     return [];
@@ -560,6 +563,7 @@ export function interviewParseSubtitleCues(
     }
 
     const text = lines
+      .map((line) => line.replace(/^\[[^\]]+\]\s*[:：]\s*/, ""))
       .join(" ")
       .replace(/<[^>]+>/g, "")
       .replace(/\s+/g, " ")
