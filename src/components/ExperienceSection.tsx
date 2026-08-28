@@ -23,21 +23,23 @@ export default function ExperienceSection() {
               date={job.period}
               isLast={index === workExperience.length - 1}
             >
-              <div className="mt-3 p-4 bg-background/80 backdrop-blur-sm backdrop-filter rounded-lg border border-purple-500/20 dark:bg-card/10 dark:border-purple-500/10 shadow-sm">
-                <div className="flex items-center mb-3">
-                  <h4 className="text-sm font-medium">Key Achievements</h4>
+              {job.achievements.length > 0 && (
+                <div className="mt-3 p-4 bg-background/80 backdrop-blur-sm backdrop-filter rounded-lg border border-purple-500/20 dark:bg-card/10 dark:border-purple-500/10 shadow-sm">
+                  <div className="flex items-center mb-3">
+                    <h4 className="text-sm font-medium">Key Achievements</h4>
+                  </div>
+                  <ul className="list-none ml-4 space-y-2 text-sm">
+                    {job.achievements.map((achievement, i) => (
+                      <li
+                        key={i}
+                        className="text-muted-foreground relative pl-6"
+                      >
+                        {achievement}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <ul className="list-none ml-4 space-y-2 text-sm">
-                  {job.achievements.map((achievement, i) => (
-                    <li
-                      key={i}
-                      className="text-muted-foreground relative pl-6"
-                    >
-                      {achievement}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              )}
             </TimelineItem>
           ))}
         </div>

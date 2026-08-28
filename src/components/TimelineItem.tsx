@@ -6,6 +6,7 @@ interface TimelineItemProps {
   subtitle: string;
   date: string;
   isLast?: boolean;
+  aside?: React.ReactNode;
   children?: React.ReactNode;
 }
 
@@ -14,6 +15,7 @@ export default function TimelineItem({
   subtitle,
   date,
   isLast = false,
+  aside,
   children,
 }: TimelineItemProps) {
   return (
@@ -28,10 +30,13 @@ export default function TimelineItem({
       </div>
       <div className={cn("min-w-0 flex-1 pb-8", isLast ? "pb-0" : "")}>
         <div className="rounded-lg -m-3 p-3 origin-left transition-all duration-300 ease-in-out hover:scale-[1.012] hover:shadow-md hover:bg-background/60 hover:ring-1 hover:ring-purple-500/20 dark:hover:bg-card/20">
-          <div className="flex flex-col gap-0.5">
-            <h3 className="font-medium">{title}</h3>
-            <p className="text-sm text-muted-foreground">{subtitle}</p>
-            <p className="text-xs text-muted-foreground/70 mb-2">{date}</p>
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0 flex flex-col gap-0.5">
+              <h3 className="font-medium">{title}</h3>
+              <p className="text-sm text-muted-foreground">{subtitle}</p>
+              <p className="text-xs text-muted-foreground/70 mb-2">{date}</p>
+            </div>
+            {aside && <div className="shrink-0">{aside}</div>}
           </div>
           <div>{children}</div>
         </div>

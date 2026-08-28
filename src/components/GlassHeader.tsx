@@ -10,13 +10,14 @@ export default function GlassHeader() {
     { href: "/#projects", label: "Projects" },
     { href: "/#publications", label: "Publications" },
     { href: "/#education", label: "Education" },
+    { href: "/interviews/", label: "Interviews" },
     { href: "/assets/", label: "Assets" },
   ];
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
-    <header className="sticky z-50 w-full backdrop-blur-md backdrop-filter bg-background/70 dark:bg-background/40 border-b border-border/40 supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full backdrop-blur-md backdrop-filter bg-background/70 dark:bg-background/40 border-b border-border/40 supports-[backdrop-filter]:bg-background/60">
       <div className="container max-w-3xl mx-auto px-4 py-2 flex justify-between items-center">
         <motion.a
           className="flex items-center text-lg font-medium"

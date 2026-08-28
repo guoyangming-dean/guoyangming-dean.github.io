@@ -1,10 +1,10 @@
 export const personalInfo = {
   name: "Yangming Guo",
-  title: "Senior Algorithm Engineer",
-  location: "Hangzhou, China",
+  title: "LLM Application Expert",
+  location: "Beijing, China",
   email: "yangmingbit@gmail.com",
   github: "https://github.com/guoyangming-dean",
-  linkedin: "",
+  linkedin: "https://www.linkedin.com/in/guoyangming1994/",
   cv: "/assets/cv/CV_Yangming_Guo.pdf",
   profilePicture: "/profile.jpeg",
   heroDescription:
@@ -13,10 +13,17 @@ export const personalInfo = {
 
 export const workExperience = [
   {
+    company: "ByteDance",
+    location: "Beijing, China",
+    position: "LLM Application Expert",
+    period: "Jun 2026 - Present",
+    achievements: [],
+  },
+  {
     company: "Hangzhou iMedAI",
     location: "Hangzhou, China",
     position: "Senior Algorithm Engineer",
-    period: "Nov 2023 - Present",
+    period: "Nov 2023 - Jun 2026",
     achievements: [
       "Develop LLM-based academic writing agents for biomedical and research workflows.",
       "Build RAG knowledge base systems and domain AI platforms for traditional Chinese medicine.",
@@ -52,19 +59,24 @@ export const education = [
     location: "Beijing, China",
     degree: "M.S. in Control Science and Engineering",
     period: "2018 - 2021",
-    achievements: [
-      "Research focus: cloud-based teleoperated vascular interventional robotic systems.",
-      "Published work in robotic teleoperation, safety strategy, and intelligent control.",
-    ],
+    website: "https://www.bit.edu.cn/",
+    logo: "/assets/education/beijing-institute-of-technology-emblem.svg",
+    advisor: {
+      name: "Shuxiang Guo",
+      href: "http://www.guolab.org/English/EMemberSupervisors.aspx",
+    },
   },
   {
     institution: "Nanjing Agricultural University",
     location: "Nanjing, China",
     degree: "B.S. in Automation",
     period: "2014 - 2018",
-    achievements: [
-      "Studied automation, control systems, and engineering fundamentals.",
-    ],
+    website: "https://www.njau.edu.cn/",
+    logo: "/assets/education/nanjing-agricultural-university-emblem.svg",
+    advisor: {
+      name: "Wei Lu",
+      href: "https://www.njaurobot.cn/Teacher/LuWei.html",
+    },
   },
 ];
 

@@ -23,30 +23,41 @@ export default function EducationSection() {
               subtitle={edu.institution}
               date={edu.period}
               isLast={index === education.length - 1}
+              aside={
+                <a
+                  href={edu.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Visit ${edu.institution} website`}
+                  title={`Visit ${edu.institution} website`}
+                  className="block rounded-full opacity-80 transition-opacity hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-500"
+                >
+                  <img
+                    src={edu.logo}
+                    alt={`${edu.institution} emblem`}
+                    width="64"
+                    height="64"
+                    loading="lazy"
+                    decoding="async"
+                    className="h-12 w-12 rounded-full object-contain md:h-16 md:w-16"
+                  />
+                </a>
+              }
             >
               <p className="text-sm text-muted-foreground mb-3">
                 {edu.location}
               </p>
-
-              {edu.achievements && edu.achievements.length > 0 && (
-                <div className="mt-3 p-4 bg-background/80 backdrop-blur-sm backdrop-filter rounded-lg border border-purple-500/20 dark:bg-card/10 dark:border-purple-500/10 shadow-sm">
-                  <div className="flex items-center mb-3">
-                    <h4 className="text-sm font-medium">
-                      Achievements & Activities
-                    </h4>
-                  </div>
-                  <ul className="list-none ml-4 space-y-2 text-sm">
-                    {edu.achievements.map((achievement, i) => (
-                      <li
-                        key={i}
-                        className="text-muted-foreground relative pl-6"
-                      >
-                        {achievement}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+              <p className="text-sm text-muted-foreground">
+                Advisor:{" "}
+                <a
+                  href={edu.advisor.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground/80 underline underline-offset-4 transition-colors hover:text-foreground"
+                >
+                  {edu.advisor.name}
+                </a>
+              </p>
             </TimelineItem>
           ))}
         </div>

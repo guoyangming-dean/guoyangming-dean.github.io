@@ -1,7 +1,7 @@
 import { readdir, readFile } from "node:fs/promises";
 
 const PUBLICATIONS_MINE_ROOT = new URL("../../public/publications-mine/", import.meta.url);
-const PUBLICATIONS_MINE_OVERVIEW = new URL("overview.md", PUBLICATIONS_MINE_ROOT);
+const PUBLICATIONS_MINE_LIST = new URL("publications.md", PUBLICATIONS_MINE_ROOT);
 const PUBLICATIONS_MINE_SOURCE_ROOT = new URL("source/", PUBLICATIONS_MINE_ROOT);
 
 export interface PublicationsMineEntry {
@@ -13,7 +13,7 @@ export interface PublicationsMineEntry {
   href: string;
 }
 
-interface PublicationsMineOverviewItem {
+interface PublicationsMineListItem {
   heading: string;
   title?: string;
   authors?: string;
@@ -38,9 +38,9 @@ async function publicationsMineReadSourceFiles() {
     .map((entry) => entry.name));
 }
 
-function publicationsMineParseOverview(source: string): PublicationsMineOverviewItem[] {
-  const items: PublicationsMineOverviewItem[] = [];
-  let currentItem: PublicationsMineOverviewItem | undefined;
+function publicationsMineParseList(source: string): PublicationsMineListItem[] {
+  const items: PublicationsMineListItem[] = [];
+  let currentItem: PublicationsMineListItem | undefined;
 
   for (const line of source.split(/\r?\n/)) {
     const headingMatch = line.match(/^##\s+(.+?)\s*$/);
@@ -91,21 +91,21 @@ function publicationsMineParseOverview(source: string): PublicationsMineOverview
   return items;
 }
 
-function publicationsMineBuildEntry(item: PublicationsMineOverviewItem, sourceFileNames: Set<string>) {
+function publicationsMineBuildEntry(item: PublicationsMineListItem, sourceFileNames: Set<string>) {
   if (!item.authors) {
-    throw new Error(`Missing Authors line in publications-mine overview item: ${item.heading}`);
+    throw new Error(`Missing Authors line in publications.md item: ${item.heading}`);
   }
 
   if (!item.venue) {
-    throw new Error(`Missing Venue line in publications-mine overview item: ${item.heading}`);
+    throw new Error(`Missing Venue line in publications.md item: ${item.heading}`);
   }
 
   if (!item.year) {
-    throw new Error(`Missing Year line in publications-mine overview item: ${item.heading}`);
+    throw new Error(`Missing Year line in publications.md item: ${item.heading}`);
   }
 
   if (!item.file) {
-    throw new Error(`Missing File line in publications-mine overview item: ${item.heading}`);
+    throw new Error(`Missing File line in publications.md item: ${item.heading}`);
   }
 
   if (!sourceFileNames.has(item.file)) {
@@ -125,19 +125,19 @@ function publicationsMineBuildEntry(item: PublicationsMineOverviewItem, sourceFi
 }
 
 export async function getPublicationsMineEntries(): Promise<PublicationsMineEntry[]> {
-  const [overviewSource, sourceFileNames] = await Promise.all([
-    readFile(PUBLICATIONS_MINE_OVERVIEW, "utf-8"),
+  const [publicationsSource, sourceFileNames] = await Promise.all([
+    readFile(PUBLICATIONS_MINE_LIST, "utf-8"),
     publicationsMineReadSourceFiles(),
   ]);
-  const overviewItems = publicationsMineParseOverview(overviewSource);
+  const publicationItems = publicationsMineParseList(publicationsSource);
   const usedNames = new Set<string>();
   const publications: PublicationsMineEntry[] = [];
 
-  for (const item of overviewItems) {
+  for (const item of publicationItems) {
     const publication = publicationsMineBuildEntry(item, sourceFileNames);
 
     if (usedNames.has(publication.name)) {
-      throw new Error(`Duplicate publication in overview.md: ${publication.name}`);
+      throw new Error(`Duplicate publication in publications.md: ${publication.name}`);
     }
 
     usedNames.add(publication.name);
