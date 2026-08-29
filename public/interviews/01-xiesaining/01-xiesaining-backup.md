@@ -269,7 +269,7 @@
 
 [00:36:36,060 --> 00:37:43,594] 谢赛宁: 那时候其实做计算机视觉的老师不多，然后，我认为[屠老师][zhuowen-tu]，当然是一个，我非常敬佩的一位老师，所以他也是我的一个 top choice。当然了，还会有很多，你当然说，像在斯坦福，伯克利对？MIT 都会有，有很多这些计算机视觉的先驱。但那时候，超过我的能力范围之内，对。所以我跟[屠老师][zhuowen-tu]发这个邮件，他就回复了我，我还记得非常清楚，因为有时差，所以[屠老师][zhuowen-tu]说我们要不要打个电话，你什么时候有时间？我说我任何时候都有时间。所以我半夜 3 点，在宿舍的楼下，跟[屠老师][zhuowen-tu]打了这么一个电话。告诉他为什么我认为，我想做这件事儿，我之前做了哪些事儿，并且我为什么，很欣赏你的 research？我认为我们可以一起工作一起共事。所以，后来[屠老师][zhuowen-tu]就把我捞起来了，非常非常幸运。
 
-[00:36:36,060 --> 00:37:43,594] NOTE: [屠卓文][zhuowen-tu]是国际知名计算机视觉与机器学习学者，现任 [UCSD][ucsd] 教授，研究方向包括计算机视觉、机器学习、深度学习、医学影像、神经计算等。他早年获得清华大学硕士学位，后在俄亥俄州立大学获得博士学位，曾在微软亚洲研究院、[UCLA][ucla]、[UCSD][ucsd] 等机构工作。屠卓文在结构化预测、图像理解、边缘检测等方向影响很大，代表性工作包括 [HED][hed] 和深监督网络相关研究。他曾获得计算机视觉领域重要奖项 [Marr Prize][marr-prize]，并入选 [IEEE Fellow][ieee-fellow]。谢赛宁、吴佳俊等后来在视觉和 AI 领域很有影响力的学者，也曾受其指导。![屠卓文教授](/interviews/01-xiesaining/media/03-tuzhuowen.jpg)
+[00:36:36,060 --> 00:37:43,594] NOTE: [屠卓文][zhuowen-tu]是国际知名计算机视觉与机器学习学者，现任 [UCSD][ucsd] 教授，研究方向包括计算机视觉、机器学习、深度学习、医学影像、神经计算等。他早年获得清华大学硕士学位，后在俄亥俄州立大学获得博士学位，曾在微软亚洲研究院、[UCLA][ucla]、[UCSD][ucsd] 等机构工作。屠卓文在结构化预测、图像理解、边缘检测等方向影响很大，代表性工作包括 [HED][hed] 和深监督网络相关研究。他曾获得计算机视觉领域重要奖项 [Marr Prize][marr-prize]，并入选 [IEEE Fellow][ieee-fellow]。谢赛宁、吴佳俊等后来在视觉和 AI 领域很有影响力的学者，也曾受其指导。![屠卓文教授](/interviews/01-xiesaining/media/03-zhuowen-tu.jpg)
 
 [00:37:43,728 --> 00:37:44,762] 张小珺: 最后几天。
 
@@ -379,7 +379,7 @@
 
 [00:56:27,117 --> 00:59:23,726] 谢赛宁: 我在那时候在三番，然后，让我做一些跟 design 相关，跟这种 crowdsourcing，也就是说你要在互联网上去写一些，这种 Mechanical Turk，就是一些互联网的，这种用户 feedback 的这种系统，然后一些用户反馈系统。用它来指导一些，机器学习跟这种，计算机视觉的一些任务，比如说 Segmentation，这件事情，我就没做好，我还对我的 mentor 心怀愧疚，当然他们也都很友善，但这，这也是一次让我体会到其实 it's OK。没有做出来什么东西，其实也不是 the end of the world，也不是世界末日。但那段时间其实还是很消沉的，这段消沉期，一直持续到了我去 [Meta][meta] 实习。是在学校里，好像也没有做出来什么有趣的工作，后来到了 [Meta][meta] 之后，之后然后，实习只有可能三个月的时间。我在前两个月基本上也，我在 explore 一些东西，在探索一些东西，也是跟神经网络的架构相关，的一些东西，但也没探索出来什么东西。什么名堂？突然一个转机发生了，这个，[何恺明][kaiming-he]（残差神经网络主要发明人） 加入了 [FAIR][meta-ai-research]。在那个时候。所以这大概是我实习的一半的时候。[何恺明老师][kaiming-he]然后加入了 [FAIR][meta-ai-research]，然后成为了一个，full-time 的研究员。所以，那是我第一次跟[恺明][kaiming-he]共事，那是我第一次，向他学习。然后，那时候也建立了一些深厚的友情。我认为，因为那时候他第一次来美国，他第一次，他有很多第一次是在 [FAIR][meta-ai-research] 的时候，发生的。他那时候也不会开车，第一次来美国也人生地不熟。我要开着车带着他出去吃饭，然后送他回家有时候，但他后来也会自己学车了，他也不会用 Linux，这件事情也很有意思，因为在微软的时候他们都用，他们只能用 Windows 来编程。所以我要教[恺明][kaiming-he]怎么样用这些 Cluster，怎么样用 Linux。但你会发现，[恺明][kaiming-he]，这个是[恺明][kaiming-he]，不是没有原因的。我认为，像他身上真的是有这种，可以叫它光环，或者我可以叫它某种，现实扭曲引力场。这其实是 [Steve Jobs][steve-jobs] 的说法，也就是说，[Steve Jobs][steve-jobs] 周围的人受到他的这个影响，都会觉得现实发生了扭曲。有些本来完全做不到的事情，现在慢慢竟然可以做到了。我认为[恺明][kaiming-he]也是有这样的魔力的。所以这是我第一次看到说，一个真正顶尖的研究员是怎么样做 research 的。
 
-[00:56:27,117 --> 00:59:23,726] NOTE: [何恺明][kaiming-he]是计算机视觉和深度学习领域的重要学者，现任 [MIT EECS][mit-eecs] 终身副教授，并兼职担任 [Google DeepMind][google-deepmind] Distinguished Scientist。他本科毕业于[清华大学][tsinghua-university]，博士毕业于[香港中文大学][cuhk]，曾任职于[微软亚洲研究院][microsoft-research-asia]和 [Facebook AI Research][meta-ai-research]。他最知名的贡献是提出 [ResNet][resnet]，使极深神经网络训练变得可行，显著推动了图像分类、检测和分割任务的发展。其代表工作还包括 [Mask R-CNN][mask-r-cnn]、[Faster R-CNN][faster-r-cnn]、[He Initialization][he-initialization] 等，在学术界和工业界影响极大。![何恺明](/interviews/01-xiesaining/media/05-hekaiming.jpg)
+[00:56:27,117 --> 00:59:23,726] NOTE: [何恺明][kaiming-he]是计算机视觉和深度学习领域的重要学者，现任 [MIT EECS][mit-eecs] 终身副教授，并兼职担任 [Google DeepMind][google-deepmind] Distinguished Scientist。他本科毕业于[清华大学][tsinghua-university]，博士毕业于[香港中文大学][cuhk]，曾任职于[微软亚洲研究院][microsoft-research-asia]和 [Facebook AI Research][meta-ai-research]。他最知名的贡献是提出 [ResNet][resnet]，使极深神经网络训练变得可行，显著推动了图像分类、检测和分割任务的发展。其代表工作还包括 [Mask R-CNN][mask-r-cnn]、[Faster R-CNN][faster-r-cnn]、[He Initialization][he-initialization] 等，在学术界和工业界影响极大。![何恺明](/interviews/01-xiesaining/media/05-kaiming-he.jpg)
 
 [00:59:23,726 --> 00:59:28,264] 张小珺: 你那个时候实习期只剩一个月了，你们为什么能够建立起深厚的友谊？
 
@@ -479,8 +479,6 @@
 
 [01:19:02,671 --> 01:19:44,880] 谢赛宁: 我不确定是不是一个确定目的，我真的我认为很玄学的。所有这些决策都是说，我只考虑的事情是我应该去做哪里。做我最想做的事情，最好是跟我最想要共事的人一起，共事。我认为，其实这个想法非常单纯。所以在当初找工作也是，其实我，也四处都在找，各大厂也有不少 offer。我之前也讲过我当初面试 [OpenAI][openai] 的经历，其实还是很酷的。总之在一个小黑屋里面，关了五六个小时，做一道题目，出来的时候天都黑了。我认为我对那个体验也比较奇妙，感觉也比较奇妙，但那时候其实我。
 
-[01:19:02,671 --> 01:19:44,880] NOTE: [谢赛宁后来在 X 上贴出][saining-openai-interview-tweet]当年 [OpenAI][openai] 面试题的手写页。题目围绕 Cross-Entropy Method 中的 variance collapse，要求候选人实现实验、写一页数学说明，并进行白板讨论。这个细节对应他这里说的“小黑屋里面，关了五六个小时，做一道题目”。![谢赛宁 OpenAI 面试题手写页](/interviews/01-xiesaining/media/06-xiesaining-openai-interview.png)
-
 [01:19:44,880 --> 01:19:45,447] 张小珺: 谁是面试官在 [OpenAI][openai]？
 
 [01:19:45,447 --> 01:19:46,248] 谢赛宁: [John Schulman][john-schulman]
@@ -492,6 +490,8 @@
 [01:19:51,653 --> 01:19:53,021] 张小珺: 对知乎转了，那就是。
 
 [01:19:53,021 --> 01:20:12,807] 谢赛宁: 是的。对他当初的，这个面试题是一张 A4 纸，他是手写的铅笔，手写的一行一行的这个面试题。我认为这件事情，我也是一个很大的触动，太有意思了，这个地方很有意思。最后，其实，当然也有 offer 了，但是最后。
+
+[01:19:53,021 --> 01:20:12,807] NOTE: [谢赛宁后来在 X 上贴出][saining-openai-interview-tweet]当年 [OpenAI][openai] 面试题的手写页。题目围绕 Cross-Entropy Method 中的 variance collapse，要求候选人实现实验、写一页数学说明，并进行白板讨论。这张图片正对应他这里提到的“一张 A4 纸”“手写的铅笔”“手写的一行一行的面试题”。![谢赛宁 OpenAI 面试题手写页](/interviews/01-xiesaining/media/06-xiesaining-openai-interview.png)
 
 [01:20:12,807 --> 01:20:14,009] 张小珺: 没有去 [OpenAI][openai]。
 

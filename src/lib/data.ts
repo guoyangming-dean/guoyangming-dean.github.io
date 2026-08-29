@@ -20,7 +20,7 @@ export const workExperience = [
     achievements: [],
   },
   {
-    company: "Hangzhou iMedAI",
+    company: "Hangzhou iMedAI (Startup)",
     location: "Hangzhou, China",
     position: "Senior Algorithm Engineer",
     period: "Nov 2023 - Jun 2026",
@@ -102,7 +102,6 @@ export const skills = {
 export const projects = [
   {
     title: "LLM Academic Writing Agents",
-    github: "/assets/cv/CV_Yangming_Guo.pdf",
     description: [
       "Built agent workflows for academic writing and biomedical research support.",
       "Integrated retrieval, structured context, and domain-specific generation workflows.",
@@ -111,7 +110,6 @@ export const projects = [
   },
   {
     title: "Traditional Chinese Medicine AI Platform",
-    github: "/assets/cv/CV_Yangming_Guo.pdf",
     description: [
       "Developed AI-powered knowledge platforms for traditional Chinese medicine.",
       "Worked on retrieval systems, domain knowledge organization, and applied LLM workflows.",
@@ -120,7 +118,6 @@ export const projects = [
   },
   {
     title: "ECG Abnormality Classification",
-    github: "/assets/cv/CV_Yangming_Guo.pdf",
     description: [
       "Worked on deep learning methods for ECG abnormality classification.",
       "Published related work in Physiological Measurement.",
@@ -129,7 +126,6 @@ export const projects = [
   },
   {
     title: "Vascular Interventional Robot Teleoperation",
-    github: "/assets/cv/CV_Yangming_Guo.pdf",
     description: [
       "Researched cloud communication and operation strategies for interventional surgical robots.",
       "Published related work in IEEE Transactions on Robotics and ICMA.",

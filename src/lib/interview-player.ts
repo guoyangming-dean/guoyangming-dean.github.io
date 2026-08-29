@@ -7,6 +7,7 @@ interface SubtitleCue {
 interface TopicItem {
   element: HTMLElement;
   end: number;
+  id: string;
   index: number;
   start: number;
   title: string;
@@ -108,13 +109,15 @@ function topicContainsTime(topicItem: TopicItem | null, time: number) {
 function topicReadItems() {
   return Array.from(document.querySelectorAll<HTMLElement>("[data-topic]"))
     .map((element, index): TopicItem => {
+      const heading = element.querySelector<HTMLHeadingElement>("h2[id]");
       const start = Number(element.getAttribute("data-topic-start"));
       const end = Number(element.getAttribute("data-topic-end"));
-      const title = element.querySelector("h2")?.textContent?.trim() || `Topic ${index + 1}`;
+      const title = heading?.textContent?.trim() || `Topic ${index + 1}`;
 
       return {
         element,
         end,
+        id: heading?.id || "",
         index,
         start,
         title,
@@ -177,6 +180,75 @@ function setupExternalLinks(externalLinks: NodeListOf<HTMLAnchorElement>) {
     externalLink.setAttribute("target", "_blank");
     externalLink.setAttribute("rel", "noopener noreferrer");
   }
+}
+
+function setupImageLightbox(interviewPage: HTMLElement) {
+  const dialog = document.querySelector<HTMLDialogElement>("[data-interview-image-lightbox]");
+  const dialogContent = dialog?.querySelector<HTMLElement>(
+    "[data-interview-image-lightbox-content]"
+  );
+  const dialogImage = dialog?.querySelector<HTMLImageElement>(
+    "[data-interview-image-lightbox-image]"
+  );
+  const closeButton = dialog?.querySelector<HTMLButtonElement>(
+    "[data-interview-image-lightbox-close]"
+  );
+  const images = interviewPage.querySelectorAll<HTMLImageElement>(".interview-note-bubble img");
+
+  if (!dialog || !dialogContent || !dialogImage || !closeButton || images.length === 0) {
+    return;
+  }
+
+  let triggerImage: HTMLImageElement | null = null;
+
+  function imageOpenLightbox(image: HTMLImageElement) {
+    triggerImage = image;
+    dialogImage.src = image.currentSrc || image.src;
+    dialogImage.alt = image.alt;
+
+    if (!dialog.open) {
+      dialog.showModal();
+    }
+  }
+
+  for (const image of images) {
+    const imageLabel = image.alt ? `Enlarge image: ${image.alt}` : "Enlarge image";
+    image.tabIndex = 0;
+    image.setAttribute("role", "button");
+    image.setAttribute("aria-label", imageLabel);
+
+    image.addEventListener("click", () => imageOpenLightbox(image));
+    image.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && !keyboardIsSpaceKey(event)) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+      imageOpenLightbox(image);
+    });
+  }
+
+  closeButton.addEventListener("click", () => dialog.close());
+  dialog.addEventListener("click", (event) => {
+    if (event.target === dialog || event.target === dialogContent) {
+      dialog.close();
+    }
+  });
+  dialog.addEventListener("keydown", (event) => {
+    event.stopPropagation();
+
+    if (event.key === "Escape" || keyboardIsSpaceKey(event)) {
+      event.preventDefault();
+      dialog.close();
+    }
+  });
+  dialog.addEventListener("close", () => {
+    dialogImage.removeAttribute("src");
+    dialogImage.alt = "";
+    triggerImage?.focus();
+    triggerImage = null;
+  });
 }
 
 export function interviewPlayerMount() {
@@ -436,6 +508,31 @@ export function interviewPlayerMount() {
     return currentTopic;
   }
 
+  function topicFindByTime(time: number) {
+    return (
+      topicItems.find((topicItem) => topicContainsTime(topicItem, time)) ||
+      [...topicItems].reverse().find((topicItem) => time >= topicItem.start) ||
+      null
+    );
+  }
+
+  function outlineSetCurrent(topicItem: TopicItem | null) {
+    for (const outlineLink of outlineLinks) {
+      const isCurrent = Boolean(
+        topicItem?.id && outlineLink.getAttribute("href") === `#${topicItem.id}`
+      );
+
+      outlineLink.classList.toggle("interview-outline-link--active", isCurrent);
+
+      if (isCurrent) {
+        outlineLink.setAttribute("aria-current", "location");
+        outlineLink.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      } else {
+        outlineLink.removeAttribute("aria-current");
+      }
+    }
+  }
+
   function topicSetCurrent(topicItem: TopicItem | null) {
     if (currentTopicItem === topicItem) {
       floatingSyncState();
@@ -443,11 +540,17 @@ export function interviewPlayerMount() {
     }
 
     currentTopicItem = topicItem;
+    outlineSetCurrent(topicItem);
     floatingSetTopic(topicItem);
     floatingSyncState();
   }
 
   function topicUpdateFromScroll() {
+    if (audio instanceof HTMLAudioElement && activeSegment && !audio.paused) {
+      topicSetCurrent(topicFindByTime(audio.currentTime));
+      return;
+    }
+
     topicSetCurrent(topicFindByScroll());
   }
 
@@ -559,6 +662,7 @@ export function interviewPlayerMount() {
 
     playerSetActive(button, true);
     playerSyncDialogueState(true, nextTime);
+    topicSetCurrent(topicFindByTime(nextTime));
     floatingSyncState(nextTime, true);
 
     if (Math.abs(audio.currentTime - nextTime) > 0.02) {
@@ -844,6 +948,10 @@ export function interviewPlayerMount() {
     });
 
     audio.addEventListener("timeupdate", () => {
+      if (activeSegment) {
+        topicSetCurrent(topicFindByTime(audio.currentTime));
+      }
+
       if (!activeSegment || audio.currentTime < activeSegment.end - 0.02) {
         playerSyncDialogueState(!audio.paused);
         floatingSyncState();
@@ -901,4 +1009,7 @@ export function interviewPlayerMount() {
 
   setupOutlineLinks(outlineLinks);
   setupExternalLinks(externalLinks);
+  if (interviewPage) {
+    setupImageLightbox(interviewPage);
+  }
 }

@@ -5,7 +5,6 @@ import remarkMath from "remark-math";
 import "katex/dist/katex.min.css";
 import Layout from "@/layouts/Layout.astro";
 import GlassHeader from "@/components/GlassHeader";
-import Footer from "@/components/Footer";
 import {
   getInterviewEntries,
   getInterviewSource,
@@ -380,6 +379,28 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
           </div>
         </div>
 
+        <dialog
+          class="interview-image-lightbox"
+          data-interview-image-lightbox
+          aria-label="Image preview"
+        >
+          <div
+            class="interview-image-lightbox-content"
+            data-interview-image-lightbox-content
+          >
+            <button
+              type="button"
+              class="interview-image-lightbox-close"
+              data-interview-image-lightbox-close
+              aria-label="Close image preview"
+              title="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+            <img data-interview-image-lightbox-image alt="" />
+          </div>
+        </dialog>
+
         <div class="interview-floating-player" data-floating-player hidden>
           <div class="interview-floating-topic">
             <span class="interview-floating-title" data-floating-topic-title></span>
@@ -418,7 +439,6 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
       </div>
     </section>
   </main>
-  <Footer client:load />
 </Layout>
 
 <script>
@@ -527,8 +547,7 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
 
   .interview-note-bubble a {
     color: var(--color-purple-500);
-    text-decoration: underline;
-    text-underline-offset: 3px;
+    text-decoration: none;
   }
 
   .interview-note-bubble img {
@@ -549,6 +568,86 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
 
   .interview-note-bubble img:last-child {
     margin-bottom: 0;
+  }
+
+  .interview-note-bubble img[role="button"] {
+    cursor: zoom-in;
+  }
+
+  .interview-note-bubble img[role="button"]:focus-visible {
+    outline: 2px solid var(--color-purple-500);
+    outline-offset: 3px;
+  }
+
+  .interview-image-lightbox {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    box-sizing: border-box;
+    height: 100dvh;
+    justify-content: center;
+    margin: 0;
+    max-height: none;
+    max-width: none;
+    padding: clamp(0.75rem, 3vw, 2rem);
+    width: 100vw;
+  }
+
+  .interview-image-lightbox[open] {
+    display: flex;
+  }
+
+  .interview-image-lightbox::backdrop {
+    background: color-mix(in oklab, var(--background) 12%, transparent);
+    backdrop-filter: blur(2px);
+  }
+
+  .interview-image-lightbox-content {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    max-height: 100%;
+    max-width: 100%;
+    position: relative;
+    width: 100%;
+  }
+
+  .interview-image-lightbox-content img {
+    border: 1px solid color-mix(in oklab, var(--color-purple-500) 26%, var(--border));
+    border-radius: 0.5rem;
+    box-shadow: 0 1.25rem 3.5rem color-mix(in oklab, var(--color-purple-500) 24%, transparent);
+    display: block;
+    height: auto;
+    max-height: 75dvh;
+    max-width: min(75vw, 64rem);
+    object-fit: contain;
+    width: auto;
+  }
+
+  .interview-image-lightbox-close {
+    align-items: center;
+    background: color-mix(in oklab, var(--background) 88%, transparent);
+    border: 1px solid color-mix(in oklab, var(--border) 82%, transparent);
+    border-radius: 999px;
+    color: var(--foreground);
+    display: inline-flex;
+    font-size: 1.5rem;
+    height: 2.25rem;
+    justify-content: center;
+    line-height: 1;
+    position: fixed;
+    right: 1rem;
+    top: 1rem;
+    width: 2.25rem;
+    z-index: 1;
+  }
+
+  .interview-image-lightbox-close:hover,
+  .interview-image-lightbox-close:focus-visible {
+    background: var(--background);
+    border-color: color-mix(in oklab, var(--color-purple-500) 48%, var(--border));
+    color: var(--color-purple-500);
   }
 
   @media (max-width: 767px) {
@@ -590,9 +689,24 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
     color: var(--foreground);
   }
 
+  .interview-outline-link--active,
+  .interview-outline-link--active:hover {
+    background: color-mix(in oklab, var(--color-purple-500) 13%, transparent);
+    border-left-color: var(--color-purple-500);
+    color: var(--foreground);
+    font-weight: 650;
+  }
+
   .interview-outline-link--h3 {
     font-size: 0.7rem;
     padding-left: 1.1rem;
+  }
+
+  @media (max-width: 767px) {
+    .interview-image-lightbox-content img {
+      max-height: 75dvh;
+      max-width: calc(100vw - 1.5rem);
+    }
   }
 
   .interview-thread {
@@ -995,8 +1109,7 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
   .interview-markdown a,
   .interview-bubble a {
     color: var(--color-purple-500);
-    text-decoration: underline;
-    text-underline-offset: 3px;
+    text-decoration: none;
   }
 
   .interview-message {

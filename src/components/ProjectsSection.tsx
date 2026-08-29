@@ -1,14 +1,8 @@
 import React from "react";
 import { projects } from "@/lib/data";
-import {
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
+import { CardContent, CardHeader, CardTitle } from "./ui/card";
 import { GlassCard } from "./ui/glass-card";
 import MotionWrapper from "./MotionWrapper";
-import { motion } from "framer-motion";
 
 export default function ProjectsSection() {
   return (
@@ -38,18 +32,6 @@ export default function ProjectsSection() {
                     ))}
                   </ul>
                 </CardContent>
-                <CardFooter className="h-16 flex justify-center md:justify-start items-center border-t border-border/30 bg-gradient-to-r from-purple-500/5 to-pink-500/5 p-6 py-0">
-                  <motion.a
-                    href={project.github}
-                    target={project.github.startsWith("/") ? undefined : "_blank"}
-                    rel={project.github.startsWith("/") ? undefined : "noopener noreferrer"}
-                    className="flex items-center text-sm text-muted-foreground hover:text-purple-500 transition-colors group/link"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    View details
-                  </motion.a>
-                </CardFooter>
               </GlassCard>
             </MotionWrapper>
           ))}
