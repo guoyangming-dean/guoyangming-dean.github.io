@@ -28,11 +28,11 @@ export default function ExperienceSection() {
                   <div className="flex items-center mb-3">
                     <h4 className="text-sm font-medium">Key Achievements</h4>
                   </div>
-                  <ul className="list-none ml-4 space-y-2 text-sm">
+                  <ul className="ml-5 list-disc space-y-2 text-sm marker:text-purple-500/60 dark:marker:text-purple-400/60">
                     {job.achievements.map((achievement, i) => (
                       <li
                         key={i}
-                        className="text-muted-foreground relative pl-6"
+                        className="pl-1 text-muted-foreground"
                       >
                         {achievement}
                       </li>

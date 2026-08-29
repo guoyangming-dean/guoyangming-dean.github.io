@@ -67,6 +67,10 @@ function subtitleReadCues(element: Element | null) {
   }
 }
 
+function subtitleFormatFloatingText(text: string) {
+  return text.replace(/[，。！？；：、,.!?;:…]+$/u, "").trimEnd();
+}
+
 function playerClampTime(time: number, start: number, end: number) {
   return Math.min(Math.max(time, start), Math.max(start, end - 0.05));
 }
@@ -404,7 +408,7 @@ export function interviewPlayerMount() {
       subtitleCue = subtitleFindByTopic(currentTopicItem);
     }
 
-    const subtitleText = subtitleCue?.text || "";
+    const subtitleText = subtitleFormatFloatingText(subtitleCue?.text || "");
     floatingSubtitle.textContent = subtitleText;
     floatingSubtitle.title = subtitleText;
   }

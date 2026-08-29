@@ -78,6 +78,10 @@ function jsonSerializeForScript(value: unknown) {
   return (JSON.stringify(value) ?? "null").replace(/</g, "\\u003c");
 }
 
+function speakerGetAvatarText(speaker: string) {
+  return Array.from(speaker.trim())[0] || "?";
+}
+
 export async function getStaticPaths() {
   function htmlRemoveTopicPrefix(html: string) {
     return html.replace(/(<h2\b[^>]*>)\s*(?:\d{1,2}[.\s、-]+)([\s\S]*?<\/h2>)/g, "$1$2");
@@ -350,19 +354,31 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
                           <div class="interview-message-meta">
                             <span>{block.speaker}</span>
                           </div>
+                          <div class="interview-speaker-avatar" aria-hidden="true">
+                            {speakerGetAvatarText(block.speaker)}
+                          </div>
+                        </div>
+                        <div class="interview-bubble">
+                          <div class="interview-bubble-content" set:html={block.contentHtml} />
                           <button
                             type="button"
-                            class="interview-play-button"
+                            class="interview-inline-play-button"
                             data-dialogue-play
                             data-start={String(block.startTime)}
                             data-end={String(block.endTime)}
-                            aria-label={`Play ${block.speaker} at ${block.timeLabel}`}
+                            aria-label={`播放 ${block.speaker} 这段语音`}
                             aria-pressed="false"
+                            title="播放这段语音"
                           >
-                            <span aria-hidden="true" class="interview-play-icon"></span>
+                            <span aria-hidden="true" class="interview-wave-icon">
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                            </span>
                           </button>
                         </div>
-                        <div class="interview-bubble" set:html={block.contentHtml} />
                       </div>
                     </div>
                     {
@@ -1177,25 +1193,24 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
     justify-items: center;
   }
 
-  .interview-play-button {
+  .interview-speaker-avatar {
     align-items: center;
-    background: var(--background);
+    background: color-mix(in oklab, var(--muted) 72%, var(--background));
     border: 1px solid var(--border);
     border-radius: 999px;
-    color: var(--foreground);
+    color: color-mix(in oklab, var(--foreground) 84%, var(--muted-foreground));
     display: inline-flex;
     flex: 0 0 auto;
+    font-size: 0.74rem;
+    font-weight: 650;
     height: 1.58rem;
     justify-content: center;
-    transition:
-      background-color 0.2s ease,
-      border-color 0.2s ease,
-      color 0.2s ease;
+    line-height: 1;
+    user-select: none;
     width: 1.58rem;
   }
 
-  .interview-play-button:hover,
-  .interview-play-button.interview-player-button--active {
+  .interview-message--right .interview-speaker-avatar {
     background: color-mix(in oklab, var(--color-purple-500) 12%, var(--background));
     border-color: color-mix(in oklab, var(--color-purple-500) 45%, var(--border));
     color: var(--color-purple-500);
@@ -1244,6 +1259,120 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
       transform 0.2s ease;
   }
 
+  .interview-bubble-content {
+    display: contents;
+  }
+
+  .interview-inline-play-button {
+    align-items: center;
+    background: transparent;
+    border: 1px solid color-mix(in oklab, var(--muted-foreground) 24%, transparent);
+    border-radius: 999px;
+    box-shadow: none;
+    color: var(--muted-foreground);
+    cursor: pointer;
+    display: inline-flex;
+    height: 1.2rem;
+    justify-content: center;
+    line-height: 1;
+    margin: 0 0 0 0.32rem;
+    min-width: 1.2rem;
+    padding: 0;
+    position: relative;
+    touch-action: manipulation;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
+    vertical-align: middle;
+    width: 1.2rem;
+  }
+
+  .interview-inline-play-button::before {
+    content: "";
+    inset: -0.3rem;
+    position: absolute;
+  }
+
+  .interview-inline-play-button:hover,
+  .interview-inline-play-button:focus-visible,
+  .interview-inline-play-button.interview-player-button--active {
+    background: color-mix(in oklab, var(--color-purple-500) 8%, transparent);
+    border-color: color-mix(in oklab, var(--color-purple-500) 38%, var(--border));
+    box-shadow: 0 0.18rem 0.45rem color-mix(in oklab, var(--color-purple-500) 12%, transparent);
+    color: var(--color-purple-500);
+    transform: translateY(-0.02rem);
+  }
+
+  .interview-inline-play-button:focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--color-purple-500) 72%, transparent);
+    outline-offset: 2px;
+  }
+
+  .interview-wave-icon {
+    align-items: center;
+    display: inline-flex;
+    gap: 0.06rem;
+    height: 0.66rem;
+    justify-content: center;
+    width: 0.68rem;
+  }
+
+  .interview-wave-icon span {
+    background: currentColor;
+    border-radius: 999px;
+    display: block;
+    width: 0.07rem;
+  }
+
+  .interview-wave-icon span:nth-child(1),
+  .interview-wave-icon span:nth-child(5) {
+    height: 0.22rem;
+  }
+
+  .interview-wave-icon span:nth-child(2),
+  .interview-wave-icon span:nth-child(4) {
+    height: 0.4rem;
+  }
+
+  .interview-wave-icon span:nth-child(3) {
+    height: 0.6rem;
+  }
+
+  .interview-inline-play-button.interview-player-button--playing .interview-wave-icon span {
+    animation: interview-wave-playing 0.9s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  .interview-inline-play-button.interview-player-button--playing .interview-wave-icon span:nth-child(2) {
+    animation-delay: 0.08s;
+  }
+
+  .interview-inline-play-button.interview-player-button--playing .interview-wave-icon span:nth-child(3) {
+    animation-delay: 0.16s;
+  }
+
+  .interview-inline-play-button.interview-player-button--playing .interview-wave-icon span:nth-child(4) {
+    animation-delay: 0.24s;
+  }
+
+  .interview-inline-play-button.interview-player-button--playing .interview-wave-icon span:nth-child(5) {
+    animation-delay: 0.32s;
+  }
+
+  @keyframes interview-wave-playing {
+    0%,
+    100% {
+      transform: scaleY(0.68);
+    }
+
+    50% {
+      transform: scaleY(1.08);
+    }
+  }
+
   .interview-message--right .interview-bubble {
     background: color-mix(in oklab, var(--color-purple-500) 10%, var(--background));
     border-color: color-mix(in oklab, var(--color-purple-500) 24%, var(--border));
@@ -1281,5 +1410,11 @@ const subtitleCuesJson = jsonSerializeForScript(subtitleCues);
 
   .interview-bubble p:last-child {
     margin-bottom: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .interview-inline-play-button.interview-player-button--playing .interview-wave-icon span {
+      animation: none;
+    }
   }
 </style>

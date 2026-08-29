@@ -41,16 +41,6 @@ export const workExperience = [
       "Delivered machine learning components for production-facing healthcare products.",
     ],
   },
-  {
-    company: "Beijing Institute of Technology",
-    location: "Beijing, China",
-    position: "Researcher, Vascular Interventional Robotics",
-    period: "Sep 2018 - Jun 2021",
-    achievements: [
-      "Researched cloud-based teleoperated vascular interventional robotic systems.",
-      "Worked on intelligent control, safety strategies, and robotic operation workflows.",
-    ],
-  },
 ];
 
 export const education = [

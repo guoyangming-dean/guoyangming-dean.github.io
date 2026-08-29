@@ -22,7 +22,7 @@ export default function TimelineItem({
     <div className="relative flex gap-6">
       <div className="flex flex-col items-center">
         <div
-          className="flex h-[18px] w-[18px] rounded-full border border-purple-500/50 bg-background dark:bg-muted z-10"
+          className="z-10 flex h-[18px] w-[18px] rounded-full border border-purple-500/50 bg-purple-500/15 dark:bg-purple-400/20"
         />
         {!isLast && (
           <div className="w-px grow bg-gradient-to-b from-purple-500/50 to-pink-500/30 dark:from-purple-500/30 dark:to-pink-500/10" />

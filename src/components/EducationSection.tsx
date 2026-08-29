@@ -53,7 +53,7 @@ export default function EducationSection() {
                   href={edu.advisor.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-foreground/80 underline underline-offset-4 transition-colors hover:text-foreground"
+                  className="text-foreground/80 transition-colors hover:text-foreground"
                 >
                   {edu.advisor.name}
                 </a>
